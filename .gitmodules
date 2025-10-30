@@ -7,3 +7,6 @@
 [submodule "lib/chimera"]
 	path = lib/chimera
 	url = https://github.com/Recon-Fuzz/chimera
+[submodule ".claude"]
+	path = .claude
+	url = https://github.com/Recon-Fuzz/ai-agent-primers
