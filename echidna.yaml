@@ -1,4 +1,4 @@
-testMode: "property"
+testMode: "assertion"
 prefix: "optimize_"
 coverage: true
 corpusDir: "echidna"
