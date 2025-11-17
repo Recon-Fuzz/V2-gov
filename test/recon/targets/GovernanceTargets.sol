@@ -18,6 +18,64 @@ abstract contract GovernanceTargets is
 {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
+    function clamped_governance_allocateLQTY() public asActor {
+        address[] memory _initiativesToReset = new address[](0);
+        address[] memory _initiatives = new address[](1);
+        _initiatives[0] = address(bribeInitiative);
+        (,uint256 unallocatedLQTY,,) = governance.userStates(_getActor());
+        int256 maxAmount = int256(unallocatedLQTY);
+        int256[] memory _absoluteLQTYVotes = new int256[](1);
+        _absoluteLQTYVotes[0] = maxAmount > 0 ? maxAmount : int256(1);
+        int256[] memory _absoluteLQTYVetos = new int256[](1);
+        _absoluteLQTYVetos[0] = 0;
+        governance.allocateLQTY(_initiativesToReset, _initiatives, _absoluteLQTYVotes, _absoluteLQTYVetos);
+    }
+
+    function clamped_governance_depositLQTY() public asActor {
+        uint256 maxAmount = lqty.balanceOf(_getActor());
+        uint256 amount = maxAmount > 0 ? maxAmount : 1e18;
+        governance.depositLQTY(amount, false, _getActor());
+    }
+
+    function clamped_governance_depositLQTYViaPermit() public asActor {
+        uint256 maxAmount = lqty.balanceOf(_getActor());
+        uint256 amount = maxAmount > 0 ? maxAmount : 1e18;
+        PermitParams memory _permitParams = PermitParams({
+            owner: _getActor(),
+            spender: address(governance),
+            value: amount,
+            deadline: block.timestamp + 1 days,
+            v: 27,
+            r: bytes32(uint256(1)),
+            s: bytes32(uint256(1))
+        });
+        governance.depositLQTYViaPermit(amount, _permitParams, false, _getActor());
+    }
+
+    function clamped_governance_registerInitiative() public asActor {
+        governance.registerInitiative(address(bribeInitiative));
+    }
+
+    function clamped_governance_withdrawLQTY() public asActor {
+        (,uint256 unallocatedLQTY,,) = governance.userStates(_getActor());
+        uint256 maxAmount = unallocatedLQTY;
+        uint256 amount = maxAmount > 0 ? maxAmount : 1e18;
+        governance.withdrawLQTY(amount, false, _getActor());
+    }
+
+    function clamped_governance_resetAllocations() public asActor {
+        address[] memory _initiativesToReset = new address[](0);
+        governance.resetAllocations(_initiativesToReset, false);
+    }
+
+    function clamped_governance_multiDelegateCall() public asActor {
+        bytes[] memory inputs = new bytes[](0);
+        governance.multiDelegateCall(inputs);
+    }
+
+    function clamped_governance_claimFromStakingV1() public asActor {
+        governance.claimFromStakingV1(_getActor());
+    }
 
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 

@@ -18,6 +18,24 @@ abstract contract BribeInitiativeTargets is
 {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
+    function clamped_bribeInitiative_depositBribe() public asActor {
+        uint256 maxBold = bold.balanceOf(_getActor());
+        uint256 maxBribeToken = bribeToken.balanceOf(_getActor());
+        uint256 boldAmount = maxBold > 0 ? maxBold : 1e18;
+        uint256 bribeTokenAmount = maxBribeToken > 0 ? maxBribeToken : 1e18;
+        uint256 epoch = governance.epoch();
+        bribeInitiative.depositBribe(boldAmount, bribeTokenAmount, epoch);
+    }
+
+    function clamped_bribeInitiative_claimBribes() public asActor {
+        IBribeInitiative.ClaimData[] memory _claimData = new IBribeInitiative.ClaimData[](1);
+        _claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch(),
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative.claimBribes(_claimData);
+    }
 
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 

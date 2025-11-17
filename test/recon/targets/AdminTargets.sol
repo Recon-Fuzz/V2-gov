@@ -16,6 +16,12 @@ abstract contract AdminTargets is
 {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
+    function clamped_governance_registerInitialInitiatives() public asAdmin {
+        address[] memory _initiatives = new address[](1);
+        _initiatives[0] = address(bribeInitiative);
+        governance.registerInitialInitiatives(_initiatives);
+    }
+
     function governance_registerInitialInitiatives(address[] memory _initiatives) public asAdmin {
         governance.registerInitialInitiatives(_initiatives);
     }
