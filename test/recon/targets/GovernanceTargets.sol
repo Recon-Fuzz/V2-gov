@@ -65,10 +65,6 @@ abstract contract GovernanceTargets is
         governance.multiDelegateCall(inputs);
     }
 
-    function governance_registerInitialInitiatives(address[] memory _initiatives) public asActor {
-        governance.registerInitialInitiatives(_initiatives);
-    }
-
     function governance_registerInitiative(address _initiative) public asActor {
         governance.registerInitiative(_initiative);
     }

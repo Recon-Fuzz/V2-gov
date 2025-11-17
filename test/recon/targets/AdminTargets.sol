@@ -16,6 +16,9 @@ abstract contract AdminTargets is
 {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
+    function governance_registerInitialInitiatives(address[] memory _initiatives) public asAdmin {
+        governance.registerInitialInitiatives(_initiatives);
+    }
 
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }

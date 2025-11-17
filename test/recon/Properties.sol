@@ -5,5 +5,8 @@ import {Asserts} from "@chimera/Asserts.sol";
 import {BeforeAfter} from "./BeforeAfter.sol";
 
 abstract contract Properties is BeforeAfter, Asserts {
-
+    // Simple coverage optimization property
+    function optimize_coverage() public returns (uint256) {
+        return 0;
+    }
 }

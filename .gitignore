@@ -15,3 +15,5 @@ docs/
 crytic-export/
 echidna/
 medusa/
+magic
+lib
