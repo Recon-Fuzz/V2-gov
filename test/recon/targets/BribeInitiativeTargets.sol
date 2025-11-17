@@ -18,23 +18,27 @@ abstract contract BribeInitiativeTargets is
 {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
-    function clamped_bribeInitiative_depositBribe() public asActor {
-        uint256 maxBold = bold.balanceOf(_getActor());
-        uint256 maxBribeToken = bribeToken.balanceOf(_getActor());
-        uint256 boldAmount = maxBold > 0 ? maxBold : 1e18;
-        uint256 bribeTokenAmount = maxBribeToken > 0 ? maxBribeToken : 1e18;
-        uint256 epoch = governance.epoch();
-        bribeInitiative.depositBribe(boldAmount, bribeTokenAmount, epoch);
+    function clamped_bribeInitiative_depositBribe(uint256 _boldAmount, uint256 _bribeTokenAmount, uint256 _epoch) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _epoch = governance.epoch();
+        
+        // Clamp amounts using modulo arithmetic
+        _boldAmount %= (bold.balanceOf(_getActor()) + 1);
+        _bribeTokenAmount %= (bribeToken.balanceOf(_getActor()) + 1);
+        
+        bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
     }
 
-    function clamped_bribeInitiative_claimBribes() public asActor {
-        IBribeInitiative.ClaimData[] memory _claimData = new IBribeInitiative.ClaimData[](1);
+    function clamped_bribeInitiative_claimBribes(IBribeInitiative.ClaimData[] memory _claimData) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _claimData = new IBribeInitiative.ClaimData[](1);
         _claimData[0] = IBribeInitiative.ClaimData({
             epoch: governance.epoch(),
             prevLQTYAllocationEpoch: 0,
             prevTotalLQTYAllocationEpoch: 0
         });
-        bribeInitiative.claimBribes(_claimData);
+        
+        bribeInitiative_claimBribes(_claimData);
     }
 
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///

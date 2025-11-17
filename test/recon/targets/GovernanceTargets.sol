@@ -18,63 +18,95 @@ abstract contract GovernanceTargets is
 {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
-    function clamped_governance_allocateLQTY() public asActor {
-        address[] memory _initiativesToReset = new address[](0);
-        address[] memory _initiatives = new address[](1);
+    function clamped_governance_allocateLQTY(address[] memory _initiativesToReset, address[] memory _initiatives, int256[] memory _absoluteLQTYVotes, int256[] memory _absoluteLQTYVetos) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _initiativesToReset = new address[](0);
+        _initiatives = new address[](1);
         _initiatives[0] = address(bribeInitiative);
+        
+        // Clamp amounts using modulo arithmetic
         (,uint256 unallocatedLQTY,,) = governance.userStates(_getActor());
-        int256 maxAmount = int256(unallocatedLQTY);
-        int256[] memory _absoluteLQTYVotes = new int256[](1);
-        _absoluteLQTYVotes[0] = maxAmount > 0 ? maxAmount : int256(1);
-        int256[] memory _absoluteLQTYVetos = new int256[](1);
-        _absoluteLQTYVetos[0] = 0;
-        governance.allocateLQTY(_initiativesToReset, _initiatives, _absoluteLQTYVotes, _absoluteLQTYVetos);
+        for(uint i = 0; i < _absoluteLQTYVotes.length; i++) {
+            _absoluteLQTYVotes[i] = int256(uint256(_absoluteLQTYVotes[i]) % (unallocatedLQTY + 1));
+        }
+        for(uint i = 0; i < _absoluteLQTYVetos.length; i++) {
+            _absoluteLQTYVetos[i] = int256(uint256(_absoluteLQTYVetos[i]) % (unallocatedLQTY + 1));
+        }
+        
+        governance_allocateLQTY(_initiativesToReset, _initiatives, _absoluteLQTYVotes, _absoluteLQTYVetos);
     }
 
-    function clamped_governance_depositLQTY() public asActor {
-        uint256 maxAmount = lqty.balanceOf(_getActor());
-        uint256 amount = maxAmount > 0 ? maxAmount : 1e18;
-        governance.depositLQTY(amount, false, _getActor());
+    function clamped_governance_depositLQTY(uint256 _lqtyAmount, bool _doSendRewards, address _recipient) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _doSendRewards = false;
+        _recipient = _getActor();
+        
+        // Clamp amount using modulo arithmetic
+        _lqtyAmount %= (lqty.balanceOf(_getActor()) + 1);
+        
+        governance_depositLQTY(_lqtyAmount, _doSendRewards, _recipient);
     }
 
-    function clamped_governance_depositLQTYViaPermit() public asActor {
-        uint256 maxAmount = lqty.balanceOf(_getActor());
-        uint256 amount = maxAmount > 0 ? maxAmount : 1e18;
-        PermitParams memory _permitParams = PermitParams({
+    function clamped_governance_depositLQTYViaPermit(uint256 _lqtyAmount, PermitParams memory _permitParams, bool _doSendRewards, address _recipient) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _doSendRewards = false;
+        _recipient = _getActor();
+        _permitParams = PermitParams({
             owner: _getActor(),
             spender: address(governance),
-            value: amount,
+            value: 1e18,
             deadline: block.timestamp + 1 days,
             v: 27,
             r: bytes32(uint256(1)),
             s: bytes32(uint256(1))
         });
-        governance.depositLQTYViaPermit(amount, _permitParams, false, _getActor());
+        
+        // Clamp amount using modulo arithmetic
+        _lqtyAmount %= (lqty.balanceOf(_getActor()) + 1);
+        _permitParams.value = _lqtyAmount;
+        
+        governance_depositLQTYViaPermit(_lqtyAmount, _permitParams, _doSendRewards, _recipient);
     }
 
-    function clamped_governance_registerInitiative() public asActor {
-        governance.registerInitiative(address(bribeInitiative));
+    function clamped_governance_registerInitiative(address _initiative) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _initiative = address(bribeInitiative);
+        
+        governance_registerInitiative(_initiative);
     }
 
-    function clamped_governance_withdrawLQTY() public asActor {
+    function clamped_governance_withdrawLQTY(uint256 _lqtyAmount, bool _doSendRewards, address _recipient) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _doSendRewards = false;
+        _recipient = _getActor();
+        
+        // Clamp amount using modulo arithmetic
         (,uint256 unallocatedLQTY,,) = governance.userStates(_getActor());
-        uint256 maxAmount = unallocatedLQTY;
-        uint256 amount = maxAmount > 0 ? maxAmount : 1e18;
-        governance.withdrawLQTY(amount, false, _getActor());
+        _lqtyAmount %= (unallocatedLQTY + 1);
+        
+        governance_withdrawLQTY(_lqtyAmount, _doSendRewards, _recipient);
     }
 
-    function clamped_governance_resetAllocations() public asActor {
-        address[] memory _initiativesToReset = new address[](0);
-        governance.resetAllocations(_initiativesToReset, false);
+    function clamped_governance_resetAllocations(address[] memory _initiativesToReset, bool checkAll) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _initiativesToReset = new address[](0);
+        checkAll = false;
+        
+        governance_resetAllocations(_initiativesToReset, checkAll);
     }
 
-    function clamped_governance_multiDelegateCall() public asActor {
-        bytes[] memory inputs = new bytes[](0);
-        governance.multiDelegateCall(inputs);
+    function clamped_governance_multiDelegateCall(bytes[] memory inputs) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        inputs = new bytes[](0);
+        
+        governance_multiDelegateCall(inputs);
     }
 
-    function clamped_governance_claimFromStakingV1() public asActor {
-        governance.claimFromStakingV1(_getActor());
+    function clamped_governance_claimFromStakingV1(address _rewardRecipient) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _rewardRecipient = _getActor();
+        
+        governance_claimFromStakingV1(_rewardRecipient);
     }
 
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
