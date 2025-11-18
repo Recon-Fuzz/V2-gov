@@ -277,5 +277,134 @@ abstract contract TargetFunctions is
         clamped_bribeInitiative_claimBribes(new IBribeInitiative.ClaimData[](1));
     }
 
+    function shortcut_multiInitiative_allocation() public asActor {
+        // Multi-initiative allocation: deposit -> register multiple initiatives -> allocate to all
+        clamped_governance_depositLQTY(0, false, _getActor());
+        
+        // Register main bribe initiative
+        clamped_governance_registerInitiative(address(bribeInitiative));
+        
+        // Create allocation for multiple initiatives (using same initiative multiple times for testing)
+        address[] memory initiatives = new address[](2);
+        initiatives[0] = address(bribeInitiative);
+        initiatives[1] = address(bribeInitiative);
+        
+        int256[] memory votes = new int256[](2);
+        votes[0] = 1;
+        votes[1] = 1;
+        
+        int256[] memory vetos = new int256[](2);
+        vetos[0] = 0;
+        vetos[1] = 0;
+        
+        clamped_governance_allocateLQTY(new address[](0), initiatives, votes, vetos);
+    }
+
+    function shortcut_voteAndVeto_allocation() public asActor {
+        // Vote and veto combination: deposit -> register -> allocate with both votes and vetos
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_registerInitiative(address(bribeInitiative));
+        
+        // Allocate with both positive votes and vetos to test complex allocation logic
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        
+        int256[] memory votes = new int256[](1);
+        votes[0] = 2; // Positive vote
+        
+        int256[] memory vetos = new int256[](1);
+        vetos[0] = 1; // Also veto to test interaction
+        
+        clamped_governance_allocateLQTY(new address[](0), initiatives, votes, vetos);
+    }
+
+    function shortcut_permitBased_fullLifecycle() public asActor {
+        // Complete lifecycle using permit: depositViaPermit -> register -> allocate -> claim
+        clamped_governance_depositLQTYViaPermit(
+            0,
+            PermitParams({
+                owner: _getActor(),
+                spender: address(governance),
+                value: 1e18,
+                deadline: block.timestamp + 1 days,
+                v: 27,
+                r: bytes32(uint256(1)),
+                s: bytes32(uint256(1))
+            }),
+            false,
+            _getActor()
+        );
+        
+        clamped_governance_registerInitiative(address(bribeInitiative));
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        clamped_governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_thresholdBased_registration() public asActor {
+        // Registration with threshold: multiple users deposit and allocate to reach registration threshold
+        // Actor 0: deposit and allocate
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Actor 1: deposit and allocate to increase total voting power
+        switchActor(1);
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Actor 2: deposit and allocate
+        switchActor(2);
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Switch back to actor 0 and register initiative with high voting power
+        switchActor(0);
+        clamped_governance_registerInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_completeUnregistration_flow() public asActor {
+        // Complete unregistration: deposit -> register -> allocate -> reset -> unregister
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_registerInitiative(address(bribeInitiative));
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Reset allocations before unregistration
+        clamped_governance_resetAllocations(new address[](0), false);
+        
+        // Unregister the initiative
+        clamped_governance_unregisterInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_combinedReward_claiming() public asActor {
+        // Combined reward claiming: deposit -> register -> allocate -> claim from both sources
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_registerInitiative(address(bribeInitiative));
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Claim from governance initiative rewards
+        clamped_governance_claimForInitiative(address(bribeInitiative));
+        
+        // Also claim from staking V1
+        clamped_governance_claimFromStakingV1(_getActor());
+    }
+
+    function shortcut_epochTransition_completeClaim() public asActor {
+        // Complete epoch transition claim: setup -> wait for new epoch -> claim
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_registerInitiative(address(bribeInitiative));
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Snapshot votes for current epoch
+        clamped_governance_snapshotVotesForInitiative(address(bribeInitiative));
+        
+        // Switch to another actor to add more allocations for next epoch
+        switchActor(1);
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Switch back and claim for next epoch
+        switchActor(0);
+        clamped_governance_claimForInitiative(address(bribeInitiative));
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
