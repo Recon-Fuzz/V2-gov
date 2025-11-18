@@ -126,9 +126,110 @@ abstract contract TargetFunctions is
         governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
     }
 
+    function shortcut_unregisterAndReregister(uint256 depositAmount, uint256 allocateAmount) public {
+        // Complete cycle: register → deposit → allocate → unregister → register again
+        
+        // Initial registration and setup
+        governance_registerInitiative_clamped();
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Wait for next epoch
+        vm.warp(block.timestamp + 604800); // 1 week
+        
+        // Claim for initiative to complete cycle
+        governance_claimForInitiative_clamped();
+        
+        // Unregister the initiative
+        governance_unregisterInitiative_clamped();
+        
+        // Register again with fresh setup
+        governance_registerInitiative_clamped();
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+    }
 
+    function shortcut_multiActorVoting(uint256 actor1Deposit, uint256 actor2Deposit, uint256 bribeAmount) public {
+        // Multi-actor voting scenario with bribes
+        
+        // Actor 1: Register initiative and deposit bribe
+        governance_registerInitiative_clamped();
+        switchActor(1);
+        bribeInitiative_depositBribe_clamped(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Actor 0: Deposit and allocate votes
+        switchActor(0);
+        governance_depositLQTY_clamped(actor1Deposit);
+        governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Actor 2: Also deposit and allocate votes
+        switchActor(2);
+        governance_depositLQTY_clamped(actor2Deposit);
+        governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Wait for epoch to end
+        vm.warp(block.timestamp + 604800); // 1 week
+        
+        // Claim for initiative
+        switchActor(0);
+        governance_claimForInitiative_clamped();
+        
+        // Both actors claim their bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        
+        switchActor(0);
+        bribeInitiative_claimBribes_clamped(claimData);
+        
+        switchActor(2);
+        bribeInitiative_claimBribes_clamped(claimData);
+    }
 
+    function shortcut_withdrawAndRedeposit(uint256 withdrawAmount, uint256 redepositAmount) public {
+        // Withdraw LQTY and immediately redeposit
+        
+        // Ensure we have an initiative and some allocation
+        governance_registerInitiative_clamped();
+        governance_depositLQTY_clamped(redepositAmount);
+        governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Withdraw some LQTY
+        governance_withdrawLQTY_clamped(withdrawAmount);
+        
+        // Redeposit the withdrawn amount (or a different amount)
+        governance_depositLQTY_clamped(redepositAmount);
+        
+        // Reallocate with the new balance
+        governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+    }
 
+    function shortcut_permitBasedFlow(uint256 lqtyAmount, uint256 allocateAmount) public {
+        // Complete flow using permit-based deposit
+        
+        // Register initiative first
+        governance_registerInitiative_clamped();
+        
+        // Create permit parameters (using dummy values for testing)
+        PermitParams memory permitParams = PermitParams({
+            owner: _getActor(),
+            spender: address(governance),
+            value: lqtyAmount,
+            deadline: block.timestamp + 3600,
+            v: 27,
+            r: bytes32(uint256(1)),
+            s: bytes32(uint256(1))
+        });
+        
+        // Deposit using permit
+        governance_depositLQTYViaPermit_clamped(lqtyAmount, permitParams);
+        
+        // Allocate the deposited LQTY
+        governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+    }
 
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
