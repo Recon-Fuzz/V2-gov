@@ -9,6 +9,7 @@ import {vm} from "@chimera/Hevm.sol";
 
 // Helpers
 import {Panic} from "@recon/Panic.sol";
+import {bound} from "../../util/Random.sol";
 
 import "src/BribeInitiative.sol";
 
@@ -23,8 +24,8 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
             IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
             claimData[0] = IBribeInitiative.ClaimData({
                 epoch: mostRecentEpoch,
-                claimBold: true,
-                claimBribeToken: true
+                prevLQTYAllocationEpoch: mostRecentEpoch,
+                prevTotalLQTYAllocationEpoch: mostRecentEpoch
             });
             bribeInitiative.claimBribes(claimData);
         }
@@ -38,8 +39,8 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         uint256 bribeTokenBalance = bribeToken.balanceOf(actor);
         
         if (boldBalance > 0 && bribeTokenBalance > 0) {
-            uint256 boldAmount = _bound(boldBalance, 1, boldBalance);
-            uint256 bribeTokenAmount = _bound(bribeTokenBalance, 1, bribeTokenBalance);
+            uint256 boldAmount = bound(boldBalance, 1, boldBalance);
+            uint256 bribeTokenAmount = bound(bribeTokenBalance, 1, bribeTokenBalance);
             
             bribeInitiative.depositBribe(boldAmount, bribeTokenAmount, currentEpoch);
         }

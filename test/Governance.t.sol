@@ -7,6 +7,7 @@ import {console} from "forge-std/console.sol";
 
 import {IERC20Errors} from "openzeppelin/contracts/interfaces/draft-IERC6093.sol";
 import {Strings} from "openzeppelin/contracts/utils/Strings.sol";
+import {bound} from "./util/Random.sol";
 
 import {IGovernance} from "../src/interfaces/IGovernance.sol";
 import {ILUSD} from "../src/interfaces/ILUSD.sol";
@@ -2410,14 +2411,14 @@ abstract contract GovernanceTest is Test {
             uint256 unallocatedLQTY_ = 0;
 
             for (uint256 i = 0; i < _stakes.length; ++i) {
-                _stakes[i].lqtyAmount = _bound(_stakes[i].lqtyAmount, 1, lqtyBalance - (_stakes.length - 1 - i));
+                _stakes[i].lqtyAmount = bound(_stakes[i].lqtyAmount, 1, lqtyBalance - (_stakes.length - 1 - i));
                 lqtyBalance -= _stakes[i].lqtyAmount;
                 unallocatedLQTY_ += _stakes[i].lqtyAmount;
 
                 lqty.approve(userProxy, _stakes[i].lqtyAmount);
                 governance.depositLQTY(_stakes[i].lqtyAmount);
 
-                _stakes[i].waitTime = _bound(_stakes[i].waitTime, 1, maxWaitTime);
+                _stakes[i].waitTime = bound(_stakes[i].waitTime, 1, maxWaitTime);
                 vm.warp(block.timestamp + _stakes[i].waitTime);
             }
 
@@ -2426,7 +2427,7 @@ abstract contract GovernanceTest is Test {
             int256[] memory vetos = new int256[](initiatives.length); // left zero
 
             for (uint256 i = 0; i < initiatives.length - 1; ++i) {
-                uint256 vote = _bound(_votes[i], 1, unallocatedLQTY_ - (initiatives.length - 1 - i));
+                uint256 vote = bound(_votes[i], 1, unallocatedLQTY_ - (initiatives.length - 1 - i));
                 unallocatedLQTY_ -= vote;
                 votes[i] = int256(vote);
             }

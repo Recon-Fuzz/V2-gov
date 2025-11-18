@@ -9,6 +9,8 @@ import {vm} from "@chimera/Hevm.sol";
 
 // Helpers
 import {Panic} from "@recon/Panic.sol";
+import {bound} from "../../util/Random.sol";
+import {PermitParams} from "src/utils/Types.sol";
 
 import "src/Governance.sol";
 
@@ -17,14 +19,14 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
 
     function clamped_governance_allocateLQTY() public asActor {
         address actor = _getActor();
-        uint256 unallocatedLQTY = governance.userStates(actor).unallocatedLQTY;
+        (uint256 unallocatedLQTY,,,) = governance.userStates(actor);
         
         if (unallocatedLQTY > 0 && governance.registeredInitiatives(address(bribeInitiative)) > 0) {
             address[] memory initiatives = new address[](1);
             initiatives[0] = address(bribeInitiative);
             
             int256[] memory votes = new int256[](1);
-            votes[0] = int256(_bound(unallocatedLQTY, 1, unallocatedLQTY));
+            votes[0] = int256(bound(unallocatedLQTY, 1, unallocatedLQTY));
             
             int256[] memory vetos = new int256[](1);
             vetos[0] = 0;
@@ -40,7 +42,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 lqtyBalance = lqty.balanceOf(actor);
         
         if (lqtyBalance > 0) {
-            uint256 depositAmount = _bound(lqtyBalance, 1, lqtyBalance);
+            uint256 depositAmount = bound(lqtyBalance, 1, lqtyBalance);
             governance.depositLQTY(depositAmount);
         }
     }
@@ -50,9 +52,9 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 lqtyBalance = lqty.balanceOf(actor);
         
         if (lqtyBalance > 0) {
-            uint256 depositAmount = _bound(lqtyBalance, 1, lqtyBalance);
+            uint256 depositAmount = bound(lqtyBalance, 1, lqtyBalance);
             
-            IGovernance.PermitParams memory permitParams = IGovernance.PermitParams({
+            PermitParams memory permitParams = PermitParams({
                 owner: actor,
                 spender: address(governance),
                 value: depositAmount,
@@ -74,10 +76,10 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
 
     function clamped_governance_withdrawLQTY() public asActor {
         address actor = _getActor();
-        uint256 unallocatedLQTY = governance.userStates(actor).unallocatedLQTY;
+        (uint256 unallocatedLQTY,,,) = governance.userStates(actor);
         
         if (unallocatedLQTY > 0) {
-            uint256 withdrawAmount = _bound(unallocatedLQTY, 1, unallocatedLQTY);
+            uint256 withdrawAmount = bound(unallocatedLQTY, 1, unallocatedLQTY);
             governance.withdrawLQTY(withdrawAmount);
         }
     }
