@@ -7,7 +7,7 @@
 - **Contract**: CryticToFoundry
 - **Signature**: `governance_deployUserProxy()`
 - **Visibility**: public
-- **Source Range**: 1334:98:125
+- **Source Range**: 5299:98:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

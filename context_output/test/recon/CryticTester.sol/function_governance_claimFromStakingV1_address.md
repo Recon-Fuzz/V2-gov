@@ -7,7 +7,7 @@
 - **Contract**: CryticTester
 - **Signature**: `governance_claimFromStakingV1(address)`
 - **Visibility**: public
-- **Source Range**: 1184:144:125
+- **Source Range**: 5149:144:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

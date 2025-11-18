@@ -7,7 +7,7 @@
 - **Contract**: CryticToFoundry
 - **Signature**: `bribeInitiative_onClaimForInitiative(uint256,uint256)`
 - **Visibility**: public
-- **Source Range**: 1350:140:123
+- **Source Range**: 2348:140:123
 - **Inherited From**: BribeInitiativeTargets
 
 ## Implementation

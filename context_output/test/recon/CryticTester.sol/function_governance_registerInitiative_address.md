@@ -7,7 +7,7 @@
 - **Contract**: CryticTester
 - **Signature**: `governance_registerInitiative(address)`
 - **Visibility**: public
-- **Source Range**: 2491:134:125
+- **Source Range**: 6456:134:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

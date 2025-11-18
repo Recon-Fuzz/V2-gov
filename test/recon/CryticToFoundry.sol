@@ -188,7 +188,7 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
     function test_governance_registerInitialInitiatives() public {
         address[] memory initiatives = new address[](1);
         initiatives[0] = address(0x999);
-        governance_registerInitialInitiatives(initiatives);
+        governance.registerInitialInitiatives(initiatives);
     }
 
     // ========== BRIBE INITIATIVE FUNCTION TESTS ==========

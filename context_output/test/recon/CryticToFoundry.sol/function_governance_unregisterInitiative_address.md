@@ -7,7 +7,7 @@
 - **Contract**: CryticToFoundry
 - **Signature**: `governance_unregisterInitiative(address)`
 - **Visibility**: public
-- **Source Range**: 2973:138:125
+- **Source Range**: 6938:138:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

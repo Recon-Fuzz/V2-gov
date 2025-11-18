@@ -99,7 +99,7 @@ function _at(Set storage set, uint256 index) private view returns (bytes32) {
 ### governance_depositLQTY(uint256)
 
 - **Kind**: internal
-- **Source**: 1438:120:125
+- **Source**: 5403:120:125
 - **Link**: `test/recon/targets/GovernanceTargets.sol:GovernanceTargets:governance_depositLQTY(uint256)`
 
 ```solidity
@@ -137,7 +137,7 @@ function _getActor() internal view returns (address) {
 ### governance_registerInitiative(address)
 
 - **Kind**: internal
-- **Source**: 2491:134:125
+- **Source**: 6456:134:125
 - **Link**: `test/recon/targets/GovernanceTargets.sol:GovernanceTargets:governance_registerInitiative(address)`
 
 ```solidity
@@ -149,7 +149,7 @@ function governance_registerInitiative(address _initiative) public asActor() {
 ### governance_allocateLQTY(address[],address[],int256[],int256[])
 
 - **Kind**: internal
-- **Source**: 612:304:125
+- **Source**: 4577:304:125
 - **Link**: `test/recon/targets/GovernanceTargets.sol:GovernanceTargets:governance_allocateLQTY(address[],address[],int256[],int256[])`
 
 ```solidity

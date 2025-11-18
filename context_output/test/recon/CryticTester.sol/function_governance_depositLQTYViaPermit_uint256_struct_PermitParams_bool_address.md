@@ -7,7 +7,7 @@
 - **Contract**: CryticTester
 - **Signature**: `governance_depositLQTYViaPermit(uint256,struct PermitParams,bool,address)`
 - **Visibility**: public
-- **Source Range**: 1759:257:125
+- **Source Range**: 5724:257:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

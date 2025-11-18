@@ -24,11 +24,10 @@ function test_governance_registerInitialInitiatives() public {
 ### governance_registerInitialInitiatives(address[])
 
 - **Kind**: internal
-- **Source**: 486:161:122
+- **Source**: 742:161:122
 - **Link**: `test/recon/targets/AdminTargets.sol:AdminTargets:governance_registerInitialInitiatives(address[])`
 
 ```solidity
-/// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 function governance_registerInitialInitiatives(address[] memory _initiatives) public asAdmin() {
     governance.registerInitialInitiatives(_initiatives);
 }

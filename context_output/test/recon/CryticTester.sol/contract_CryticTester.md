@@ -198,24 +198,61 @@ constructor() payable;
 function optimize_coverage() public returns (uint256);
 ```
 
-### governance_registerInitialInitiatives(address[]) (inherited from AdminTargets)
+### clamped_governance_registerInitialInitiatives() (inherited from AdminTargets)
 
-- **Signature**: `governance_registerInitialInitiatives(address[])`
+- **Signature**: `clamped_governance_registerInitialInitiatives()`
 - **Visibility**: public
-- **Source Range**: 486:161:122
-- **Details**: [function_governance_registerInitialInitiatives_address[].md](./function_governance_registerInitialInitiatives_address[].md)
+- **Source Range**: 486:250:122
+- **Details**: [function_clamped_governance_registerInitialInitiatives.md](./function_clamped_governance_registerInitialInitiatives.md)
 
 **Signature:**
 ```solidity
 /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
+function clamped_governance_registerInitialInitiatives() public asAdmin();
+```
+
+### governance_registerInitialInitiatives(address[]) (inherited from AdminTargets)
+
+- **Signature**: `governance_registerInitialInitiatives(address[])`
+- **Visibility**: public
+- **Source Range**: 742:161:122
+- **Details**: [function_governance_registerInitialInitiatives_address[].md](./function_governance_registerInitialInitiatives_address[].md)
+
+**Signature:**
+```solidity
 function governance_registerInitialInitiatives(address[] memory _initiatives) public asAdmin();
+```
+
+### clamped_bribeInitiative_depositBribe(uint256,uint256,uint256) (inherited from BribeInitiativeTargets)
+
+- **Signature**: `clamped_bribeInitiative_depositBribe(uint256,uint256,uint256)`
+- **Visibility**: public
+- **Source Range**: 531:505:123
+- **Details**: [function_clamped_bribeInitiative_depositBribe_uint256_uint256_uint256.md](./function_clamped_bribeInitiative_depositBribe_uint256_uint256_uint256.md)
+
+**Signature:**
+```solidity
+/// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
+function clamped_bribeInitiative_depositBribe(uint256 _boldAmount, uint256 _bribeTokenAmount, uint256 _epoch) public asActor();
+```
+
+### clamped_bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (inherited from BribeInitiativeTargets)
+
+- **Signature**: `clamped_bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[])`
+- **Visibility**: public
+- **Source Range**: 1042:482:123
+- **Details**: [function_clamped_bribeInitiative_claimBribes_struct_IBribeInitiative.ClaimData[].md](./function_clamped_bribeInitiative_claimBribes_struct_IBribeInitiative.ClaimData[].md)
+
+**Signature:**
+```solidity
+function clamped_bribeInitiative_claimBribes(IBribeInitiative.ClaimData[] memory _claimData) public asActor();
 ```
 
 ### bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (inherited from BribeInitiativeTargets)
 
 - **Signature**: `bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[])`
 - **Visibility**: public
-- **Source Range**: 622:156:123
+- **Source Range**: 1620:156:123
 - **Details**: [function_bribeInitiative_claimBribes_struct_IBribeInitiative.ClaimData[].md](./function_bribeInitiative_claimBribes_struct_IBribeInitiative.ClaimData[].md)
 
 **Signature:**
@@ -228,7 +265,7 @@ function bribeInitiative_claimBribes(IBribeInitiative.ClaimData[] memory _claimD
 
 - **Signature**: `bribeInitiative_depositBribe(uint256,uint256,uint256)`
 - **Visibility**: public
-- **Source Range**: 784:202:123
+- **Source Range**: 1782:202:123
 - **Details**: [function_bribeInitiative_depositBribe_uint256_uint256_uint256.md](./function_bribeInitiative_depositBribe_uint256_uint256_uint256.md)
 
 **Signature:**
@@ -240,7 +277,7 @@ function bribeInitiative_depositBribe(uint256 _boldAmount, uint256 _bribeTokenAm
 
 - **Signature**: `bribeInitiative_onAfterAllocateLQTY(uint256,address,struct IGovernance.UserState,struct IGovernance.Allocation,struct IGovernance.InitiativeState)`
 - **Visibility**: public
-- **Source Range**: 992:352:123
+- **Source Range**: 1990:352:123
 - **Details**: [function_bribeInitiative_onAfterAllocateLQTY_uint256_address_struct_IGovernance.UserState_struct_IGovernance.Allocation_struct_IGovernance.InitiativeState.md](./function_bribeInitiative_onAfterAllocateLQTY_uint256_address_struct_IGovernance.UserState_struct_IGovernance.Allocation_struct_IGovernance.InitiativeState.md)
 
 **Signature:**
@@ -252,7 +289,7 @@ function bribeInitiative_onAfterAllocateLQTY(uint256 _currentEpoch, address _use
 
 - **Signature**: `bribeInitiative_onClaimForInitiative(uint256,uint256)`
 - **Visibility**: public
-- **Source Range**: 1350:140:123
+- **Source Range**: 2348:140:123
 - **Details**: [function_bribeInitiative_onClaimForInitiative_uint256_uint256.md](./function_bribeInitiative_onClaimForInitiative_uint256_uint256.md)
 
 **Signature:**
@@ -264,7 +301,7 @@ function bribeInitiative_onClaimForInitiative(uint256, uint256) public asActor()
 
 - **Signature**: `bribeInitiative_onRegisterInitiative(uint256)`
 - **Visibility**: public
-- **Source Range**: 1496:127:123
+- **Source Range**: 2494:127:123
 - **Details**: [function_bribeInitiative_onRegisterInitiative_uint256.md](./function_bribeInitiative_onRegisterInitiative_uint256.md)
 
 **Signature:**
@@ -276,7 +313,7 @@ function bribeInitiative_onRegisterInitiative(uint256) public asActor();
 
 - **Signature**: `bribeInitiative_onUnregisterInitiative(uint256)`
 - **Visibility**: public
-- **Source Range**: 1629:131:123
+- **Source Range**: 2627:131:123
 - **Details**: [function_bribeInitiative_onUnregisterInitiative_uint256.md](./function_bribeInitiative_onUnregisterInitiative_uint256.md)
 
 **Signature:**
@@ -284,11 +321,108 @@ function bribeInitiative_onRegisterInitiative(uint256) public asActor();
 function bribeInitiative_onUnregisterInitiative(uint256) public asActor();
 ```
 
+### clamped_governance_allocateLQTY(address[],address[],int256[],int256[]) (inherited from GovernanceTargets)
+
+- **Signature**: `clamped_governance_allocateLQTY(address[],address[],int256[],int256[])`
+- **Visibility**: public
+- **Source Range**: 521:1002:125
+- **Details**: [function_clamped_governance_allocateLQTY_address[]_address[]_int256[]_int256[].md](./function_clamped_governance_allocateLQTY_address[]_address[]_int256[]_int256[].md)
+
+**Signature:**
+```solidity
+/// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
+function clamped_governance_allocateLQTY(address[] memory _initiativesToReset, address[] memory _initiatives, int256[] memory _absoluteLQTYVotes, int256[] memory _absoluteLQTYVetos) public asActor();
+```
+
+### clamped_governance_depositLQTY(uint256,bool,address) (inherited from GovernanceTargets)
+
+- **Signature**: `clamped_governance_depositLQTY(uint256,bool,address)`
+- **Visibility**: public
+- **Source Range**: 1529:450:125
+- **Details**: [function_clamped_governance_depositLQTY_uint256_bool_address.md](./function_clamped_governance_depositLQTY_uint256_bool_address.md)
+
+**Signature:**
+```solidity
+function clamped_governance_depositLQTY(uint256 _lqtyAmount, bool _doSendRewards, address _recipient) public asActor();
+```
+
+### clamped_governance_depositLQTYViaPermit(uint256,struct PermitParams,bool,address) (inherited from GovernanceTargets)
+
+- **Signature**: `clamped_governance_depositLQTYViaPermit(uint256,struct PermitParams,bool,address)`
+- **Visibility**: public
+- **Source Range**: 1985:849:125
+- **Details**: [function_clamped_governance_depositLQTYViaPermit_uint256_struct_PermitParams_bool_address.md](./function_clamped_governance_depositLQTYViaPermit_uint256_struct_PermitParams_bool_address.md)
+
+**Signature:**
+```solidity
+function clamped_governance_depositLQTYViaPermit(uint256 _lqtyAmount, PermitParams memory _permitParams, bool _doSendRewards, address _recipient) public asActor();
+```
+
+### clamped_governance_registerInitiative(address) (inherited from GovernanceTargets)
+
+- **Signature**: `clamped_governance_registerInitiative(address)`
+- **Visibility**: public
+- **Source Range**: 2840:262:125
+- **Details**: [function_clamped_governance_registerInitiative_address.md](./function_clamped_governance_registerInitiative_address.md)
+
+**Signature:**
+```solidity
+function clamped_governance_registerInitiative(address _initiative) public asActor();
+```
+
+### clamped_governance_withdrawLQTY(uint256,bool,address) (inherited from GovernanceTargets)
+
+- **Signature**: `clamped_governance_withdrawLQTY(uint256,bool,address)`
+- **Visibility**: public
+- **Source Range**: 3108:515:125
+- **Details**: [function_clamped_governance_withdrawLQTY_uint256_bool_address.md](./function_clamped_governance_withdrawLQTY_uint256_bool_address.md)
+
+**Signature:**
+```solidity
+function clamped_governance_withdrawLQTY(uint256 _lqtyAmount, bool _doSendRewards, address _recipient) public asActor();
+```
+
+### clamped_governance_resetAllocations(address[],bool) (inherited from GovernanceTargets)
+
+- **Signature**: `clamped_governance_resetAllocations(address[],bool)`
+- **Visibility**: public
+- **Source Range**: 3629:334:125
+- **Details**: [function_clamped_governance_resetAllocations_address[]_bool.md](./function_clamped_governance_resetAllocations_address[]_bool.md)
+
+**Signature:**
+```solidity
+function clamped_governance_resetAllocations(address[] memory _initiativesToReset, bool checkAll) public asActor();
+```
+
+### clamped_governance_multiDelegateCall(bytes[]) (inherited from GovernanceTargets)
+
+- **Signature**: `clamped_governance_multiDelegateCall(bytes[])`
+- **Visibility**: public
+- **Source Range**: 3969:242:125
+- **Details**: [function_clamped_governance_multiDelegateCall_bytes[].md](./function_clamped_governance_multiDelegateCall_bytes[].md)
+
+**Signature:**
+```solidity
+function clamped_governance_multiDelegateCall(bytes[] memory inputs) public asActor();
+```
+
+### clamped_governance_claimFromStakingV1(address) (inherited from GovernanceTargets)
+
+- **Signature**: `clamped_governance_claimFromStakingV1(address)`
+- **Visibility**: public
+- **Source Range**: 4217:264:125
+- **Details**: [function_clamped_governance_claimFromStakingV1_address.md](./function_clamped_governance_claimFromStakingV1_address.md)
+
+**Signature:**
+```solidity
+function clamped_governance_claimFromStakingV1(address _rewardRecipient) public asActor();
+```
+
 ### governance_allocateLQTY(address[],address[],int256[],int256[]) (inherited from GovernanceTargets)
 
 - **Signature**: `governance_allocateLQTY(address[],address[],int256[],int256[])`
 - **Visibility**: public
-- **Source Range**: 612:304:125
+- **Source Range**: 4577:304:125
 - **Details**: [function_governance_allocateLQTY_address[]_address[]_int256[]_int256[].md](./function_governance_allocateLQTY_address[]_address[]_int256[]_int256[].md)
 
 **Signature:**
@@ -301,7 +435,7 @@ function governance_allocateLQTY(address[] memory _initiativesToReset, address[]
 
 - **Signature**: `governance_calculateVotingThreshold()`
 - **Visibility**: public
-- **Source Range**: 922:116:125
+- **Source Range**: 4887:116:125
 - **Details**: [function_governance_calculateVotingThreshold.md](./function_governance_calculateVotingThreshold.md)
 
 **Signature:**
@@ -313,7 +447,7 @@ function governance_calculateVotingThreshold() public asActor();
 
 - **Signature**: `governance_claimForInitiative(address)`
 - **Visibility**: public
-- **Source Range**: 1044:134:125
+- **Source Range**: 5009:134:125
 - **Details**: [function_governance_claimForInitiative_address.md](./function_governance_claimForInitiative_address.md)
 
 **Signature:**
@@ -325,7 +459,7 @@ function governance_claimForInitiative(address _initiative) public asActor();
 
 - **Signature**: `governance_claimFromStakingV1(address)`
 - **Visibility**: public
-- **Source Range**: 1184:144:125
+- **Source Range**: 5149:144:125
 - **Details**: [function_governance_claimFromStakingV1_address.md](./function_governance_claimFromStakingV1_address.md)
 
 **Signature:**
@@ -337,7 +471,7 @@ function governance_claimFromStakingV1(address _rewardRecipient) public asActor(
 
 - **Signature**: `governance_deployUserProxy()`
 - **Visibility**: public
-- **Source Range**: 1334:98:125
+- **Source Range**: 5299:98:125
 - **Details**: [function_governance_deployUserProxy.md](./function_governance_deployUserProxy.md)
 
 **Signature:**
@@ -349,7 +483,7 @@ function governance_deployUserProxy() public asActor();
 
 - **Signature**: `governance_depositLQTY(uint256)`
 - **Visibility**: public
-- **Source Range**: 1438:120:125
+- **Source Range**: 5403:120:125
 - **Details**: [function_governance_depositLQTY_uint256.md](./function_governance_depositLQTY_uint256.md)
 
 **Signature:**
@@ -361,7 +495,7 @@ function governance_depositLQTY(uint256 _lqtyAmount) public asActor();
 
 - **Signature**: `governance_depositLQTY(uint256,bool,address)`
 - **Visibility**: public
-- **Source Range**: 1564:189:125
+- **Source Range**: 5529:189:125
 - **Details**: [function_governance_depositLQTY_uint256_bool_address.md](./function_governance_depositLQTY_uint256_bool_address.md)
 
 **Signature:**
@@ -373,7 +507,7 @@ function governance_depositLQTY(uint256 _lqtyAmount, bool _doSendRewards, addres
 
 - **Signature**: `governance_depositLQTYViaPermit(uint256,struct PermitParams,bool,address)`
 - **Visibility**: public
-- **Source Range**: 1759:257:125
+- **Source Range**: 5724:257:125
 - **Details**: [function_governance_depositLQTYViaPermit_uint256_struct_PermitParams_bool_address.md](./function_governance_depositLQTYViaPermit_uint256_struct_PermitParams_bool_address.md)
 
 **Signature:**
@@ -385,7 +519,7 @@ function governance_depositLQTYViaPermit(uint256 _lqtyAmount, PermitParams memor
 
 - **Signature**: `governance_depositLQTYViaPermit(uint256,struct PermitParams)`
 - **Visibility**: public
-- **Source Range**: 2022:188:125
+- **Source Range**: 5987:188:125
 - **Details**: [function_governance_depositLQTYViaPermit_uint256_struct_PermitParams.md](./function_governance_depositLQTYViaPermit_uint256_struct_PermitParams.md)
 
 **Signature:**
@@ -397,7 +531,7 @@ function governance_depositLQTYViaPermit(uint256 _lqtyAmount, PermitParams memor
 
 - **Signature**: `governance_getInitiativeState(address)`
 - **Visibility**: public
-- **Source Range**: 2216:134:125
+- **Source Range**: 6181:134:125
 - **Details**: [function_governance_getInitiativeState_address.md](./function_governance_getInitiativeState_address.md)
 
 **Signature:**
@@ -409,7 +543,7 @@ function governance_getInitiativeState(address _initiative) public asActor();
 
 - **Signature**: `governance_multiDelegateCall(bytes[])`
 - **Visibility**: public
-- **Source Range**: 2356:129:125
+- **Source Range**: 6321:129:125
 - **Details**: [function_governance_multiDelegateCall_bytes[].md](./function_governance_multiDelegateCall_bytes[].md)
 
 **Signature:**
@@ -421,7 +555,7 @@ function governance_multiDelegateCall(bytes[] memory inputs) public asActor();
 
 - **Signature**: `governance_registerInitiative(address)`
 - **Visibility**: public
-- **Source Range**: 2491:134:125
+- **Source Range**: 6456:134:125
 - **Details**: [function_governance_registerInitiative_address.md](./function_governance_registerInitiative_address.md)
 
 **Signature:**
@@ -433,7 +567,7 @@ function governance_registerInitiative(address _initiative) public asActor();
 
 - **Signature**: `governance_resetAllocations(address[],bool)`
 - **Visibility**: public
-- **Source Range**: 2631:180:125
+- **Source Range**: 6596:180:125
 - **Details**: [function_governance_resetAllocations_address[]_bool.md](./function_governance_resetAllocations_address[]_bool.md)
 
 **Signature:**
@@ -445,7 +579,7 @@ function governance_resetAllocations(address[] memory _initiativesToReset, bool 
 
 - **Signature**: `governance_snapshotVotesForInitiative(address)`
 - **Visibility**: public
-- **Source Range**: 2817:150:125
+- **Source Range**: 6782:150:125
 - **Details**: [function_governance_snapshotVotesForInitiative_address.md](./function_governance_snapshotVotesForInitiative_address.md)
 
 **Signature:**
@@ -457,7 +591,7 @@ function governance_snapshotVotesForInitiative(address _initiative) public asAct
 
 - **Signature**: `governance_unregisterInitiative(address)`
 - **Visibility**: public
-- **Source Range**: 2973:138:125
+- **Source Range**: 6938:138:125
 - **Details**: [function_governance_unregisterInitiative_address.md](./function_governance_unregisterInitiative_address.md)
 
 **Signature:**
@@ -469,7 +603,7 @@ function governance_unregisterInitiative(address _initiative) public asActor();
 
 - **Signature**: `governance_withdrawLQTY(uint256)`
 - **Visibility**: public
-- **Source Range**: 3117:122:125
+- **Source Range**: 7082:122:125
 - **Details**: [function_governance_withdrawLQTY_uint256.md](./function_governance_withdrawLQTY_uint256.md)
 
 **Signature:**
@@ -481,7 +615,7 @@ function governance_withdrawLQTY(uint256 _lqtyAmount) public asActor();
 
 - **Signature**: `governance_withdrawLQTY(uint256,bool,address)`
 - **Visibility**: public
-- **Source Range**: 3245:191:125
+- **Source Range**: 7210:191:125
 - **Details**: [function_governance_withdrawLQTY_uint256_bool_address.md](./function_governance_withdrawLQTY_uint256_bool_address.md)
 
 **Signature:**
@@ -553,4 +687,53 @@ function asset_approve(address to, uint128 amt) public updateGhosts() asActor();
 ```solidity
 /// @dev Mint to arbitrary address, uses owner by default, even though MockERC20 doesn't check
 function asset_mint(address to, uint128 amt) public updateGhosts() asAdmin();
+```
+
+### shortcut_governance_claimForInitiative() (inherited from TargetFunctions)
+
+- **Signature**: `shortcut_governance_claimForInitiative()`
+- **Visibility**: public
+- **Source Range**: 915:637:121
+- **Details**: [function_shortcut_governance_claimForInitiative.md](./function_shortcut_governance_claimForInitiative.md)
+
+**Signature:**
+```solidity
+/// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
+function shortcut_governance_claimForInitiative() public asActor();
+```
+
+### shortcut_bribeInitiative_claimBribes() (inherited from TargetFunctions)
+
+- **Signature**: `shortcut_bribeInitiative_claimBribes()`
+- **Visibility**: public
+- **Source Range**: 1558:753:121
+- **Details**: [function_shortcut_bribeInitiative_claimBribes.md](./function_shortcut_bribeInitiative_claimBribes.md)
+
+**Signature:**
+```solidity
+function shortcut_bribeInitiative_claimBribes() public asActor();
+```
+
+### shortcut_full_allocation_flow() (inherited from TargetFunctions)
+
+- **Signature**: `shortcut_full_allocation_flow()`
+- **Visibility**: public
+- **Source Range**: 2317:368:121
+- **Details**: [function_shortcut_full_allocation_flow.md](./function_shortcut_full_allocation_flow.md)
+
+**Signature:**
+```solidity
+function shortcut_full_allocation_flow() public asActor();
+```
+
+### shortcut_reset_allocation_flow() (inherited from TargetFunctions)
+
+- **Signature**: `shortcut_reset_allocation_flow()`
+- **Visibility**: public
+- **Source Range**: 2691:354:121
+- **Details**: [function_shortcut_reset_allocation_flow.md](./function_shortcut_reset_allocation_flow.md)
+
+**Signature:**
+```solidity
+function shortcut_reset_allocation_flow() public asActor();
 ```

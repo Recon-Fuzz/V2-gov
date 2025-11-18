@@ -7,7 +7,7 @@
 - **Contract**: CryticToFoundry
 - **Signature**: `governance_depositLQTYViaPermit(uint256,struct PermitParams)`
 - **Visibility**: public
-- **Source Range**: 2022:188:125
+- **Source Range**: 5987:188:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

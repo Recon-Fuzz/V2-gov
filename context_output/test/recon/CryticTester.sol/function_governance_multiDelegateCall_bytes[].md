@@ -7,7 +7,7 @@
 - **Contract**: CryticTester
 - **Signature**: `governance_multiDelegateCall(bytes[])`
 - **Visibility**: public
-- **Source Range**: 2356:129:125
+- **Source Range**: 6321:129:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

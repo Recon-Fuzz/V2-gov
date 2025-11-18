@@ -7,7 +7,7 @@
 - **Contract**: CryticTester
 - **Signature**: `governance_resetAllocations(address[],bool)`
 - **Visibility**: public
-- **Source Range**: 2631:180:125
+- **Source Range**: 6596:180:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

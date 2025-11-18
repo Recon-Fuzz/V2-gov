@@ -7,7 +7,7 @@
 - **Contract**: CryticToFoundry
 - **Signature**: `governance_depositLQTY(uint256)`
 - **Visibility**: public
-- **Source Range**: 1438:120:125
+- **Source Range**: 5403:120:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

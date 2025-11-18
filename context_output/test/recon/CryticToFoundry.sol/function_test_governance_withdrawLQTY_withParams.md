@@ -104,7 +104,7 @@ function _getActor() internal view returns (address) {
 ### governance_depositLQTY(uint256)
 
 - **Kind**: internal
-- **Source**: 1438:120:125
+- **Source**: 5403:120:125
 - **Link**: `test/recon/targets/GovernanceTargets.sol:GovernanceTargets:governance_depositLQTY(uint256)`
 
 ```solidity
@@ -129,7 +129,7 @@ modifier asActor() {
 ### governance_withdrawLQTY(uint256,bool,address)
 
 - **Kind**: internal
-- **Source**: 3245:191:125
+- **Source**: 7210:191:125
 - **Link**: `test/recon/targets/GovernanceTargets.sol:GovernanceTargets:governance_withdrawLQTY(uint256,bool,address)`
 
 ```solidity

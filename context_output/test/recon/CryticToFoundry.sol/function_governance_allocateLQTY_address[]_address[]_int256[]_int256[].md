@@ -7,7 +7,7 @@
 - **Contract**: CryticToFoundry
 - **Signature**: `governance_allocateLQTY(address[],address[],int256[],int256[])`
 - **Visibility**: public
-- **Source Range**: 612:304:125
+- **Source Range**: 4577:304:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

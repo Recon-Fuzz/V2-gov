@@ -7,7 +7,7 @@
 - **Contract**: CryticToFoundry
 - **Signature**: `governance_claimForInitiative(address)`
 - **Visibility**: public
-- **Source Range**: 1044:134:125
+- **Source Range**: 5009:134:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

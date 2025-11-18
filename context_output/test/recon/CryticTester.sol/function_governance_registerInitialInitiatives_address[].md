@@ -7,13 +7,12 @@
 - **Contract**: CryticTester
 - **Signature**: `governance_registerInitialInitiatives(address[])`
 - **Visibility**: public
-- **Source Range**: 486:161:122
+- **Source Range**: 742:161:122
 - **Inherited From**: AdminTargets
 
 ## Implementation
 
 ```solidity
-/// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 function governance_registerInitialInitiatives(address[] memory _initiatives) public asAdmin() {
     governance.registerInitialInitiatives(_initiatives);
 }
@@ -49,9 +48,3 @@ modifier asAdmin() {
   └─ [1] 🔒 MODIFIER: Setup.asAdmin() (NodeID: 1)
       💬 Args: [no args]
 ```
-
-## Documentation
-
-### Function Documentation
-
-CUSTOM TARGET FUNCTIONS - Add your own target functions here ///

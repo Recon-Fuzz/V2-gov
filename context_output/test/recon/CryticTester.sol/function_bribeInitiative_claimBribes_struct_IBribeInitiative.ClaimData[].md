@@ -7,7 +7,7 @@
 - **Contract**: CryticTester
 - **Signature**: `bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[])`
 - **Visibility**: public
-- **Source Range**: 622:156:123
+- **Source Range**: 1620:156:123
 - **Inherited From**: BribeInitiativeTargets
 
 ## Implementation

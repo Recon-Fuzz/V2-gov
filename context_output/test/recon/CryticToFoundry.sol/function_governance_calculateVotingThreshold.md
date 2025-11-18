@@ -7,7 +7,7 @@
 - **Contract**: CryticToFoundry
 - **Signature**: `governance_calculateVotingThreshold()`
 - **Visibility**: public
-- **Source Range**: 922:116:125
+- **Source Range**: 4887:116:125
 - **Inherited From**: GovernanceTargets
 
 ## Implementation

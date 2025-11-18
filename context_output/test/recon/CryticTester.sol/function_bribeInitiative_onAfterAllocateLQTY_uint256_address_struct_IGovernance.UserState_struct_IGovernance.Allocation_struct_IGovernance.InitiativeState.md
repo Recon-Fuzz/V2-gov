@@ -7,7 +7,7 @@
 - **Contract**: CryticTester
 - **Signature**: `bribeInitiative_onAfterAllocateLQTY(uint256,address,struct IGovernance.UserState,struct IGovernance.Allocation,struct IGovernance.InitiativeState)`
 - **Visibility**: public
-- **Source Range**: 992:352:123
+- **Source Range**: 1990:352:123
 - **Inherited From**: BribeInitiativeTargets
 
 ## Implementation

@@ -7,7 +7,7 @@
 - **Contract**: CryticTester
 - **Signature**: `bribeInitiative_onRegisterInitiative(uint256)`
 - **Visibility**: public
-- **Source Range**: 1496:127:123
+- **Source Range**: 2494:127:123
 - **Inherited From**: BribeInitiativeTargets
 
 ## Implementation
