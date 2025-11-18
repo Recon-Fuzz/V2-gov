@@ -46,6 +46,53 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         }
     }
 
+    function clamped_bribeInitiative_onAfterAllocateLQTY() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        address actor = _getActor();
+        
+        (uint256 unallocatedLQTY,,,) = governance.userStates(actor);
+        IGovernance.UserState memory userState = IGovernance.UserState({
+            unallocatedLQTY: unallocatedLQTY,
+            lastAllocationEpoch: currentEpoch,
+            totalLQTY: unallocatedLQTY,
+            lastClaimEpoch: 0
+        });
+        
+        IGovernance.Allocation memory allocation = IGovernance.Allocation({
+            absoluteLQTYVote: int256(unallocatedLQTY),
+            absoluteLQTYVeto: 0,
+            lastVoteChangeEpoch: currentEpoch
+        });
+        
+        IGovernance.InitiativeState memory initiativeState = IGovernance.InitiativeState({
+            totalLQTYAllocations: unallocatedLQTY,
+            totalLQTYVetos: 0,
+            lastClaimEpoch: 0,
+            isRegistered: true
+        });
+        
+        bribeInitiative.onAfterAllocateLQTY(currentEpoch, actor, userState, allocation, initiativeState);
+    }
+
+    function clamped_bribeInitiative_onClaimForInitiative() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        uint256 forEpoch = currentEpoch > 0 ? currentEpoch - 1 : 0;
+        
+        bribeInitiative.onClaimForInitiative(forEpoch, currentEpoch);
+    }
+
+    function clamped_bribeInitiative_onRegisterInitiative() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        
+        bribeInitiative.onRegisterInitiative(currentEpoch);
+    }
+
+    function clamped_bribeInitiative_onUnregisterInitiative() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        
+        bribeInitiative.onUnregisterInitiative(currentEpoch);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(

@@ -92,6 +92,38 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         }
     }
 
+    function clamped_governance_calculateVotingThreshold() public asActor {
+        governance.calculateVotingThreshold();
+    }
+
+    function clamped_governance_claimForInitiative() public asActor {
+        governance.claimForInitiative(address(bribeInitiative));
+    }
+
+    function clamped_governance_claimFromStakingV1() public asActor {
+        address actor = _getActor();
+        governance.claimFromStakingV1(actor);
+    }
+
+    function clamped_governance_getInitiativeState() public asActor {
+        governance.getInitiativeState(address(bribeInitiative));
+    }
+
+    function clamped_governance_multiDelegateCall() public asActor {
+        bytes[] memory data = new bytes[](10);
+        governance.multiDelegateCall(data);
+    }
+
+    function clamped_governance_snapshotVotesForInitiative() public asActor {
+        governance.snapshotVotesForInitiative(address(bribeInitiative));
+    }
+
+    function clamped_governance_unregisterInitiative() public asActor {
+        if (governance.registeredInitiatives(address(bribeInitiative)) > 0) {
+            governance.unregisterInitiative(address(bribeInitiative));
+        }
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(
