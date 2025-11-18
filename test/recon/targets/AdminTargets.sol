@@ -19,7 +19,7 @@ abstract contract AdminTargets is BaseTargetFunctions, Properties {
         governance.registerInitialInitiatives(_initiatives);
     }
 
-    function clamped_governance_multiDelegateCall() public asAdmin {
+    function clamped_governance_multiDelegateCall() public virtual asAdmin {
         bytes[] memory data = new bytes[](10);
         governance.multiDelegateCall(data);
     }

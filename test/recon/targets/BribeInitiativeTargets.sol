@@ -53,22 +53,25 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         (uint256 unallocatedLQTY,,,) = governance.userStates(actor);
         IGovernance.UserState memory userState = IGovernance.UserState({
             unallocatedLQTY: unallocatedLQTY,
-            lastAllocationEpoch: currentEpoch,
-            totalLQTY: unallocatedLQTY,
-            lastClaimEpoch: 0
+            unallocatedOffset: 0,
+            allocatedLQTY: 0,
+            allocatedOffset: 0
         });
         
         IGovernance.Allocation memory allocation = IGovernance.Allocation({
-            absoluteLQTYVote: int256(unallocatedLQTY),
-            absoluteLQTYVeto: 0,
-            lastVoteChangeEpoch: currentEpoch
+            voteLQTY: unallocatedLQTY,
+            voteOffset: 0,
+            vetoLQTY: 0,
+            vetoOffset: 0,
+            atEpoch: currentEpoch
         });
         
         IGovernance.InitiativeState memory initiativeState = IGovernance.InitiativeState({
-            totalLQTYAllocations: unallocatedLQTY,
-            totalLQTYVetos: 0,
-            lastClaimEpoch: 0,
-            isRegistered: true
+            voteLQTY: unallocatedLQTY,
+            voteOffset: 0,
+            vetoLQTY: 0,
+            vetoOffset: 0,
+            lastEpochClaim: 0
         });
         
         bribeInitiative.onAfterAllocateLQTY(currentEpoch, actor, userState, allocation, initiativeState);

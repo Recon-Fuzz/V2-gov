@@ -109,7 +109,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance.getInitiativeState(address(bribeInitiative));
     }
 
-    function clamped_governance_multiDelegateCall() public asActor {
+    function clamped_governance_multiDelegateCall() public virtual asActor {
         bytes[] memory data = new bytes[](10);
         governance.multiDelegateCall(data);
     }
