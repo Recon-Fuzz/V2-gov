@@ -109,6 +109,61 @@ abstract contract GovernanceTargets is
         governance_claimFromStakingV1(_rewardRecipient);
     }
 
+    function clamped_governance_calculateVotingThreshold() public asActor {
+        // No parameters to clamp, just call the function
+        governance_calculateVotingThreshold();
+    }
+
+    function clamped_governance_claimForInitiative(address _initiative) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _initiative = address(bribeInitiative);
+        
+        governance_claimForInitiative(_initiative);
+    }
+
+    function clamped_governance_deployUserProxy() public asActor {
+        // No parameters to clamp, just call the function
+        governance_deployUserProxy();
+    }
+
+    function clamped_governance_depositLQTY_single(uint256 _lqtyAmount) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _lqtyAmount %= (lqty.balanceOf(_getActor()) + 1);
+        
+        governance_depositLQTY(_lqtyAmount);
+    }
+
+    function clamped_governance_getInitiativeState(address _initiative) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _initiative = address(bribeInitiative);
+        
+        governance_getInitiativeState(_initiative);
+    }
+
+
+
+    function clamped_governance_snapshotVotesForInitiative(address _initiative) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _initiative = address(bribeInitiative);
+        
+        governance_snapshotVotesForInitiative(_initiative);
+    }
+
+    function clamped_governance_unregisterInitiative(address _initiative) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        _initiative = address(bribeInitiative);
+        
+        governance_unregisterInitiative(_initiative);
+    }
+
+    function clamped_governance_withdrawLQTY_single(uint256 _lqtyAmount) public asActor {
+        // Apply meaningful values from meaningful-values.json
+        (,uint256 unallocatedLQTY,,) = governance.userStates(_getActor());
+        _lqtyAmount %= (unallocatedLQTY + 1);
+        
+        governance_withdrawLQTY(_lqtyAmount);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(address[] memory _initiativesToReset, address[] memory _initiatives, int256[] memory _absoluteLQTYVotes, int256[] memory _absoluteLQTYVetos) public asActor {
