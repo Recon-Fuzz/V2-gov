@@ -72,6 +72,79 @@ abstract contract TargetFunctions is
         clamped_governance_resetAllocations(new address[](0), false);
     }
 
+    function shortcut_withdrawLQTY_complete() public asActor {
+        // Complete withdrawal flow: deposit -> allocate -> reset -> withdraw
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        clamped_governance_resetAllocations(new address[](0), false);
+        clamped_governance_withdrawLQTY(0, false, _getActor());
+    }
+
+    function shortcut_registerInitiative_complete() public asActor {
+        // Complete registration flow: deposit -> register initiative
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_registerInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_deployUserProxy_withDeposit() public asActor {
+        // Deploy proxy and deposit in one flow
+        clamped_governance_deployUserProxy();
+        clamped_governance_depositLQTY(0, false, _getActor());
+    }
+
+    function shortcut_multiDelegateCall_withAllocation() public asActor {
+        // Multi-delegate call that includes allocation
+        clamped_governance_depositLQTY(0, false, _getActor());
+        
+        // Create delegate call data for allocation
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        int256[] memory amounts = new int256[](1);
+        amounts[0] = 1;
+        
+        bytes[] memory callData = new bytes[](1);
+        callData[0] = abi.encodeWithSelector(governance.allocateLQTY.selector, new address[](0), initiatives, new int256[](1), amounts);
+        
+        clamped_governance_multiDelegateCall(callData);
+    }
+
+    function shortcut_unregisterInitiative_withAllocation() public asActor {
+        // Complete flow: deposit -> register -> allocate -> unregister
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_registerInitiative(address(bribeInitiative));
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        clamped_governance_unregisterInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_snapshotVotes_withAllocation() public asActor {
+        // Complete flow: deposit -> allocate -> snapshot
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        clamped_governance_snapshotVotesForInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_bribeInitiative_fullLifecycle() public asActor {
+        // Complete bribe initiative lifecycle: deposit -> register -> allocate -> deposit bribe -> claim bribes
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_registerInitiative(address(bribeInitiative));
+        clamped_governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        clamped_bribeInitiative_depositBribe(0, 0, 0);
+        clamped_bribeInitiative_claimBribes(new IBribeInitiative.ClaimData[](1));
+    }
+
+    function shortcut_governance_claimFromStakingV1_withDeposit() public asActor {
+        // Deposit LQTY and then claim from staking V1
+        clamped_governance_depositLQTY(0, false, _getActor());
+        clamped_governance_claimFromStakingV1(_getActor());
+    }
+
+    function shortcut_registerInitialInitiatives_withDeposit() public asActor {
+        // Deposit LQTY and register initial initiatives
+        clamped_governance_depositLQTY(0, false, _getActor());
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        clamped_governance_registerInitialInitiatives(initiatives);
+    }
 
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
