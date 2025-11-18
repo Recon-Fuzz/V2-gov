@@ -10,10 +10,7 @@ import {vm} from "@chimera/Hevm.sol";
 // Helpers
 import {Panic} from "@recon/Panic.sol";
 
-abstract contract AdminTargets is
-    BaseTargetFunctions,
-    Properties
-{
+abstract contract AdminTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
     function clamped_governance_registerInitialInitiatives() public asAdmin {

@@ -76,21 +76,11 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
         // 5. Deploy governance
         address[] memory initialInitiatives = new address[](0);
         governance = new Governance(
-            address(lqty),
-            address(lusd),
-            address(stakingV1),
-            address(bold),
-            config,
-            address(this),
-            initialInitiatives
+            address(lqty), address(lusd), address(stakingV1), address(bold), config, address(this), initialInitiatives
         );
 
         // 6. Deploy bribe initiative
-        bribeInitiative = new BribeInitiative(
-            address(governance),
-            address(bold),
-            address(bribeToken)
-        );
+        bribeInitiative = new BribeInitiative(address(governance), address(bold), address(bribeToken));
 
         // 7. Mint tokens to actors manually (MockERC20Tester has onlyOwner on mint)
         address[] memory actors = _getActors();
@@ -136,12 +126,12 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
     /// === MODIFIERS === ///
     /// Prank admin and actor
 
-    modifier asAdmin {
+    modifier asAdmin() {
         vm.prank(address(this));
         _;
     }
 
-    modifier asActor {
+    modifier asActor() {
         vm.prank(address(_getActor()));
         _;
     }
