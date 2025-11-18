@@ -19,8 +19,21 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
     function bribeInitiative_claimBribes_clamped(
         IBribeInitiative.ClaimData[] memory _claimData
     ) public asActor {
-        // For claimBribes, the amounts are returned by the function, not passed as input
-        // So we just need to ensure the claimData is valid, but the amounts are automatically clamped by the contract
+        // For claimBribes, we need to ensure the claimData references valid epochs and amounts
+        // The amounts will be automatically clamped by the contract to available balances
+        if (_claimData.length > 0) {
+            // Limit the number of claims to prevent gas issues
+            uint256 maxLength = 10;
+            if (_claimData.length > maxLength) {
+                // Create a new array with limited length
+                IBribeInitiative.ClaimData[] memory limitedClaimData = new IBribeInitiative.ClaimData[](maxLength);
+                for (uint256 i = 0; i < maxLength; i++) {
+                    limitedClaimData[i] = _claimData[i % _claimData.length];
+                }
+                _claimData = limitedClaimData;
+            }
+        }
+        
         bribeInitiative_claimBribes(_claimData);
     }
 

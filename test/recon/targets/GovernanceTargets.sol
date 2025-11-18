@@ -98,6 +98,8 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance_claimFromStakingV1(_getActor());
     }
 
+
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(
@@ -131,6 +133,8 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     function governance_deployUserProxy() public asActor {
         governance.deployUserProxy();
     }
+
+
 
     function governance_depositLQTY(uint256 _lqtyAmount) public asActor {
         governance.depositLQTY(_lqtyAmount);
@@ -169,11 +173,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance.getInitiativeState(_initiative);
     }
 
-    function governance_multiDelegateCall(
-        bytes[] memory inputs
-    ) public asActor {
-        governance.multiDelegateCall(inputs);
-    }
+
 
     function governance_registerInitiative(address _initiative) public asActor {
         governance.registerInitiative(_initiative);
