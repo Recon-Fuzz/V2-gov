@@ -15,38 +15,13 @@
 function test_governance_registerInitialInitiatives() public {
     address[] memory initiatives = new address[](1);
     initiatives[0] = address(0x999);
-    governance_registerInitialInitiatives(initiatives);
+    governance.registerInitialInitiatives(initiatives);
 }
 ```
 
-## Related Implementations
+## External Calls
 
-### governance_registerInitialInitiatives(address[])
-
-- **Kind**: internal
-- **Source**: 742:161:122
-- **Link**: `test/recon/targets/AdminTargets.sol:AdminTargets:governance_registerInitialInitiatives(address[])`
-
-```solidity
-function governance_registerInitialInitiatives(address[] memory _initiatives) public asAdmin() {
-    governance.registerInitialInitiatives(_initiatives);
-}
-```
-
-### asAdmin()
-
-- **Kind**: modifier
-- **Source**: 4899:68:120
-- **Link**: `test/recon/Setup.sol:Setup:asAdmin()`
-
-```solidity
-/// === MODIFIERS === ///
-///  Prank admin and actor
-modifier asAdmin() {
-    vm.prank(address(this));
-    _;
-}
-```
+- **Governance::registerInitialInitiatives(address[])**
 
 ## Call Tree
 
@@ -54,9 +29,4 @@ modifier asAdmin() {
 ┌─ [0] ⚙️ FUNCTION: CryticToFoundry.test_governance_registerInitialInitiatives() (NodeID: 0)
     💬 Args: [no args]
     👁️  Def: public
-  └─ [1] ⚙️ FUNCTION: AdminTargets.governance_registerInitialInitiatives(address[]) (NodeID: 1)
-      💬 Args: [initiatives]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asAdmin() (NodeID: 2)
-        💬 Args: [no args]
 ```

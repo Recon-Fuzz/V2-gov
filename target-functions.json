@@ -1,0 +1,34 @@
+{
+  "BribeInitiative": {
+    "target_functions": [
+      "claimBribes(tuple[])",
+      "depositBribe(uint256,uint256,uint256)",
+      "onAfterAllocateLQTY(uint256,address,tuple,tuple,tuple)",
+      "onClaimForInitiative(uint256,uint256)",
+      "onRegisterInitiative(uint256)",
+      "onUnregisterInitiative(uint256)"
+    ]
+  },
+  "Governance": {
+    "target_functions": [
+      "allocateLQTY(address[],address[],int256[],int256[])",
+      "calculateVotingThreshold()",
+      "claimForInitiative(address)",
+      "claimFromStakingV1(address)",
+      "deployUserProxy()",
+      "depositLQTY(uint256)",
+      "depositLQTY(uint256,bool,address)",
+      "depositLQTYViaPermit(uint256,tuple,bool,address)",
+      "depositLQTYViaPermit(uint256,tuple)",
+      "getInitiativeState(address)",
+      "multiDelegateCall(bytes[])",
+      "registerInitialInitiatives(address[])",
+      "registerInitiative(address)",
+      "resetAllocations(address[],bool)",
+      "snapshotVotesForInitiative(address)",
+      "unregisterInitiative(address)",
+      "withdrawLQTY(uint256)",
+      "withdrawLQTY(uint256,bool,address)"
+    ]
+  }
+}
