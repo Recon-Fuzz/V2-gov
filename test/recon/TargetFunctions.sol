@@ -231,5 +231,115 @@ abstract contract TargetFunctions is
         governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
     }
 
+    function shortcut_snapshotVotes(uint256 depositAmount, uint256 allocateAmount) public {
+        // Set up initiative with votes and then snapshot
+        
+        // Register initiative
+        governance_registerInitiative_clamped();
+        
+        // Deposit and allocate LQTY
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Snapshot votes for the initiative
+        governance_snapshotVotesForInitiative_clamped();
+    }
+
+    function shortcut_claimFromStakingV1(uint256 lqtyAmount) public {
+        // Set up governance and claim from staking V1
+        
+        // Register initiative first
+        governance_registerInitiative_clamped();
+        
+        // Deposit some LQTY to establish user state
+        governance_depositLQTY_clamped(lqtyAmount);
+        
+        // Claim from staking V1
+        governance_claimFromStakingV1_clamped();
+    }
+
+    function shortcut_deployProxyAndVote(uint256 depositAmount, uint256 allocateAmount) public {
+        // Deploy user proxy and then vote through it
+        
+        // Deploy user proxy for current actor
+        governance_deployUserProxy();
+        
+        // Register initiative
+        governance_registerInitiative_clamped();
+        
+        // Deposit and allocate LQTY
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+    }
+
+    function shortcut_fullInitiativeLifecycle(uint256 depositAmount, uint256 allocateAmount, uint256 bribeAmount) public {
+        // Complete lifecycle: register -> allocate -> claim -> unregister
+        
+        // Register initiative
+        governance_registerInitiative_clamped();
+        
+        // Switch to different actor to deposit bribe
+        switchActor(1);
+        bribeInitiative_depositBribe_clamped(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Switch back and allocate votes
+        switchActor(0);
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Wait for epoch to end
+        vm.warp(block.timestamp + 604800); // 1 week
+        
+        // Claim for initiative
+        governance_claimForInitiative_clamped();
+        
+        // Claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes_clamped(claimData);
+        
+        // Unregister initiative
+        governance_unregisterInitiative_clamped();
+    }
+
+    function shortcut_multiEpochVoting(uint256 depositAmount, uint256 allocateAmount, uint256 bribeAmount, uint256 epochs) public {
+        // Vote across multiple epochs with bribes
+        
+        // Register initiative
+        governance_registerInitiative_clamped();
+        
+        for (uint256 i = 0; i < epochs && i < 5; i++) { // Limit to 5 epochs for gas
+            // Switch to different actor to deposit bribe for current epoch
+            switchActor(1);
+            bribeInitiative_depositBribe_clamped(bribeAmount, bribeAmount, governance.epoch());
+            
+            // Switch back and allocate votes
+            switchActor(0);
+            if (i == 0) {
+                governance_depositLQTY_clamped(depositAmount);
+            }
+            governance_allocateLQTY_clamped(new address[](0), new address[](1), new int256[](1), new int256[](1));
+            
+            // Wait for epoch to end
+            vm.warp(block.timestamp + 604800); // 1 week
+            
+            // Claim for initiative
+            governance_claimForInitiative_clamped();
+            
+            // Claim bribes
+            IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+            claimData[0] = IBribeInitiative.ClaimData({
+                epoch: governance.epoch() - 1,
+                prevLQTYAllocationEpoch: 0,
+                prevTotalLQTYAllocationEpoch: 0
+            });
+            bribeInitiative_claimBribes_clamped(claimData);
+        }
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
