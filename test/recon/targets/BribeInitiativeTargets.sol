@@ -66,6 +66,38 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         bribeInitiative_onUnregisterInitiative(currentEpoch);
     }
 
+    function bribeInitiative_onAfterAllocateLQTY_clamped() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        address user = _getActor();
+        
+        (uint256 unallocatedLQTY,,,) = governance.userStates(user);
+        IGovernance.UserState memory userState = IGovernance.UserState({
+            unallocatedLQTY: unallocatedLQTY,
+            unallocatedOffset: 0,
+            allocatedLQTY: 0,
+            allocatedOffset: 0
+        });
+        
+        IGovernance.Allocation memory allocation = IGovernance.Allocation({
+            voteLQTY: bound(unallocatedLQTY, 0, unallocatedLQTY),
+            voteOffset: 0,
+            vetoLQTY: bound(unallocatedLQTY, 0, unallocatedLQTY),
+            vetoOffset: 0,
+            atEpoch: currentEpoch
+        });
+        
+        (,,,,uint256 lastEpochClaim) = governance.initiativeStates(address(bribeInitiative));
+        IGovernance.InitiativeState memory initiativeState = IGovernance.InitiativeState({
+            voteLQTY: 0,
+            voteOffset: 0,
+            vetoLQTY: 0,
+            vetoOffset: 0,
+            lastEpochClaim: lastEpochClaim
+        });
+        
+        bribeInitiative_onAfterAllocateLQTY(currentEpoch, user, userState, allocation, initiativeState);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(

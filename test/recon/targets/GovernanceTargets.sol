@@ -113,6 +113,52 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance.multiDelegateCall(calls);
     }
 
+    function governance_calculateVotingThreshold_clamped() public asActor {
+        governance_calculateVotingThreshold();
+    }
+
+    function governance_deployUserProxy_clamped() public asActor {
+        governance_deployUserProxy();
+    }
+
+    function governance_depositLQTY_clamped_with_params(
+        uint256 _lqtyAmount,
+        bool _doSendRewards,
+        address _recipient
+    ) public asActor {
+        _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
+        _doSendRewards = false; // Simplify for clamping
+        _recipient = _getActor(); // Use actor as recipient
+        
+        governance_depositLQTY(_lqtyAmount, _doSendRewards, _recipient);
+    }
+
+    function governance_depositLQTYViaPermit_clamped_with_params(
+        uint256 _lqtyAmount,
+        PermitParams memory _permitParams,
+        bool _doSendRewards,
+        address _recipient
+    ) public asActor {
+        _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
+        _doSendRewards = false; // Simplify for clamping
+        _recipient = _getActor(); // Use actor as recipient
+        
+        governance_depositLQTYViaPermit(_lqtyAmount, _permitParams, _doSendRewards, _recipient);
+    }
+
+    function governance_withdrawLQTY_clamped_with_params(
+        uint256 _lqtyAmount,
+        bool _doSendRewards,
+        address _recipient
+    ) public asActor {
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        _lqtyAmount %= unallocatedLQTY + 1;
+        _doSendRewards = false; // Simplify for clamping
+        _recipient = _getActor(); // Use actor as recipient
+        
+        governance_withdrawLQTY(_lqtyAmount, _doSendRewards, _recipient);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(
