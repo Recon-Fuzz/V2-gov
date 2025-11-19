@@ -489,8 +489,8 @@ abstract contract TargetFunctions is
         bytes[] memory calls = new bytes[](2);
         
         // First call: deposit LQTY
-        calls[0] = abi.encodeWithSelector(
-            governance.depositLQTY.selector,
+        calls[0] = abi.encodeWithSignature(
+            "depositLQTY(uint256)",
             depositAmount
         );
         
@@ -568,8 +568,8 @@ abstract contract TargetFunctions is
         );
         
         // Second call: deposit LQTY (as regular actor)
-        calls[1] = abi.encodeWithSelector(
-            governance.depositLQTY.selector,
+        calls[1] = abi.encodeWithSignature(
+            "depositLQTY(uint256)",
             depositAmount
         );
         

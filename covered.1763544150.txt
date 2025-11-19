@@ -1,0 +1,5 @@
+Coverage Report Generated
+Timestamp: 1763544150
+Instructions covered: 34413
+Contracts: 9
+Corpus size: 51

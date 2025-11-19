@@ -105,12 +105,12 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         
         // Create a simple depositLQTY call for clamping
         uint256 lqtyAmount = lqty.balanceOf(_getActor()) % 1000e18 + 1;
-        calls[0] = abi.encodeWithSelector(
-            governance.depositLQTY.selector,
+        calls[0] = abi.encodeWithSignature(
+            "depositLQTY(uint256)",
             lqtyAmount
         );
         
-        governance_multiDelegateCall(calls);
+        governance.multiDelegateCall(calls);
     }
 
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
