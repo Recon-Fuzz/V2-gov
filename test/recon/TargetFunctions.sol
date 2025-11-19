@@ -870,7 +870,7 @@ abstract contract TargetFunctions is
         governance_registerInitiative(address(bribeInitiative));
         
         // Deposit and allocate just before voting cutoff
-        uint256 votingCutoff = governance.epochStart() + governance.epochVotingCutoff();
+        uint256 votingCutoff = governance.epochStart() + governance.EPOCH_VOTING_CUTOFF();
         vm.warp(votingCutoff - 100); // Just before cutoff
         
         governance_depositLQTY(depositAmount);
@@ -882,7 +882,7 @@ abstract contract TargetFunctions is
         bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
         
         // Fast forward to next epoch
-        vm.warp(governance.epochStart() + governance.epochDuration());
+        vm.warp(governance.epochStart() + governance.EPOCH_DURATION());
         
         // Claim for initiative
         switchActor(0);
