@@ -16,41 +16,6 @@ import "src/BribeInitiative.sol";
 abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
-    function bribeInitiative_claimBribes_clamped(
-        IBribeInitiative.ClaimData[] memory _claimData
-    ) public asActor {
-        // For claimBribes, we need to ensure the claimData references valid epochs and amounts
-        // The amounts will be automatically clamped by the contract to available balances
-        if (_claimData.length > 0) {
-            // Limit the number of claims to prevent gas issues
-            uint256 maxLength = 10;
-            if (_claimData.length > maxLength) {
-                // Create a new array with limited length
-                IBribeInitiative.ClaimData[] memory limitedClaimData = new IBribeInitiative.ClaimData[](maxLength);
-                for (uint256 i = 0; i < maxLength; i++) {
-                    limitedClaimData[i] = _claimData[i % _claimData.length];
-                }
-                _claimData = limitedClaimData;
-            }
-        }
-        
-        bribeInitiative_claimBribes(_claimData);
-    }
-
-    function bribeInitiative_depositBribe_clamped(
-        uint256 _boldAmount,
-        uint256 _bribeTokenAmount,
-        uint256 _epoch
-    ) public asActor {
-        // Clamp amounts to actor's balances
-        _boldAmount %= bold.balanceOf(_getActor()) + 1;
-        _bribeTokenAmount %= bribeToken.balanceOf(_getActor()) + 1;
-        // Clamp epoch to current epoch
-        _epoch = governance.epoch();
-        
-        bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
-    }
-
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(

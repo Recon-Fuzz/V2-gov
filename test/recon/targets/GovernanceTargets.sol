@@ -17,89 +17,6 @@ import "src/Governance.sol";
 abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
-    function governance_allocateLQTY_clamped(
-        address[] memory _initiativesToReset,
-        address[] memory _initiatives,
-        int256[] memory _absoluteLQTYVotes,
-        int256[] memory _absoluteLQTYVetos
-    ) public asActor {
-        // Clamp votes and vetos to unallocated LQTY
-        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
-        for (uint256 i = 0; i < _absoluteLQTYVotes.length; i++) {
-            _absoluteLQTYVotes[i] = int256(uint256(_absoluteLQTYVotes[i]) % (unallocatedLQTY + 1));
-        }
-        for (uint256 i = 0; i < _absoluteLQTYVetos.length; i++) {
-            _absoluteLQTYVetos[i] = int256(uint256(_absoluteLQTYVetos[i]) % (unallocatedLQTY + 1));
-        }
-        
-        governance_allocateLQTY(_initiativesToReset, _initiatives, _absoluteLQTYVotes, _absoluteLQTYVetos);
-    }
-
-    function governance_depositLQTY_clamped(uint256 _lqtyAmount) public asActor {
-        // Clamp amount to actor's LQTY balance
-        _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
-        
-        governance_depositLQTY(_lqtyAmount);
-    }
-
-    function governance_depositLQTYViaPermit_clamped(
-        uint256 _lqtyAmount,
-        PermitParams memory _permitParams
-    ) public asActor {
-        // Clamp amount to actor's LQTY balance
-        _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
-        
-        governance_depositLQTYViaPermit(_lqtyAmount, _permitParams);
-    }
-
-    function governance_registerInitiative_clamped() public asActor {
-        // Use bribeInitiative address as the initiative
-        governance_registerInitiative(address(bribeInitiative));
-    }
-
-    function governance_withdrawLQTY_clamped(uint256 _lqtyAmount) public asActor {
-        // Clamp amount to unallocated LQTY
-        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
-        _lqtyAmount %= unallocatedLQTY + 1;
-        
-        governance_withdrawLQTY(_lqtyAmount);
-    }
-
-    function governance_claimForInitiative_clamped() public asActor {
-        // Use bribeInitiative address as the initiative
-        governance_claimForInitiative(address(bribeInitiative));
-    }
-
-    function governance_unregisterInitiative_clamped() public asActor {
-        // Use bribeInitiative address as the initiative
-        governance_unregisterInitiative(address(bribeInitiative));
-    }
-
-    function governance_resetAllocations_clamped() public asActor {
-        // Use [bribeInitiative] as initiatives to reset
-        address[] memory initiativesToReset = new address[](1);
-        initiativesToReset[0] = address(bribeInitiative);
-        
-        governance_resetAllocations(initiativesToReset, false);
-    }
-
-    function governance_snapshotVotesForInitiative_clamped() public asActor {
-        // Use bribeInitiative address as the initiative
-        governance_snapshotVotesForInitiative(address(bribeInitiative));
-    }
-
-    function governance_getInitiativeState_clamped() public asActor {
-        // Use bribeInitiative address as the initiative
-        governance_getInitiativeState(address(bribeInitiative));
-    }
-
-    function governance_claimFromStakingV1_clamped() public asActor {
-        // Use current actor as reward recipient
-        governance_claimFromStakingV1(_getActor());
-    }
-
-
-
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(
@@ -133,8 +50,6 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     function governance_deployUserProxy() public asActor {
         governance.deployUserProxy();
     }
-
-
 
     function governance_depositLQTY(uint256 _lqtyAmount) public asActor {
         governance.depositLQTY(_lqtyAmount);
@@ -172,8 +87,6 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     function governance_getInitiativeState(address _initiative) public asActor {
         governance.getInitiativeState(_initiative);
     }
-
-
 
     function governance_registerInitiative(address _initiative) public asActor {
         governance.registerInitiative(_initiative);

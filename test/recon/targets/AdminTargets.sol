@@ -13,22 +13,15 @@ import {Panic} from "@recon/Panic.sol";
 abstract contract AdminTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
-    function governance_registerInitialInitiatives_clamped() public asAdmin {
-        address[] memory _initiatives = new address[](1);
-        _initiatives[0] = address(bribeInitiative);
-        governance_registerInitialInitiatives(_initiatives);
-    }
-
-    function governance_multiDelegateCall_clamped() public virtual asAdmin {
-        bytes[] memory data = new bytes[](10);
-        governance_multiDelegateCall(data);
-    }
-
-    function governance_registerInitialInitiatives(address[] memory _initiatives) public asAdmin {
+    function governance_registerInitialInitiatives(
+        address[] memory _initiatives
+    ) public asAdmin {
         governance.registerInitialInitiatives(_initiatives);
     }
 
-    function governance_multiDelegateCall(bytes[] memory inputs) public asAdmin {
+    function governance_multiDelegateCall(
+        bytes[] memory inputs
+    ) public asAdmin {
         governance.multiDelegateCall(inputs);
     }
 
