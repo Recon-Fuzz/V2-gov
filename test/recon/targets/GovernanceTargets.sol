@@ -100,6 +100,19 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance_claimFromStakingV1(_getActor());
     }
 
+    function governance_multiDelegateCall_clamped() public asActor {
+        bytes[] memory calls = new bytes[](1);
+        
+        // Create a simple depositLQTY call for clamping
+        uint256 lqtyAmount = lqty.balanceOf(_getActor()) % 1000e18 + 1;
+        calls[0] = abi.encodeWithSelector(
+            governance.depositLQTY.selector,
+            lqtyAmount
+        );
+        
+        governance_multiDelegateCall(calls);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(

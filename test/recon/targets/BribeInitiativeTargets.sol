@@ -44,6 +44,28 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
     }
 
+    function bribeInitiative_onClaimForInitiative_clamped(
+        uint256 _rewardAmount,
+        uint256 _prevEpoch
+    ) public asActor {
+        _rewardAmount %= bold.balanceOf(address(bribeInitiative)) + 1;
+        _prevEpoch = governance.epoch();
+        
+        bribeInitiative_onClaimForInitiative(_rewardAmount, _prevEpoch);
+    }
+
+    function bribeInitiative_onRegisterInitiative_clamped() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        
+        bribeInitiative_onRegisterInitiative(currentEpoch);
+    }
+
+    function bribeInitiative_onUnregisterInitiative_clamped() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        
+        bribeInitiative_onUnregisterInitiative(currentEpoch);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(
