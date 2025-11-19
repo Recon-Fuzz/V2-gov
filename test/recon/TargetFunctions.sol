@@ -341,5 +341,123 @@ abstract contract TargetFunctions is
         }
     }
 
+    function shortcut_userProxyStaking(uint256 stakeAmount, bool doSendRewards, address recipient) public {
+        // Complete flow through UserProxy for staking
+        
+        // Deploy user proxy for current actor if not already deployed
+        governance_deployUserProxy();
+        
+        // Get the user proxy address
+        address userProxy = governance.deriveUserProxyAddress(_getActor());
+        
+        // Approve LQTY to be spent by user proxy
+        lqty.approve(userProxy, stakeAmount);
+        
+        // Call stake through the proxy (this would need to be exposed through governance)
+        // For now, we'll simulate the direct call pattern
+        governance_depositLQTY(stakeAmount, doSendRewards, recipient);
+    }
+
+    function shortcut_singleInitiativeMultipleBribes(uint256 depositAmount, uint256 bribeAmount1, uint256 bribeAmount2) public {
+        // Scenario with multiple bribes for the same initiative from different actors
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Deposit LQTY for voting
+        governance_depositLQTY(depositAmount);
+        
+        // Switch to actor 1 to deposit first bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount1, bribeAmount1, governance.epoch());
+        
+        // Switch to actor 2 to deposit second bribe
+        switchActor(2);
+        bribeInitiative_depositBribe(bribeAmount2, bribeAmount2, governance.epoch());
+        
+        // Switch back to main actor and allocate votes
+        switchActor(0);
+        governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Wait for epoch to end
+        vm.warp(block.timestamp + 604800); // 1 week
+        
+        // Claim for initiative
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim bribes from multiple actors
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        
+        switchActor(0);
+        bribeInitiative_claimBribes(claimData);
+        
+        switchActor(1);
+        bribeInitiative_claimBribes(claimData);
+        
+        switchActor(2);
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_emergencyUnregister(uint256 depositAmount, uint256 allocateAmount) public {
+        // Emergency scenario: register -> allocate -> immediate unregister
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Deposit and allocate
+        governance_depositLQTY(depositAmount);
+        governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Immediately unregister (testing edge case)
+        governance_unregisterInitiative(address(bribeInitiative));
+        
+        // Try to claim after unregister (should test behavior)
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_zeroAllocationScenario(uint256 depositAmount) public {
+        // Test scenario with zero allocations
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Deposit LQTY but don't allocate anything
+        governance_depositLQTY(depositAmount);
+        
+        // Wait for epoch to end
+        vm.warp(block.timestamp + 604800); // 1 week
+        
+        // Try to claim with zero allocations
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_maxAllocationScenario(uint256 depositAmount) public {
+        // Test scenario with maximum allocations
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Deposit all available LQTY
+        governance_depositLQTY(depositAmount);
+        
+        // Allocate all deposited LQTY
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(depositAmount);
+        
+        governance_allocateLQTY(new address[](0), new address[](1), votes, new int256[](1));
+        
+        // Wait for epoch to end
+        vm.warp(block.timestamp + 604800); // 1 week
+        
+        // Claim maximum rewards
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }

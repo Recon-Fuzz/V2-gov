@@ -23,7 +23,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         int256[] memory _absoluteLQTYVotes,
         int256[] memory _absoluteLQTYVetos
     ) public asActor {
-        uint256 unallocatedLQTY = governance.userStates(_getActor()).unallocatedLQTY;
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
         
         _initiatives = new address[](1);
         _initiatives[0] = address(bribeInitiative);
@@ -56,7 +56,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     }
 
     function governance_withdrawLQTY_clamped(uint256 _lqtyAmount) public asActor {
-        uint256 unallocatedLQTY = governance.userStates(_getActor()).unallocatedLQTY;
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
         _lqtyAmount %= unallocatedLQTY + 1;
         
         governance_withdrawLQTY(_lqtyAmount);
@@ -66,11 +66,11 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance_registerInitiative(address(bribeInitiative));
     }
 
-    function governance_registerInitialInitiatives_clamped() public asActor {
+    function governance_registerInitialInitiatives_clamped() public asAdmin {
         address[] memory initiatives = new address[](1);
         initiatives[0] = address(bribeInitiative);
         
-        governance_registerInitialInitiatives(initiatives);
+        governance.registerInitialInitiatives(initiatives);
     }
 
     function governance_resetAllocations_clamped() public asActor {

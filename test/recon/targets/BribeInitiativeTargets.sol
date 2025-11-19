@@ -24,8 +24,8 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
             _claimData = new IBribeInitiative.ClaimData[](1);
             _claimData[0] = IBribeInitiative.ClaimData({
                 epoch: mostRecentEpoch,
-                bribeTokenAmount: 0,
-                boldAmount: 0
+                prevLQTYAllocationEpoch: 0,
+                prevTotalLQTYAllocationEpoch: 0
             });
         }
         
