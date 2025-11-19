@@ -459,5 +459,123 @@ abstract contract TargetFunctions is
         governance_claimForInitiative(address(bribeInitiative));
     }
 
+    function shortcut_deployProxyAndStake(uint256 stakeAmount) public {
+        // Deploy user proxy and stake through it
+        
+        // Deploy user proxy for current actor
+        governance_deployUserProxy();
+        
+        // Get the user proxy address
+        address userProxy = governance.deriveUserProxyAddress(_getActor());
+        
+        // Approve LQTY to be spent by user proxy
+        lqty.approve(userProxy, stakeAmount);
+        
+        // Register initiative first
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Deposit and allocate through governance
+        governance_depositLQTY(stakeAmount);
+        governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+    }
+
+    function shortcut_multiDelegateWithVoting(uint256 depositAmount, uint256 allocateAmount) public {
+        // Use multi-delegate call to perform voting operations
+        
+        // Register initiative first
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Create multi-delegate call array
+        bytes[] memory calls = new bytes[](2);
+        
+        // First call: deposit LQTY
+        calls[0] = abi.encodeWithSelector(
+            governance.depositLQTY.selector,
+            depositAmount
+        );
+        
+        // Second call: allocate LQTY
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(allocateAmount);
+        int256[] memory vetos = new int256[](1);
+        vetos[0] = int256(0);
+        
+        calls[1] = abi.encodeWithSelector(
+            governance.allocateLQTY.selector,
+            new address[](0),
+            initiatives,
+            votes,
+            vetos
+        );
+        
+        // Execute multi-delegate call
+        governance_multiDelegateCall(calls);
+    }
+
+    function shortcut_proxyVotingWithBribes(uint256 stakeAmount, uint256 bribeAmount) public {
+        // Complete flow: deploy proxy -> stake -> vote -> claim bribes
+        
+        // Deploy user proxy
+        governance_deployUserProxy();
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Switch to different actor to deposit bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Switch back and stake through proxy
+        switchActor(0);
+        address userProxy = governance.deriveUserProxyAddress(_getActor());
+        lqty.approve(userProxy, stakeAmount);
+        governance_depositLQTY(stakeAmount);
+        governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Wait for epoch to end
+        vm.warp(block.timestamp + 604800); // 1 week
+        
+        // Claim for initiative
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_adminMultiDelegate(uint256 depositAmount) public {
+        // Admin multi-delegate call scenario
+        
+        // Register initiative as admin
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Create admin multi-delegate call
+        bytes[] memory calls = new bytes[](2);
+        
+        // First call: register initial initiatives
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        calls[0] = abi.encodeWithSelector(
+            governance.registerInitialInitiatives.selector,
+            initiatives
+        );
+        
+        // Second call: deposit LQTY (as regular actor)
+        calls[1] = abi.encodeWithSelector(
+            governance.depositLQTY.selector,
+            depositAmount
+        );
+        
+        // Execute admin multi-delegate call
+        governance_multiDelegateCall(calls);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
