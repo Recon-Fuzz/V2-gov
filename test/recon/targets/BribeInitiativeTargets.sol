@@ -38,7 +38,7 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         _boldAmount %= bold.balanceOf(_getActor()) + 1;
         _bribeTokenAmount %= bribeToken.balanceOf(_getActor()) + 1;
         // Clamp epoch to reasonable range (current epoch +/- 10)
-        uint256 currentEpoch = (block.timestamp - governance.epochStart()) / governance.epochDuration();
+        uint256 currentEpoch = (block.timestamp - governance.EPOCH_START()) / governance.EPOCH_DURATION();
         _epoch = currentEpoch + (_epoch % 21) - 10; // Range: currentEpoch-10 to currentEpoch+10
         
         bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
@@ -46,26 +46,31 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
 
     function bribeInitiative_onAfterAllocateLQTY_clamped() public asActor {
         // Use current actor and current epoch for meaningful values
-        uint256 currentEpoch = (block.timestamp - governance.epochStart()) / governance.epochDuration();
+        uint256 currentEpoch = (block.timestamp - governance.EPOCH_START()) / governance.EPOCH_DURATION();
         address user = _getActor();
         
         // Create minimal valid structs
         IGovernance.UserState memory userState = IGovernance.UserState({
-            lqtyVotes: 0,
-            lqtyVetos: 0,
-            lastClaimEpoch: 0
+            unallocatedLQTY: 0,
+            unallocatedOffset: 0,
+            allocatedLQTY: 0,
+            allocatedOffset: 0
         });
         
         IGovernance.Allocation memory allocation = IGovernance.Allocation({
-            absoluteLQTYVotes: 0,
-            absoluteLQTYVetos: 0
+            voteLQTY: 0,
+            voteOffset: 0,
+            vetoLQTY: 0,
+            vetoOffset: 0,
+            atEpoch: currentEpoch
         });
         
         IGovernance.InitiativeState memory initiativeState = IGovernance.InitiativeState({
-            totalLQTYVotes: 0,
-            totalLQTYVetos: 0,
-            lastClaimEpoch: 0,
-            isRegistered: true
+            voteLQTY: 0,
+            voteOffset: 0,
+            vetoLQTY: 0,
+            vetoOffset: 0,
+            lastEpochClaim: 0
         });
         
         bribeInitiative_onAfterAllocateLQTY(currentEpoch, user, userState, allocation, initiativeState);
@@ -78,7 +83,7 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         // Clamp reward amount to reasonable range
         _rewardAmount %= 10000e18; // Max 10k tokens
         // Clamp epoch to reasonable range (current epoch +/- 10)
-        uint256 currentEpoch = (block.timestamp - governance.epochStart()) / governance.epochDuration();
+        uint256 currentEpoch = (block.timestamp - governance.EPOCH_START()) / governance.EPOCH_DURATION();
         _epoch = currentEpoch + (_epoch % 21) - 10;
         
         bribeInitiative_onClaimForInitiative(_rewardAmount, _epoch);
@@ -86,7 +91,7 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
 
     function bribeInitiative_onRegisterInitiative_clamped(uint256 _epoch) public asActor {
         // Clamp epoch to reasonable range (current epoch +/- 10)
-        uint256 currentEpoch = (block.timestamp - governance.epochStart()) / governance.epochDuration();
+        uint256 currentEpoch = (block.timestamp - governance.EPOCH_START()) / governance.EPOCH_DURATION();
         _epoch = currentEpoch + (_epoch % 21) - 10;
         
         bribeInitiative_onRegisterInitiative(_epoch);
@@ -94,7 +99,7 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
 
     function bribeInitiative_onUnregisterInitiative_clamped(uint256 _epoch) public asActor {
         // Clamp epoch to reasonable range (current epoch +/- 10)
-        uint256 currentEpoch = (block.timestamp - governance.epochStart()) / governance.epochDuration();
+        uint256 currentEpoch = (block.timestamp - governance.EPOCH_START()) / governance.EPOCH_DURATION();
         _epoch = currentEpoch + (_epoch % 21) - 10;
         
         bribeInitiative_onUnregisterInitiative(_epoch);
