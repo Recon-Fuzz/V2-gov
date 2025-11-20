@@ -149,6 +149,38 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance_claimForInitiative(address(bribeInitiative));
     }
 
+    function governance_calculateVotingThreshold_clamped() public asActor {
+        // This function takes no parameters, just call it directly
+        governance_calculateVotingThreshold();
+    }
+
+    function governance_claimFromStakingV1_clamped() public asActor {
+        // Use current actor as reward recipient according to meaningful-values.json
+        governance_claimFromStakingV1(_getActor());
+    }
+
+    function governance_deployUserProxy_clamped() public asActor {
+        // This function takes no parameters, just call it directly
+        governance_deployUserProxy();
+    }
+
+    function governance_getInitiativeState_clamped() public asActor {
+        // Get state for the bribe initiative according to meaningful-values.json
+        governance_getInitiativeState(address(bribeInitiative));
+    }
+
+
+
+    function governance_snapshotVotesForInitiative_clamped() public asActor {
+        // Snapshot votes for the bribe initiative according to meaningful-values.json
+        governance_snapshotVotesForInitiative(address(bribeInitiative));
+    }
+
+    function governance_unregisterInitiative_clamped() public asActor {
+        // Unregister the bribe initiative according to meaningful-values.json
+        governance_unregisterInitiative(address(bribeInitiative));
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(
