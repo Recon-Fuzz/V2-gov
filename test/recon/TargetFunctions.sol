@@ -1680,5 +1680,490 @@ abstract contract TargetFunctions is
         bribeInitiative_claimBribes(claimData);
     }
 
+    function shortcut_completeGovernanceCycle(uint256 depositAmount, uint256 allocateAmount, uint256 bribeAmount) public {
+        // Complete governance cycle: register -> deposit -> allocate -> claim -> unregister -> re-register
+        // This shortcut covers the most complex sequence requiring multiple prerequisite functions
+        
+        // Step 1: Register initiative (prerequisite for all other operations)
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Step 2: Switch to different actor to deposit bribe (prerequisite for claiming)
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Step 3: Switch back and deposit LQTY (prerequisite for allocation)
+        switchActor(0);
+        governance_depositLQTY_clamped(depositAmount);
+        
+        // Step 4: Allocate LQTY to initiative (prerequisite for claiming)
+        governance_allocateLQTY_clamped(0, 1, allocateAmount, 0);
+        
+        // Step 5: Wait for epoch to end (prerequisite for claiming)
+        vm.warp(block.timestamp + 604800); // 1 week
+        
+        // Step 6: Claim for initiative (distributes bribes to voters)
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Step 7: Claim bribes (final step in the cycle)
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+        
+        // Step 8: Unregister initiative (testing cleanup)
+        governance_unregisterInitiative(address(bribeInitiative));
+        
+        // Step 9: Re-register initiative (testing re-registration)
+        governance_registerInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_multiActorGovernanceFlow(uint256 actor1Deposit, uint256 actor2Deposit, uint256 actor3Deposit, uint256 bribeAmount) public {
+        // Multi-actor governance flow with complex interactions
+        
+        // Actor 0: Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Actor 1: Deposit bribe to incentivize voting
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Actor 0: Deposit and allocate votes
+        switchActor(0);
+        governance_depositLQTY_clamped(actor1Deposit);
+        governance_allocateLQTY_clamped(0, 1, actor1Deposit, 0);
+        
+        // Actor 2: Also deposit and allocate (testing multiple voters)
+        switchActor(2);
+        governance_depositLQTY_clamped(actor2Deposit);
+        governance_allocateLQTY_clamped(0, 1, actor2Deposit, 0);
+        
+        // Actor 3: Third voter for complex scenarios
+        switchActor(3);
+        governance_depositLQTY_clamped(actor3Deposit);
+        governance_allocateLQTY_clamped(0, 1, actor3Deposit, 0);
+        
+        // Wait for epoch to end
+        vm.warp(block.timestamp + 604800); // 1 week
+        
+        // Actor 0: Claim for initiative
+        switchActor(0);
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // All actors claim their share of bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        
+        // Each actor claims bribes
+        for (uint256 i = 0; i < 4; i++) {
+            switchActor(i);
+            bribeInitiative_claimBribes(claimData);
+        }
+    }
+
+    function shortcut_complexAllocationReset(uint256 initialDeposit, uint256 newDeposit, uint256 allocateAmount) public {
+        // Complex allocation reset and reallocation scenario
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Initial deposit and allocation
+        governance_depositLQTY_clamped(initialDeposit);
+        governance_allocateLQTY_clamped(0, 1, allocateAmount, 0);
+        
+        // Switch to different actor to add bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(allocateAmount, allocateAmount, governance.epoch());
+        
+        // Switch back and reset allocations
+        switchActor(0);
+        address[] memory initiativesToReset = new address[](1);
+        initiativesToReset[0] = address(bribeInitiative);
+        governance_resetAllocations(initiativesToReset, false);
+        
+        // Deposit more LQTY
+        governance_depositLQTY_clamped(newDeposit);
+        
+        // Reallocate with new amounts
+        governance_allocateLQTY_clamped(0, 1, initialDeposit + newDeposit, 0);
+        
+        // Wait and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_permitBasedGovernanceFlow(uint256 lqtyAmount, uint256 allocateAmount, uint256 bribeAmount) public {
+        // Complete governance flow using permit-based deposits
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Switch to different actor for bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Switch back and use permit-based deposit
+        switchActor(0);
+        governance_depositLQTYViaPermit_clamped(lqtyAmount, false);
+        
+        // Allocate the deposited LQTY
+        governance_allocateLQTY_clamped(0, 1, allocateAmount, 0);
+        
+        // Wait for epoch and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_withdrawalDuringActiveVoting(uint256 depositAmount, uint256 allocateAmount, uint256 withdrawAmount) public {
+        // Test withdrawal scenarios during active voting period
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Switch to different actor for bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(allocateAmount, allocateAmount, governance.epoch());
+        
+        // Switch back and deposit
+        switchActor(0);
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(0, 1, allocateAmount, 0);
+        
+        // Withdraw during voting period (testing edge case)
+        governance_withdrawLQTY_clamped(withdrawAmount);
+        
+        // Reallocate with remaining balance
+        governance_allocateLQTY_clamped(0, 1, allocateAmount - withdrawAmount, 0);
+        
+        // Wait and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_stakingV1IntegrationFlow(uint256 lqtyAmount, uint256 allocateAmount, uint256 bribeAmount) public {
+        // Complete flow integrating StakingV1 claims with governance
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Claim from StakingV1 first (prerequisite for some users)
+        governance_claimFromStakingV1(_getActor());
+        
+        // Deposit claimed LQTY
+        governance_depositLQTY_clamped(lqtyAmount);
+        
+        // Switch to different actor for bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Switch back and allocate
+        switchActor(0);
+        governance_allocateLQTY_clamped(0, 1, allocateAmount, 0);
+        
+        // Wait and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_multiEpochBribeCompetition(uint256 depositAmount, uint256 bribeAmount1, uint256 bribeAmount2) public {
+        // Multi-epoch scenario with competing bribes
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Deposit and allocate for voting power
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(0, 1, depositAmount, 0);
+        
+        // Epoch 1: First bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount1, bribeAmount1, governance.epoch());
+        
+        // Wait for epoch 1 to end
+        vm.warp(block.timestamp + 604800); // 1 week
+        switchActor(0);
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim epoch 1 bribes
+        IBribeInitiative.ClaimData[] memory claimData1 = new IBribeInitiative.ClaimData[](1);
+        claimData1[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData1);
+        
+        // Epoch 2: Second, larger bribe
+        switchActor(2);
+        bribeInitiative_depositBribe(bribeAmount2, bribeAmount2, governance.epoch());
+        
+        // Reallocate for new epoch
+        switchActor(0);
+        governance_allocateLQTY_clamped(0, 1, depositAmount, 0);
+        
+        // Wait for epoch 2 to end
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim epoch 2 bribes
+        IBribeInitiative.ClaimData[] memory claimData2 = new IBribeInitiative.ClaimData[](1);
+        claimData2[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData2);
+    }
+
+    function shortcut_adminEmergencyFlow(uint256 depositAmount, uint256 allocateAmount) public {
+        // Admin emergency scenario with multi-delegate calls
+        
+        // Admin registers initial initiatives
+        switchActor(0); // Ensure admin actor
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        governance_registerInitialInitiatives(initiatives);
+        
+        // Switch to regular user for voting
+        switchActor(1);
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(0, 1, allocateAmount, 0);
+        
+        // Switch to another user for bribe
+        switchActor(2);
+        bribeInitiative_depositBribe(allocateAmount, allocateAmount, governance.epoch());
+        
+        // Wait and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        switchActor(1);
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_votingThresholdEdgeCase(uint256 depositAmount1, uint256 depositAmount2) public {
+        // Test voting threshold calculations with multiple actors
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Actor 0: Large deposit to affect threshold
+        governance_depositLQTY_clamped(depositAmount1);
+        
+        // Calculate threshold and allocate appropriately
+        uint256 threshold = governance.calculateVotingThreshold();
+        uint256 voteAmount = depositAmount1 > threshold ? threshold : depositAmount1;
+        
+        governance_allocateLQTY_clamped(0, 1, voteAmount, 0);
+        
+        // Actor 1: Also deposit to test threshold dynamics
+        switchActor(1);
+        governance_depositLQTY_clamped(depositAmount2);
+        governance_allocateLQTY_clamped(0, 1, depositAmount2, 0);
+        
+        // Test threshold calculations
+        governance_calculateVotingThreshold();
+        governance_snapshotVotesForInitiative(address(bribeInitiative));
+        
+        // Switch to actor 2 for bribe
+        switchActor(2);
+        bribeInitiative_depositBribe(voteAmount, voteAmount, governance.epoch());
+        
+        // Wait and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        switchActor(0);
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_proxyMultiDelegateFlow(uint256 depositAmount, uint256 allocateAmount, uint256 bribeAmount) public {
+        // Complex multi-delegate call through user proxy
+        
+        // Deploy user proxy
+        governance_deployUserProxy();
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Switch to different actor for bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Switch back and create multi-delegate call
+        switchActor(0);
+        bytes[] memory calls = new bytes[](3);
+        
+        // Call 1: Deposit LQTY
+        calls[0] = abi.encodeWithSignature("depositLQTY(uint256)", depositAmount);
+        
+        // Call 2: Allocate LQTY
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(allocateAmount);
+        int256[] memory vetos = new int256[](1);
+        vetos[0] = int256(0);
+        address[] memory emptyArray = new address[](0);
+        
+        calls[1] = abi.encodeWithSelector(
+            governance.allocateLQTY.selector,
+            emptyArray,
+            initiatives,
+            votes,
+            vetos
+        );
+        
+        // Call 3: Snapshot votes
+        calls[2] = abi.encodeWithSignature(
+            "snapshotVotesForInitiative(address)",
+            address(bribeInitiative)
+        );
+        
+        // Execute multi-delegate call
+        governance_multiDelegateCall(calls);
+        
+        // Wait for epoch and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_minimumClaimScenario(uint256 depositAmount, uint256 bribeAmount) public {
+        // Test minimum claim edge cases
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Deposit minimal amount
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(0, 1, depositAmount, 0);
+        
+        // Switch to different actor to deposit minimal bribe
+        switchActor(1);
+        uint256 minClaim = governance.MIN_CLAIM();
+        uint256 adjustedBribeAmount = bribeAmount < minClaim ? minClaim : bribeAmount;
+        bribeInitiative_depositBribe(adjustedBribeAmount, adjustedBribeAmount, governance.epoch());
+        
+        // Wait for epoch
+        vm.warp(block.timestamp + 604800); // 1 week
+        
+        // Claim for initiative
+        switchActor(0);
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Try to claim bribes (testing minimum claim logic)
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_unregistrationThresholdFlow(uint256 depositAmount, uint256 allocateAmount) public {
+        // Test unregistration threshold scenarios
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Deposit and allocate substantial amount
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(0, 1, allocateAmount, 0);
+        
+        // Switch to different actor to also allocate
+        switchActor(1);
+        governance_depositLQTY_clamped(depositAmount / 2);
+        governance_allocateLQTY_clamped(0, 1, allocateAmount / 2, 0);
+        
+        // Switch to actor 2 for bribe
+        switchActor(2);
+        bribeInitiative_depositBribe(allocateAmount, allocateAmount, governance.epoch());
+        
+        // Wait for multiple epochs to test unregistration threshold
+        for (uint256 i = 0; i < 3; i++) {
+            vm.warp(block.timestamp + 604800); // 1 week
+            switchActor(0);
+            governance_claimForInitiative(address(bribeInitiative));
+            
+            // Claim bribes each epoch
+            IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+            claimData[0] = IBribeInitiative.ClaimData({
+                epoch: governance.epoch() - 1,
+                prevLQTYAllocationEpoch: 0,
+                prevTotalLQTYAllocationEpoch: 0
+            });
+            bribeInitiative_claimBribes(claimData);
+        }
+        
+        // Try to unregister after threshold period
+        governance_unregisterInitiative(address(bribeInitiative));
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
