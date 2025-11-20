@@ -1570,8 +1570,8 @@ abstract contract TargetFunctions is
         bytes[] memory calls = new bytes[](2);
         
         // Call 1: Deposit using permit
-        calls[0] = abi.encodeWithSelector(
-            governance.depositLQTYViaPermit.selector,
+        calls[0] = abi.encodeWithSignature(
+            "depositLQTYViaPermit(uint256,(uint256,uint256,uint256,bytes,bytes32,bytes32))",
             lqtyAmount,
             permitParams
         );
