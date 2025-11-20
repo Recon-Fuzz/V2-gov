@@ -33,6 +33,9 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         int256[] memory votes = new int256[](numInits);
         int256[] memory vetos = new int256[](numInits);
         
+        // Get user's unallocated LQTY according to meaningful-values.json
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        
         // Fill arrays with actor addresses and bounded amounts
         address[] memory actors = _getActors();
         for (uint256 i = 0; i < numToReset; i++) {
@@ -41,17 +44,16 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         
         for (uint256 i = 0; i < numInits; i++) {
             initiatives[i] = actors[i % actors.length];
-            // Clamp amounts to actor's LQTY balance
-            uint256 actorBalance = lqty.balanceOf(_getActor());
-            votes[i] = int256((_votesAmount % (actorBalance + 1)));
-            vetos[i] = int256((_vetosAmount % (actorBalance + 1)));
+            // Clamp amounts to user's unallocated LQTY according to meaningful-values.json
+            votes[i] = int256((_votesAmount % (unallocatedLQTY + 1)));
+            vetos[i] = int256((_vetosAmount % (unallocatedLQTY + 1)));
         }
         
         governance_allocateLQTY(initiativesToReset, initiatives, votes, vetos);
     }
 
     function governance_depositLQTY_clamped(uint256 _lqtyAmount) public asActor {
-        // Clamp amount to actor's LQTY balance
+        // Clamp amount to actor's LQTY balance according to meaningful-values.json
         _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
         
         governance_depositLQTY(_lqtyAmount);
@@ -73,7 +75,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 _lqtyAmount,
         bool _doSendRewards
     ) public asActor {
-        // Clamp amount to actor's LQTY balance
+        // Clamp amount to actor's LQTY balance according to meaningful-values.json
         _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
         
         // Create minimal valid permit params
@@ -92,7 +94,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     }
 
     function governance_depositLQTYViaPermit_simple_clamped(uint256 _lqtyAmount) public asActor {
-        // Clamp amount to actor's LQTY balance
+        // Clamp amount to actor's LQTY balance according to meaningful-values.json
         _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
         
         // Create minimal valid permit params
@@ -110,30 +112,22 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     }
 
     function governance_registerInitiative_clamped() public asActor {
-        // Register the bribe initiative as it's a known valid initiative
+        // Register the bribe initiative according to meaningful-values.json
         governance_registerInitiative(address(bribeInitiative));
     }
 
-    function governance_resetAllocations_clamped(uint256 _numInitiatives) public asActor {
-        // Create bounded array of initiatives to reset
-        uint256 maxInitiatives = 5;
-        uint256 numToReset = (_numInitiatives % (maxInitiatives + 1));
-        
-        address[] memory initiativesToReset = new address[](numToReset);
-        address[] memory actors = _getActors();
-        
-        for (uint256 i = 0; i < numToReset; i++) {
-            initiativesToReset[i] = actors[i % actors.length];
-        }
+    function governance_resetAllocations_clamped() public asActor {
+        // Use exact array from meaningful-values.json containing bribe initiative
+        address[] memory initiativesToReset = new address[](1);
+        initiativesToReset[0] = address(bribeInitiative);
         
         governance_resetAllocations(initiativesToReset, false);
     }
 
     function governance_withdrawLQTY_clamped(uint256 _lqtyAmount) public asActor {
-        // Clamp amount to reasonable range (up to actor's total deposited amount)
-        // For safety, we'll use a fraction of actor's balance
-        uint256 actorBalance = lqty.balanceOf(_getActor());
-        _lqtyAmount %= (actorBalance / 2 + 1); // Conservative withdrawal
+        // Clamp amount to user's unallocated LQTY according to meaningful-values.json
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        _lqtyAmount %= (unallocatedLQTY + 1);
         
         governance_withdrawLQTY(_lqtyAmount);
     }
@@ -142,12 +136,17 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 _lqtyAmount,
         bool _doSendRewards
     ) public asActor {
-        // Clamp amount to reasonable range
-        uint256 actorBalance = lqty.balanceOf(_getActor());
-        _lqtyAmount %= (actorBalance / 2 + 1);
+        // Clamp amount to user's unallocated LQTY according to meaningful-values.json
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        _lqtyAmount %= (unallocatedLQTY + 1);
         
         address recipient = _getActor();
         governance_withdrawLQTY(_lqtyAmount, _doSendRewards, recipient);
+    }
+
+    function governance_claimForInitiative_clamped() public asActor {
+        // Claim for the bribe initiative according to meaningful-values.json
+        governance_claimForInitiative(address(bribeInitiative));
     }
 
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///

@@ -16,7 +16,14 @@ import "src/BribeInitiative.sol";
 abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here //
 
-    function bribeInitiative_claimBribes_clamped() public asActor {
+    function bribeInitiative_claimBribes_clamped(
+        uint256 _boldAmount,
+        uint256 _bribeTokenAmount
+    ) public asActor {
+        // Clamp amounts to actor's balances according to meaningful-values.json
+        _boldAmount %= bold.balanceOf(_getActor()) + 1;
+        _bribeTokenAmount %= bribeToken.balanceOf(_getActor()) + 1;
+        
         // Create a simple claim data with current epoch
         IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
         uint256 currentEpoch = (block.timestamp - governance.EPOCH_START()) / governance.EPOCH_DURATION();
@@ -31,15 +38,13 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
 
     function bribeInitiative_depositBribe_clamped(
         uint256 _boldAmount,
-        uint256 _bribeTokenAmount,
-        uint256 _epoch
+        uint256 _bribeTokenAmount
     ) public asActor {
-        // Clamp amounts to actor's balances
+        // Clamp amounts to actor's balances according to meaningful-values.json
         _boldAmount %= bold.balanceOf(_getActor()) + 1;
         _bribeTokenAmount %= bribeToken.balanceOf(_getActor()) + 1;
-        // Clamp epoch to reasonable range (current epoch +/- 10)
-        uint256 currentEpoch = (block.timestamp - governance.EPOCH_START()) / governance.EPOCH_DURATION();
-        _epoch = currentEpoch + (_epoch % 21) - 10; // Range: currentEpoch-10 to currentEpoch+10
+        // Use exact epoch value from meaningful-values.json
+        uint256 _epoch = governance.epoch();
         
         bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
     }
