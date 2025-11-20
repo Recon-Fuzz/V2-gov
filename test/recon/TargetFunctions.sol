@@ -2165,5 +2165,174 @@ abstract contract TargetFunctions is
         governance_unregisterInitiative(address(bribeInitiative));
     }
 
+    function shortcut_resetAllocationsWithBribes(uint256 depositAmount1, uint256 depositAmount2, uint256 bribeAmount) public {
+        // Test resetAllocations function with full bribe flow
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Actor 0: Initial deposit and allocation
+        governance_depositLQTY_clamped(depositAmount1);
+        governance_allocateLQTY_clamped(0, 1, depositAmount1, 0);
+        
+        // Actor 1: Also deposit and allocate
+        switchActor(1);
+        governance_depositLQTY_clamped(depositAmount2);
+        governance_allocateLQTY_clamped(0, 1, depositAmount2, 0);
+        
+        // Actor 2: Deposit bribe
+        switchActor(2);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Switch back to actor 0 and reset allocations
+        switchActor(0);
+        governance_resetAllocations_clamped();
+        
+        // Reallocate with different amounts
+        governance_allocateLQTY_clamped(0, 1, depositAmount1 / 2, 0);
+        
+        // Wait for epoch and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function shortcut_adminMultiDelegateWithReset(uint256 depositAmount, uint256 allocateAmount) public {
+        // Admin multi-delegate call that includes resetAllocations
+        
+        // Admin registers initial initiatives
+        switchActor(0); // Ensure admin actor
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        governance_registerInitialInitiatives(initiatives);
+        
+        // Switch to regular user for setup
+        switchActor(1);
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(0, 1, allocateAmount, 0);
+        
+        // Switch back to admin for multi-delegate call with reset
+        switchActor(0);
+        bytes[] memory calls = new bytes[](3);
+        
+        // Call 1: Reset allocations
+        address[] memory initiativesToReset = new address[](1);
+        initiativesToReset[0] = address(bribeInitiative);
+        calls[0] = abi.encodeWithSelector(
+            governance.resetAllocations.selector,
+            initiativesToReset,
+            false
+        );
+        
+        // Call 2: Calculate voting threshold
+        calls[1] = abi.encodeWithSignature("calculateVotingThreshold()");
+        
+        // Call 3: Snapshot votes
+        calls[2] = abi.encodeWithSignature(
+            "snapshotVotesForInitiative(address)",
+            address(bribeInitiative)
+        );
+        
+        // Execute multi-delegate call
+        governance_multiDelegateCall(calls);
+    }
+
+    function shortcut_complexResetAndReallocation(uint256 depositAmount1, uint256 depositAmount2, uint256 allocateAmount) public {
+        // Complex reset and reallocation scenario with multiple actors
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Multiple actors deposit and allocate
+        governance_depositLQTY_clamped(depositAmount1);
+        governance_allocateLQTY_clamped(0, 1, allocateAmount, 0);
+        
+        switchActor(1);
+        governance_depositLQTY_clamped(depositAmount2);
+        governance_allocateLQTY_clamped(0, 1, allocateAmount / 2, 0);
+        
+        switchActor(2);
+        bribeInitiative_depositBribe(allocateAmount, allocateAmount, governance.epoch());
+        
+        // Switch back and reset all allocations
+        switchActor(0);
+        governance_resetAllocations_clamped();
+        
+        // All actors reallocate with new amounts
+        governance_allocateLQTY_clamped(0, 1, depositAmount1, 0);
+        
+        switchActor(1);
+        governance_allocateLQTY_clamped(0, 1, depositAmount2, 0);
+        
+        // Wait and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        switchActor(0);
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // All actors claim bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        
+        for (uint256 i = 0; i < 3; i++) {
+            switchActor(i);
+            bribeInitiative_claimBribes(claimData);
+        }
+    }
+
+    function shortcut_resetWithEpochTransition(uint256 depositAmount, uint256 allocateAmount, uint256 bribeAmount) public {
+        // Reset allocations across epoch transitions
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Initial setup
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_clamped(0, 1, allocateAmount, 0);
+        
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Wait for epoch and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        switchActor(0);
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Reset allocations after epoch
+        governance_resetAllocations_clamped();
+        
+        // Reallocate for next epoch
+        governance_allocateLQTY_clamped(0, 1, allocateAmount / 2, 0);
+        
+        // Switch to different actor for new bribe
+        switchActor(2);
+        bribeInitiative_depositBribe(bribeAmount / 2, bribeAmount / 2, governance.epoch());
+        
+        // Wait for next epoch
+        vm.warp(block.timestamp + 604800); // 1 week
+        switchActor(0);
+        governance_claimForInitiative(address(bribeInitiative));
+        
+        // Claim final bribes
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: governance.epoch() - 1,
+            prevLQTYAllocationEpoch: 0,
+            prevTotalLQTYAllocationEpoch: 0
+        });
+        bribeInitiative_claimBribes(claimData);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
