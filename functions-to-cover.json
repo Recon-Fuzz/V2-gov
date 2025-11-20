@@ -1,0 +1,73 @@
+{
+    "BribeInitiative": {
+        "functions_to_cover": [
+            "claimBribes",
+            "_claimBribe",
+            "depositBribe",
+            "onAfterAllocateLQTY",
+            "onClaimForInitiative",
+            "onRegisterInitiative",
+            "onUnregisterInitiative",
+            "_setTotalLQTYAllocationByEpoch",
+            "_setLQTYAllocationByUserAtEpoch"
+        ]
+    },
+    "Governance": {
+        "functions_to_cover": [
+            "allocateLQTY",
+            "_allocateLQTY",
+            "_resetInitiatives",
+            "calculateVotingThreshold",
+            "claimForInitiative",
+            "claimFromStakingV1",
+            "deployUserProxy",
+            "depositLQTY",
+            "_increaseUserVoteTrackers",
+            "depositLQTYViaPermit",
+            "getInitiativeState",
+            "getInitiativeSnapshotAndState",
+            "getTotalVotesAndState",
+            "lqtyToVotes",
+            "multiDelegateCall",
+            "registerInitiative",
+            "registerInitialInitiatives",
+            "resetAllocations",
+            "secondsWithinEpoch",
+            "snapshotVotesForInitiative",
+            "_snapshotVotes",
+            "_snapshotVotesForInitiative",
+            "unregisterInitiative",
+            "withdrawLQTY",
+            "epoch",
+            "epochStart",
+            "_requireNoNOP",
+            "_requireNoSimultaneousVoteAndVeto"
+        ]
+    },
+    "DoubleLinkedList": {
+        "functions_to_cover": [
+            "getItem",
+            "getHead",
+            "insert",
+            "contains"
+        ]
+    },
+    "UserProxyFactory": {
+        "functions_to_cover": [
+            "deriveUserProxyAddress",
+            "deployUserProxy"
+        ]
+    },
+    "Clones": {
+        "functions_to_cover": [
+            "predictDeterministicAddress",
+            "cloneDeterministic"
+        ]
+    },
+    "ReentrancyGuard": {
+        "functions_to_cover": [
+            "_nonReentrantBefore",
+            "_nonReentrantAfter"
+        ]
+    }
+}
