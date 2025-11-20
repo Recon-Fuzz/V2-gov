@@ -19,9 +19,8 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
     function bribeInitiative_claimBribes_clamped() public asActor {
         // Create a simple claim for current epoch - 1 (previous epoch)
         uint256 currentEpoch = governance.epoch();
-        if (currentEpoch == 0) return;
+        uint256 claimEpoch = currentEpoch == 0 ? 0 : currentEpoch - 1;
         
-        uint256 claimEpoch = currentEpoch - 1;
         IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
         claimData[0] = IBribeInitiative.ClaimData({
             epoch: claimEpoch,
@@ -41,18 +40,9 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         uint256 maxBold = bold.balanceOf(actor);
         uint256 maxBribeToken = bribeToken.balanceOf(actor);
         
-        // Ensure at least 1 token is deposited if balance > 0
-        if (maxBold > 0) {
-            _boldAmount = (_boldAmount % maxBold) + 1;
-        } else {
-            _boldAmount = 0;
-        }
-        
-        if (maxBribeToken > 0) {
-            _bribeTokenAmount = (_bribeTokenAmount % maxBribeToken) + 1;
-        } else {
-            _bribeTokenAmount = 0;
-        }
+        // Clamp amounts to available balances + 1 to allow full balance
+        _boldAmount = maxBold > 0 ? (_boldAmount % (maxBold + 1)) : 0;
+        _bribeTokenAmount = maxBribeToken > 0 ? (_bribeTokenAmount % (maxBribeToken + 1)) : 0;
         
         bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, currentEpoch);
     }
@@ -66,8 +56,8 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         uint256 bribeTokenBalance = bribeToken.balanceOf(actor);
         
         // Use 10% of balance as a reasonable bribe amount
-        uint256 boldAmount = boldBalance > 0 ? boldBalance / 10 : 0;
-        uint256 bribeTokenAmount = bribeTokenBalance > 0 ? bribeTokenBalance / 10 : 0;
+        uint256 boldAmount = boldBalance / 10;
+        uint256 bribeTokenAmount = bribeTokenBalance / 10;
         
         bribeInitiative_depositBribe(boldAmount, bribeTokenAmount, currentEpoch);
     }

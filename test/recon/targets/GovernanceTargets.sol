@@ -25,13 +25,8 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 availableLQTY = unallocatedLQTY + allocatedLQTY;
         
         // Clamp vote and veto amounts to available LQTY
-        if (availableLQTY > 0) {
-            _voteAmount = _voteAmount % (availableLQTY + 1);
-            _vetoAmount = _vetoAmount % (availableLQTY + 1);
-        } else {
-            _voteAmount = 0;
-            _vetoAmount = 0;
-        }
+        _voteAmount = _voteAmount % (availableLQTY + 1);
+        _vetoAmount = _vetoAmount % (availableLQTY + 1);
         
         // Create allocation arrays with bribe initiative
         address[] memory initiatives = new address[](1);
@@ -53,11 +48,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 maxBalance = lqty.balanceOf(actor);
         
         // Clamp to actor's balance, allowing full balance deposit
-        if (maxBalance > 0) {
-            _lqtyAmount = (_lqtyAmount % (maxBalance + 1));
-        } else {
-            _lqtyAmount = 0;
-        }
+        _lqtyAmount = _lqtyAmount % (maxBalance + 1);
         
         governance_depositLQTY(_lqtyAmount);
     }
@@ -76,11 +67,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 deposited = unallocatedLQTY + allocatedLQTY;
         
         // Clamp to deposited amount
-        if (deposited > 0) {
-            _lqtyAmount = (_lqtyAmount % (deposited + 1));
-        } else {
-            _lqtyAmount = 0;
-        }
+        _lqtyAmount = _lqtyAmount % (deposited + 1);
         
         governance_withdrawLQTY(_lqtyAmount);
     }
@@ -135,39 +122,37 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         address actor = _getActor();
         uint256 lqtyBalance = lqty.balanceOf(actor);
         
-        if (lqtyBalance > 0) {
-            // Use 10% of balance for operations
-            uint256 depositAmount = lqtyBalance / 10;
-            
-            // Create call data for depositLQTY (simple version)
-            bytes memory depositCall = abi.encodeWithSignature(
-                "depositLQTY(uint256)",
-                depositAmount
-            );
-            
-            // Create call data for allocateLQTY
-            address[] memory initiatives = new address[](1);
-            initiatives[0] = address(bribeInitiative);
-            int256[] memory votes = new int256[](1);
-            votes[0] = int256(depositAmount);
-            int256[] memory vetos = new int256[](1);
-            vetos[0] = 0;
-            address[] memory emptyArray = new address[](0);
-            
-            bytes memory allocateCall = abi.encodeWithSelector(
-                governance.allocateLQTY.selector,
-                emptyArray,
-                initiatives,
-                votes,
-                vetos
-            );
-            
-            bytes[] memory calls = new bytes[](2);
-            calls[0] = depositCall;
-            calls[1] = allocateCall;
-            
-            governance.multiDelegateCall(calls);
-        }
+        // Use 10% of balance for operations (will be 0 if balance is 0)
+        uint256 depositAmount = lqtyBalance / 10;
+        
+        // Create call data for depositLQTY (simple version)
+        bytes memory depositCall = abi.encodeWithSignature(
+            "depositLQTY(uint256)",
+            depositAmount
+        );
+        
+        // Create call data for allocateLQTY
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(depositAmount);
+        int256[] memory vetos = new int256[](1);
+        vetos[0] = 0;
+        address[] memory emptyArray = new address[](0);
+        
+        bytes memory allocateCall = abi.encodeWithSelector(
+            governance.allocateLQTY.selector,
+            emptyArray,
+            initiatives,
+            votes,
+            vetos
+        );
+        
+        bytes[] memory calls = new bytes[](2);
+        calls[0] = depositCall;
+        calls[1] = allocateCall;
+        
+        governance.multiDelegateCall(calls);
     }
 
     function governance_registerInitialInitiatives_clamped() public asActor {
@@ -204,11 +189,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 maxBalance = lqty.balanceOf(actor);
         
         // Clamp to actor's balance
-        if (maxBalance > 0) {
-            _lqtyAmount = (_lqtyAmount % (maxBalance + 1));
-        } else {
-            _lqtyAmount = 0;
-        }
+        _lqtyAmount = _lqtyAmount % (maxBalance + 1);
         
         // Create permit parameters (using mock values)
         PermitParams memory permitParams = PermitParams({
@@ -230,11 +211,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 maxBalance = lqty.balanceOf(actor);
         
         // Clamp to actor's balance
-        if (maxBalance > 0) {
-            _lqtyAmount = (_lqtyAmount % (maxBalance + 1));
-        } else {
-            _lqtyAmount = 0;
-        }
+        _lqtyAmount = _lqtyAmount % (maxBalance + 1);
         
         // Create permit parameters
         PermitParams memory permitParams = PermitParams({
@@ -257,11 +234,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 deposited = unallocatedLQTY + allocatedLQTY;
         
         // Clamp to deposited amount
-        if (deposited > 0) {
-            _lqtyAmount = (_lqtyAmount % (deposited + 1));
-        } else {
-            _lqtyAmount = 0;
-        }
+        _lqtyAmount = _lqtyAmount % (deposited + 1);
         
         governance.withdrawLQTY(_lqtyAmount, true, actor);
     }
@@ -272,11 +245,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         uint256 maxBalance = lqty.balanceOf(actor);
         
         // Clamp to actor's balance
-        if (maxBalance > 0) {
-            _lqtyAmount = (_lqtyAmount % (maxBalance + 1));
-        } else {
-            _lqtyAmount = 0;
-        }
+        _lqtyAmount = _lqtyAmount % (maxBalance + 1);
         
         governance.depositLQTY(_lqtyAmount, true, actor);
     }
