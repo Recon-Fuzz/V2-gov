@@ -57,6 +57,21 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         );
     }
 
+    function bribeInitiative_onClaimForInitiative_clamped() public asActor {
+        // Use minimal values for uint parameters
+        bribeInitiative_onClaimForInitiative(0, 0);
+    }
+
+    function bribeInitiative_onRegisterInitiative_clamped() public asActor {
+        // Use minimal value for uint parameter
+        bribeInitiative_onRegisterInitiative(0);
+    }
+
+    function bribeInitiative_onUnregisterInitiative_clamped() public asActor {
+        // Use minimal value for uint parameter
+        bribeInitiative_onUnregisterInitiative(0);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(

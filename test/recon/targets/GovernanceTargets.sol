@@ -191,6 +191,18 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance_withdrawLQTY(_lqtyAmount, _doSendRewards, _recipient);
     }
 
+    function governance_calculateVotingThreshold_clamped() public asActor {
+        // No parameters to clamp
+        governance_calculateVotingThreshold();
+    }
+
+    function governance_deployUserProxy_clamped() public asActor {
+        // No parameters to clamp
+        governance_deployUserProxy();
+    }
+
+
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(
