@@ -21,8 +21,8 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         address actor = _getActor();
         
         // Get current user state to determine available LQTY
-        IGovernance.UserState memory userState = governance.userStates(actor);
-        uint256 availableLQTY = userState.lqtyDeposited;
+        (uint256 unallocatedLQTY,, uint256 allocatedLQTY,) = governance.userStates(actor);
+        uint256 availableLQTY = unallocatedLQTY + allocatedLQTY;
         
         // Clamp vote and veto amounts to available LQTY
         if (availableLQTY > 0) {
@@ -72,8 +72,8 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
 
     function governance_withdrawLQTY_clamped(uint256 _lqtyAmount) public asActor {
         address actor = _getActor();
-        IGovernance.UserState memory userState = governance.userStates(actor);
-        uint256 deposited = userState.lqtyDeposited;
+        (uint256 unallocatedLQTY,, uint256 allocatedLQTY,) = governance.userStates(actor);
+        uint256 deposited = unallocatedLQTY + allocatedLQTY;
         
         // Clamp to deposited amount
         if (deposited > 0) {
@@ -88,9 +88,10 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     function governance_withdrawLQTY_all_clamped() public asActor {
         // Withdraw all deposited LQTY
         address actor = _getActor();
-        IGovernance.UserState memory userState = governance.userStates(actor);
+        (uint256 unallocatedLQTY,, uint256 allocatedLQTY,) = governance.userStates(actor);
+        uint256 totalLQTY = unallocatedLQTY + allocatedLQTY;
         
-        governance_withdrawLQTY(userState.lqtyDeposited);
+        governance_withdrawLQTY(totalLQTY);
     }
 
     function governance_registerInitiative_clamped() public asActor {

@@ -1085,10 +1085,11 @@ abstract contract TargetFunctions is
         governance_withdrawLQTY(withdrawAmount);
         
         // Reallocate with remaining balance
-        IGovernance.UserState memory userState = governance.userStates(_getActor());
-        if (userState.lqtyDeposited > 0) {
+        (uint256 unallocatedLQTY,, uint256 allocatedLQTY,) = governance.userStates(_getActor());
+        uint256 totalLQTY = unallocatedLQTY + allocatedLQTY;
+        if (totalLQTY > 0) {
             int256[] memory votes = new int256[](1);
-            votes[0] = int256(userState.lqtyDeposited);
+            votes[0] = int256(totalLQTY);
             governance_allocateLQTY(new address[](0), new address[](1), votes, new int256[](1));
         }
         
