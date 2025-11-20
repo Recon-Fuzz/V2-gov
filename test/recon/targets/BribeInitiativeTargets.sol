@@ -72,6 +72,67 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         bribeInitiative_depositBribe(boldAmount, bribeTokenAmount, currentEpoch);
     }
 
+    function bribeInitiative_onAfterAllocateLQTY_clamped() public asActor {
+        // Call onAfterAllocateLQTY with realistic parameters
+        address actor = _getActor();
+        uint256 currentEpoch = governance.epoch();
+        
+        // Get user state from governance
+        (uint256 unallocatedLQTY,, uint256 allocatedLQTY,) = governance.userStates(actor);
+        
+        // Create allocation for bribe initiative
+        IGovernance.Allocation memory allocation = IGovernance.Allocation({
+            voteLQTY: allocatedLQTY,
+            voteOffset: 0,
+            vetoLQTY: 0,
+            vetoOffset: 0,
+            atEpoch: currentEpoch
+        });
+        
+        // Create user state
+        IGovernance.UserState memory userState = IGovernance.UserState({
+            unallocatedLQTY: unallocatedLQTY,
+            unallocatedOffset: 0,
+            allocatedLQTY: allocatedLQTY,
+            allocatedOffset: 0
+        });
+        
+        // Get initiative state for bribe initiative
+        (uint256 voteLQTY, uint256 voteOffset, uint256 vetoLQTY, uint256 vetoOffset, uint256 lastEpochClaim) = governance.initiativeStates(address(bribeInitiative));
+        
+        IGovernance.InitiativeState memory initiativeState = IGovernance.InitiativeState({
+            voteLQTY: voteLQTY,
+            voteOffset: voteOffset,
+            vetoLQTY: vetoLQTY,
+            vetoOffset: vetoOffset,
+            lastEpochClaim: lastEpochClaim
+        });
+        
+        bribeInitiative_onAfterAllocateLQTY(currentEpoch, actor, userState, allocation, initiativeState);
+    }
+
+    function bribeInitiative_onClaimForInitiative_clamped() public asActor {
+        // Call onClaimForInitiative with current epoch and reasonable amount
+        uint256 currentEpoch = governance.epoch();
+        uint256 claimAmount = 1000e18; // Reasonable claim amount
+        
+        bribeInitiative_onClaimForInitiative(currentEpoch, claimAmount);
+    }
+
+    function bribeInitiative_onRegisterInitiative_clamped() public asActor {
+        // Call onRegisterInitiative with current epoch
+        uint256 currentEpoch = governance.epoch();
+        
+        bribeInitiative_onRegisterInitiative(currentEpoch);
+    }
+
+    function bribeInitiative_onUnregisterInitiative_clamped() public asActor {
+        // Call onUnregisterInitiative with current epoch
+        uint256 currentEpoch = governance.epoch();
+        
+        bribeInitiative_onUnregisterInitiative(currentEpoch);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(
