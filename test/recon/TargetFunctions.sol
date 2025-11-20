@@ -898,5 +898,235 @@ abstract contract TargetFunctions is
         bribeInitiative_claimBribes(claimData);
     }
 
+    function shortcut_adminRegistrationAndVoting(uint256 depositAmount, uint256 allocateAmount) public {
+        // Admin registers initial initiatives, then regular users vote
+        
+        // Admin registers initial initiatives
+        switchActor(0); // Ensure admin actor
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        governance_registerInitialInitiatives(initiatives);
+        
+        // Switch to regular user for voting
+        switchActor(1);
+        governance_depositLQTY(depositAmount);
+        governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+    }
+
+    function shortcut_multiDelegateVotingCycle(uint256 depositAmount, uint256 allocateAmount, uint256 bribeAmount) public {
+        // Complete voting cycle using multi-delegate calls
+        
+        // Register initiative first
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Switch to different actor for bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Switch back and create multi-delegate call for voting
+        switchActor(0);
+        bytes[] memory calls = new bytes[](2);
+        
+        // Deposit call
+        calls[0] = abi.encodeWithSignature("depositLQTY(uint256)", depositAmount);
+        
+        // Allocate call
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(allocateAmount);
+        calls[1] = abi.encodeWithSelector(
+            governance.allocateLQTY.selector,
+            new address[](0),
+            initiatives,
+            votes,
+            new int256[](1)
+        );
+        
+        // Execute multi-delegate call
+        governance_multiDelegateCall(calls);
+        
+        // Wait for epoch and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_proxyDeploymentAndStaking(uint256 stakeAmount, uint256 bribeAmount) public {
+        // Deploy proxy, stake, and participate in bribe system
+        
+        // Deploy user proxy
+        governance_deployUserProxy();
+        
+        // Get proxy address and approve
+        address userProxy = governance.deriveUserProxyAddress(_getActor());
+        lqty.approve(userProxy, stakeAmount);
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Switch to different actor for bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Switch back and stake through proxy
+        switchActor(0);
+        governance_depositLQTY(stakeAmount);
+        governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Wait and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_stakingV1ClaimAndVoting(uint256 lqtyAmount, uint256 allocateAmount) public {
+        // Claim from StakingV1 and immediately participate in voting
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Claim from StakingV1 first
+        governance_claimFromStakingV1(_getActor());
+        
+        // Deposit claimed LQTY
+        governance_depositLQTY(lqtyAmount);
+        
+        // Allocate votes
+        governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Switch to different actor for bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(allocateAmount, allocateAmount, governance.epoch());
+        
+        // Wait and claim
+        switchActor(0);
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_permitDepositAndVoting(uint256 lqtyAmount, uint256 allocateAmount, uint256 bribeAmount) public {
+        // Use permit-based deposit and participate in voting
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Create permit parameters
+        PermitParams memory permitParams = PermitParams({
+            owner: _getActor(),
+            spender: address(governance),
+            value: lqtyAmount,
+            deadline: block.timestamp + 3600,
+            v: 27,
+            r: bytes32(uint256(1)),
+            s: bytes32(uint256(1))
+        });
+        
+        // Deposit using permit
+        governance_depositLQTYViaPermit(lqtyAmount, permitParams);
+        
+        // Allocate votes
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(allocateAmount);
+        governance_allocateLQTY(new address[](0), new address[](1), votes, new int256[](1));
+        
+        // Switch to different actor for bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(bribeAmount, bribeAmount, governance.epoch());
+        
+        // Wait and claim
+        switchActor(0);
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_votingThresholdScenario(uint256 depositAmount1, uint256 depositAmount2) public {
+        // Test voting threshold calculations with multiple actors
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Actor 0: Large deposit to affect threshold
+        governance_depositLQTY(depositAmount1);
+        
+        // Calculate threshold and allocate appropriately
+        uint256 threshold = governance.calculateVotingThreshold();
+        uint256 voteAmount = depositAmount1 > threshold ? threshold : depositAmount1;
+        
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(voteAmount);
+        governance_allocateLQTY(new address[](0), new address[](1), votes, new int256[](1));
+        
+        // Actor 1: Also deposit to test threshold dynamics
+        switchActor(1);
+        governance_depositLQTY(depositAmount2);
+        votes[0] = int256(depositAmount2);
+        governance_allocateLQTY(new address[](0), new address[](1), votes, new int256[](1));
+        
+        // Test snapshot functionality
+        switchActor(0);
+        governance_snapshotVotesForInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_withdrawalDuringVoting(uint256 depositAmount, uint256 allocateAmount, uint256 withdrawAmount) public {
+        // Test withdrawal scenarios during active voting
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Deposit and allocate
+        governance_depositLQTY(depositAmount);
+        governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Switch to different actor for bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(allocateAmount, allocateAmount, governance.epoch());
+        
+        // Switch back and withdraw during voting period
+        switchActor(0);
+        governance_withdrawLQTY(withdrawAmount);
+        
+        // Reallocate with remaining balance
+        IGovernance.UserState memory userState = governance.userStates(_getActor());
+        if (userState.lqtyDeposited > 0) {
+            int256[] memory votes = new int256[](1);
+            votes[0] = int256(userState.lqtyDeposited);
+            governance_allocateLQTY(new address[](0), new address[](1), votes, new int256[](1));
+        }
+        
+        // Wait and claim
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    function shortcut_resetAndReallocation(uint256 depositAmount1, uint256 depositAmount2) public {
+        // Test reset allocations and reallocation scenarios
+        
+        // Register initiative
+        governance_registerInitiative(address(bribeInitiative));
+        
+        // Initial deposit and allocation
+        governance_depositLQTY(depositAmount1);
+        governance_allocateLQTY(new address[](0), new address[](1), new int256[](1), new int256[](1));
+        
+        // Reset allocations
+        address[] memory initiativesToReset = new address[](1);
+        initiativesToReset[0] = address(bribeInitiative);
+        governance_resetAllocations(initiativesToReset, false);
+        
+        // Deposit more and reallocate
+        governance_depositLQTY(depositAmount2);
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(depositAmount1 + depositAmount2);
+        governance_allocateLQTY(new address[](0), new address[](1), votes, new int256[](1));
+        
+        // Switch to different actor for bribe
+        switchActor(1);
+        bribeInitiative_depositBribe(depositAmount2, depositAmount2, governance.epoch());
+        
+        // Wait and claim
+        switchActor(0);
+        vm.warp(block.timestamp + 604800); // 1 week
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
