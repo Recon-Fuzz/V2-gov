@@ -1,0 +1,16 @@
+{
+  "multiDelegateCall": {
+    "contract": "MultiDelegateCall",
+    "lines_missing_covg": [
+      "8-15"
+    ],
+    "reason": "Function not covered in any coverage report - MultiDelegateCall.sol not included in coverage files"
+  },
+  "resetAllocations": {
+    "contract": "Governance", 
+    "lines_missing_covg": [
+      "569-581"
+    ],
+    "reason": "Function located at lines 569-581 but coverage for Governance.sol only extends to line 507"
+  }
+}
