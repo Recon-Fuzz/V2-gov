@@ -2,72 +2,60 @@
     "BribeInitiative": {
         "functions_to_cover": [
             "claimBribes",
-            "_claimBribe",
             "depositBribe",
             "onAfterAllocateLQTY",
             "onClaimForInitiative",
             "onRegisterInitiative",
             "onUnregisterInitiative",
+            "_claimBribe",
             "_setTotalLQTYAllocationByEpoch",
-            "_setLQTYAllocationByUserAtEpoch"
+            "_setLQTYAllocationByUserAtEpoch",
+            "getMostRecentUserEpoch",
+            "getMostRecentTotalEpoch"
+        ]
+    },
+    "CurveV2GaugeRewards": {
+        "functions_to_cover": [
+            "onClaimForInitiative",
+            "_depositIntoGauge"
         ]
     },
     "Governance": {
         "functions_to_cover": [
             "allocateLQTY",
-            "_allocateLQTY",
-            "_resetInitiatives",
             "calculateVotingThreshold",
-            "claimForInitiative",
             "claimFromStakingV1",
             "deployUserProxy",
             "depositLQTY",
-            "_increaseUserVoteTrackers",
             "depositLQTYViaPermit",
             "getInitiativeState",
-            "getInitiativeSnapshotAndState",
-            "getTotalVotesAndState",
-            "lqtyToVotes",
             "multiDelegateCall",
-            "registerInitiative",
             "registerInitialInitiatives",
+            "registerInitiative",
             "resetAllocations",
-            "secondsWithinEpoch",
             "snapshotVotesForInitiative",
-            "_snapshotVotes",
-            "_snapshotVotesForInitiative",
             "unregisterInitiative",
             "withdrawLQTY",
+            "_allocateLQTY",
+            "_increaseUserVoteTrackers",
+            "_resetInitiatives",
+            "_requireNoNOP",
+            "_requireNoSimultaneousVoteAndVeto",
+            "_snapshotVotes",
+            "_snapshotVotesForInitiative",
             "epoch",
             "epochStart",
-            "_requireNoNOP",
-            "_requireNoSimultaneousVoteAndVeto"
-        ]
-    },
-    "DoubleLinkedList": {
-        "functions_to_cover": [
-            "getItem",
-            "getHead",
-            "insert",
-            "contains"
+            "getTotalVotesAndState",
+            "getInitiativeSnapshotAndState",
+            "lqtyToVotes",
+            "getLatestVotingThreshold",
+            "secondsWithinEpoch"
         ]
     },
     "UserProxyFactory": {
         "functions_to_cover": [
             "deriveUserProxyAddress",
             "deployUserProxy"
-        ]
-    },
-    "Clones": {
-        "functions_to_cover": [
-            "predictDeterministicAddress",
-            "cloneDeterministic"
-        ]
-    },
-    "ReentrancyGuard": {
-        "functions_to_cover": [
-            "_nonReentrantBefore",
-            "_nonReentrantAfter"
         ]
     }
 }
