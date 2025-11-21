@@ -1,10 +1,23 @@
 {
+  "deployUserProxy": {
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Function not found in coverage report - may be internal or not reached during fuzzing"
+  },
+  "getInitiativeState": {
+    "contract": "Governance", 
+    "lines_missing_covg": [],
+    "reason": "Function not found in coverage report - may be internal or not reached during fuzzing"
+  },
   "multiDelegateCall": {
-    "contract": "MultiDelegateCall",
-    "lines_missing_covg": [
-      "8-15"
-    ],
-    "reason": "Function not covered in any coverage report - MultiDelegateCall.sol not included in coverage files"
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Function not found in coverage report - may be internal or not reached during fuzzing"
+  },
+  "registerInitialInitiatives": {
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Function not found in coverage report - may be internal or not reached during fuzzing"
   },
   "resetAllocations": {
     "contract": "Governance", 
@@ -12,5 +25,62 @@
       "569-581"
     ],
     "reason": "Function located at lines 569-581 but coverage for Governance.sol only extends to line 507"
+  },
+  "_allocateLQTY": {
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Internal function not found in coverage report - may not be reached during fuzzing"
+  },
+  "_increaseUserVoteTrackers": {
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Internal function not found in coverage report - may not be reached during fuzzing"
+  },
+  "_resetInitiatives": {
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Internal function not found in coverage report - may not be reached during fuzzing"
+  },
+  "_requireNoNOP": {
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Internal function not found in coverage report - may not be reached during fuzzing"
+  },
+  "_requireNoSimultaneousVoteAndVeto": {
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Internal function not found in coverage report - may not be reached during fuzzing"
+  },
+  "getTotalVotesAndState": {
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Function not found in coverage report - may be internal or not reached during fuzzing"
+  },
+  "getInitiativeSnapshotAndState": {
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Function not found in coverage report - may be internal or not reached during fuzzing"
+  },
+  "getLatestVotingThreshold": {
+    "contract": "Governance",
+    "lines_missing_covg": [],
+    "reason": "Function not found in coverage report - may be internal or not reached during fuzzing"
+  },
+  "getMostRecentUserEpoch": {
+    "contract": "BribeInitiative",
+    "lines_missing_covg": [],
+    "reason": "Function not found in coverage report - may be internal or not reached during fuzzing"
+  },
+  "getMostRecentTotalEpoch": {
+    "contract": "BribeInitiative",
+    "lines_missing_covg": [],
+    "reason": "Function not found in coverage report - may be internal or not reached during fuzzing"
+  },
+  "onClaimForInitiative": {
+    "contract": "CurveV2GaugeRewards",
+    "lines_missing_covg": [
+      "25-27"
+    ],
+    "reason": "Function not covered in coverage report - CurveV2GaugeRewards.onClaimForInitiative not listed in coverage data"
   }
 }
