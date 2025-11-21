@@ -100,6 +100,29 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, targetEpoch);
     }
 
+    function bribeInitiative_totalLQTYAllocatedByEpoch_clamped(uint256 _epochOffset) public asActor {
+        uint256 currentEpoch = governance.epoch();
+        uint256 targetEpoch = (currentEpoch + _epochOffset) % 20; // Allow some past and future epochs
+        
+        bribeInitiative_totalLQTYAllocatedByEpoch(targetEpoch);
+    }
+
+    function bribeInitiative_lqtyAllocatedByUserAtEpoch_clamped(uint256 _epochOffset) public asActor {
+        uint256 currentEpoch = governance.epoch();
+        uint256 targetEpoch = (currentEpoch + _epochOffset) % 20; // Allow some past and future epochs
+        address user = _getActor();
+        
+        bribeInitiative_lqtyAllocatedByUserAtEpoch(user, targetEpoch);
+    }
+
+    function bribeInitiative_checkClaimedBribeAtEpoch_clamped(uint256 _epochOffset) public asActor {
+        uint256 currentEpoch = governance.epoch();
+        uint256 targetEpoch = (currentEpoch + _epochOffset) % 20; // Allow some past and future epochs
+        address user = _getActor();
+        
+        bribeInitiative_checkClaimedBribeAtEpoch(user, targetEpoch);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(
@@ -145,5 +168,17 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
 
     function bribeInitiative_onUnregisterInitiative(uint256) public asActor {
         bribeInitiative.onUnregisterInitiative(0);
+    }
+
+    function bribeInitiative_totalLQTYAllocatedByEpoch(uint256 _epoch) public asActor {
+        bribeInitiative.totalLQTYAllocatedByEpoch(_epoch);
+    }
+
+    function bribeInitiative_lqtyAllocatedByUserAtEpoch(address _user, uint256 _epoch) public asActor {
+        bribeInitiative.lqtyAllocatedByUserAtEpoch(_user, _epoch);
+    }
+
+    function bribeInitiative_checkClaimedBribeAtEpoch(address _user, uint256 _epoch) public asActor {
+        bribeInitiative.claimedBribeAtEpoch(_user, _epoch);
     }
 }

@@ -36,6 +36,36 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance_allocateLQTY(initiativesToReset, initiatives, absoluteLQTYVotes, absoluteLQTYVetos);
     }
 
+    function governance_allocateLQTYLateEpoch_clamped(uint256 _randomVotes, uint256 _randomVetos) public asActor {
+        // Fast forward to near end of epoch to trigger late allocation logic
+        uint256 currentEpoch = governance.epoch();
+        uint256 epochVotingCutoff = governance.EPOCH_VOTING_CUTOFF();
+        uint256 epochStart = governance.EPOCH_START();
+        uint256 epochDuration = governance.EPOCH_DURATION();
+        
+        uint256 currentEpochStart = epochStart + (currentEpoch * epochDuration);
+        uint256 votingCutoffTime = currentEpochStart + epochVotingCutoff;
+        
+        // Only warp if we're before the voting cutoff
+        if (block.timestamp < votingCutoffTime) {
+            vm.warp(votingCutoffTime + 100);
+        }
+        
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        
+        address[] memory initiativesToReset = new address[](0);
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        
+        int256[] memory absoluteLQTYVotes = new int256[](1);
+        int256[] memory absoluteLQTYVetos = new int256[](1);
+        
+        absoluteLQTYVotes[0] = int256(_randomVotes % (unallocatedLQTY + 1));
+        absoluteLQTYVetos[0] = int256(_randomVetos % (unallocatedLQTY + 1));
+        
+        governance_allocateLQTY(initiativesToReset, initiatives, absoluteLQTYVotes, absoluteLQTYVetos);
+    }
+
     function governance_depositLQTY_clamped(uint256 _lqtyAmount) public asActor {
         _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
         
@@ -124,6 +154,36 @@ function governance_depositLQTYViaPermit_clamped(uint256 _lqtyAmount) public asA
         calls[0] = abi.encodeWithSignature("depositLQTY(uint256)", uint256(0));
         
         governance_multiDelegateCall(calls);
+    }
+
+    function governance_getLatestVotingThreshold_clamped() public asActor {
+        governance_getLatestVotingThreshold();
+    }
+
+    function governance_calculateVotingThresholdWithVotes_clamped(uint256 _votes) public asActor {
+        _votes %= 1000000e18 + 1; // Reasonable vote range
+        governance.calculateVotingThreshold(_votes);
+    }
+
+    function governance_getVotesSnapshot_clamped() public asActor {
+        governance.votesSnapshot();
+    }
+
+    function governance_getVotesForInitiativeSnapshot_clamped() public asActor {
+        governance.votesForInitiativeSnapshot(address(bribeInitiative));
+    }
+
+    function governance_getGlobalState_clamped() public asActor {
+        governance.globalState();
+    }
+
+    function governance_getRegisteredInitiatives_clamped() public asActor {
+        governance.registeredInitiatives(address(bribeInitiative));
+    }
+
+    function governance_getLQTYAllocatedByUserToInitiative_clamped() public asActor {
+        address user = _getActor();
+        governance.lqtyAllocatedByUserToInitiative(user, address(bribeInitiative));
     }
 
     function governance_registerInitialInitiatives_clamped() public asActor {
@@ -254,4 +314,10 @@ function governance_depositLQTYViaPermit_clamped(uint256 _lqtyAmount) public asA
     ) public asActor {
         governance.withdrawLQTY(_lqtyAmount, _doSendRewards, _recipient);
     }
+
+    function governance_getLatestVotingThreshold() public asActor {
+        governance.getLatestVotingThreshold();
+    }
+
+    // These are view functions that access state directly - no need for wrapper functions
 }
