@@ -17,6 +17,69 @@ import "src/Governance.sol";
 abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
+    function governance_allocateLQTY_clamped(
+        uint256 _randomVotes,
+        uint256 _randomVetos
+    ) public asActor {
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        
+        address[] memory initiativesToReset = new address[](0);
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        
+        int256[] memory absoluteLQTYVotes = new int256[](1);
+        int256[] memory absoluteLQTYVetos = new int256[](1);
+        
+        absoluteLQTYVotes[0] = int256(_randomVotes % (unallocatedLQTY + 1));
+        absoluteLQTYVetos[0] = int256(_randomVetos % (unallocatedLQTY + 1));
+        
+        governance_allocateLQTY(initiativesToReset, initiatives, absoluteLQTYVotes, absoluteLQTYVetos);
+    }
+
+    function governance_depositLQTY_clamped(uint256 _lqtyAmount) public asActor {
+        _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
+        
+        governance_depositLQTY(_lqtyAmount);
+    }
+
+    function governance_depositLQTYViaPermit_clamped(uint256 _lqtyAmount) public asActor {
+        _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
+        
+        PermitParams memory permitParams = PermitParams({
+            owner: _getActor(),
+            spender: address(governance),
+            value: _lqtyAmount,
+            deadline: block.timestamp + 3600,
+            v: 27,
+            r: bytes32(0),
+            s: bytes32(0)
+        });
+        
+        governance_depositLQTYViaPermit(_lqtyAmount, permitParams);
+    }
+
+    function governance_registerInitiative_clamped() public asActor {
+        governance_registerInitiative(address(bribeInitiative));
+    }
+
+    function governance_withdrawLQTY_clamped(uint256 _lqtyAmount) public asActor {
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        _lqtyAmount %= unallocatedLQTY + 1;
+        
+        governance_withdrawLQTY(_lqtyAmount);
+    }
+
+    function governance_claimForInitiative_clamped() public asActor {
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    function governance_resetAllocations_clamped() public asActor {
+        address[] memory initiativesToReset = new address[](1);
+        initiativesToReset[0] = address(bribeInitiative);
+        
+        governance_resetAllocations(initiativesToReset, false);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(

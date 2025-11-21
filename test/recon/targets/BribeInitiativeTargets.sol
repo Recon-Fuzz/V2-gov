@@ -16,6 +16,29 @@ import "src/BribeInitiative.sol";
 abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here //
 
+    function bribeInitiative_claimBribes_clamped() public asActor {
+        uint256 mostRecentEpoch = bribeInitiative.getMostRecentUserEpoch(_getActor());
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: mostRecentEpoch,
+            prevLQTYAllocationEpoch: mostRecentEpoch,
+            prevTotalLQTYAllocationEpoch: mostRecentEpoch
+        });
+        
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    function bribeInitiative_depositBribe_clamped(
+        uint256 _boldAmount,
+        uint256 _bribeTokenAmount
+    ) public asActor {
+        _boldAmount %= bold.balanceOf(_getActor()) + 1;
+        _bribeTokenAmount %= bribeToken.balanceOf(_getActor()) + 1;
+        uint256 currentEpoch = governance.epoch();
+        
+        bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, currentEpoch);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(
