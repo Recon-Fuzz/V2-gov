@@ -14,13 +14,19 @@ import {Utils} from "@recon/Utils.sol";
 
 // Your deps
 import "src/BribeInitiative.sol";
+import "src/CurveV2GaugeRewards.sol";
 import "src/Governance.sol";
+import "src/UniV4MerklRewards.sol";
 import {IGovernance} from "src/interfaces/IGovernance.sol";
 import {IERC20} from "openzeppelin/contracts/interfaces/IERC20.sol";
+import {ILiquidityGauge} from "src/interfaces/ILiquidityGauge.sol";
 
 // Mocks
 import {MockERC20Tester} from "../mocks/MockERC20Tester.sol";
 import {MockStakingV1} from "../mocks/MockStakingV1.sol";
+import {MockLiquidityGauge} from "../mocks/MockLiquidityGauge.sol";
+import {MockDistributionCreator} from "../mocks/MockDistributionCreator.sol";
+import {MockUniV4MerklRewards} from "../mocks/MockUniV4MerklRewards.sol";
 
 abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
     // Configuration constants
@@ -28,7 +34,10 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
 
     // Core contracts
     BribeInitiative bribeInitiative;
+    CurveV2GaugeRewards curveV2GaugeRewards;
     Governance governance;
+    MockUniV4MerklRewards uniV4MerklRewards;
+    MockDistributionCreator mockDistributionCreator;
 
     // Token contracts
     MockERC20Tester lqty;
@@ -38,6 +47,7 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
 
     // Infrastructure contracts
     MockStakingV1 stakingV1;
+    MockLiquidityGauge mockLiquidityGauge;
 
     /// === Setup === ///
     /// This contains all calls to be performed in the tester constructor, both for Echidna and Foundry
@@ -57,6 +67,12 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
 
         // Set wildcard spender for stakingV1 (like in real LQTYStaking)
         lqty.mock_setWildcardSpender(address(stakingV1), true);
+
+        // 3.1. Deploy MockLiquidityGauge for CurveV2GaugeRewards
+        mockLiquidityGauge = new MockLiquidityGauge(address(bold));
+
+        // 3.2. Deploy MockDistributionCreator for UniV4MerklRewards
+        mockDistributionCreator = new MockDistributionCreator();
 
         // 4. Create governance configuration
         // CONFIGURABLE: These parameters can be modified via governance functions
@@ -82,6 +98,27 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
         // 6. Deploy bribe initiative
         bribeInitiative = new BribeInitiative(address(governance), address(bold), address(bribeToken));
 
+        // 6.1. Deploy CurveV2GaugeRewards
+        curveV2GaugeRewards = new CurveV2GaugeRewards(
+            address(governance),
+            address(bold),
+            address(bribeToken),
+            address(mockLiquidityGauge),
+            604800 // 1 week duration
+        );
+
+        // 6.2. Deploy UniV4MerklRewards
+        uniV4MerklRewards = new MockUniV4MerklRewards(
+            address(governance),
+            address(bold),
+            1000e18, // campaignBoldAmountThreshold
+            bytes32(0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef), // uniV4PoolId
+            2500, // weightFees (25%)
+            3750, // weightToken0 (37.5%)
+            3750, // weightToken1 (37.5%)
+            address(mockDistributionCreator)
+        );
+
         // 7. Mint tokens to actors manually (MockERC20Tester has onlyOwner on mint)
         address[] memory actors = _getActors();
         uint256 mintAmount = type(uint88).max;
@@ -94,15 +131,17 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
         }
 
         // 8. Set up approvals for each actor to all relevant contracts
-        // We need to approve: governance, bribeInitiative, stakingV1, and each actor's userProxy
+        // We need to approve: governance, bribeInitiative, curveV2GaugeRewards, uniV4MerklRewards, stakingV1, and each actor's userProxy
         for (uint256 i = 0; i < actors.length; i++) {
             address userProxy = governance.deriveUserProxyAddress(actors[i]);
 
-            address[] memory approvalArray = new address[](4);
+            address[] memory approvalArray = new address[](6);
             approvalArray[0] = address(governance);
             approvalArray[1] = address(bribeInitiative);
-            approvalArray[2] = address(stakingV1);
-            approvalArray[3] = userProxy;
+            approvalArray[2] = address(curveV2GaugeRewards);
+            approvalArray[3] = address(uniV4MerklRewards);
+            approvalArray[4] = address(stakingV1);
+            approvalArray[5] = userProxy;
 
             for (uint256 j = 0; j < approvalArray.length; j++) {
                 vm.prank(actors[i]);

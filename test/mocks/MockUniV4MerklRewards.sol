@@ -1,0 +1,146 @@
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.24;
+
+import {IERC20} from "openzeppelin/contracts/interfaces/IERC20.sol";
+import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
+import {IGovernance} from "src/interfaces/IGovernance.sol";
+import {IDistributionCreator} from "src/interfaces/IDistributionCreator.sol";
+import {IInitiative} from "src/interfaces/IInitiative.sol";
+
+contract MockUniV4MerklRewards is IInitiative {
+    using SafeERC20 for IERC20;
+
+    address public constant LIQUITY_FUNDS_SAFE = address(0xF06016D822943C42e3Cb7FC3a6A3B1889C1045f8);
+
+    uint32 public constant CAMPAIGN_TYPE = 13;
+    IDistributionCreator public merklDistributionCreator;
+
+    IGovernance public immutable governance;
+    IERC20 public immutable boldToken;
+
+    uint256 public immutable CAMPAIGN_BOLD_AMOUNT_THRESHOLD;
+    bool constant IS_OUT_OF_RANGE_INCENTIVIZED = false;
+    bytes32 public immutable UNIV4_POOL_ID;
+    uint32 public immutable WEIGHT_FEES;
+    uint32 public immutable WEIGHT_TOKEN_0;
+    uint32 public immutable WEIGHT_TOKEN_1;
+
+    uint256 internal immutable EPOCH_START;
+    uint256 internal immutable EPOCH_DURATION;
+
+    event NewMerklCampaign(uint256 indexed claimEpoch, uint256 boldAmount, bytes32 campaingId);
+
+    modifier onlyGovernance() {
+        require(msg.sender == address(governance), "UniV4MerklInitiative: invalid-sender");
+        _;
+    }
+
+    constructor(
+        address _governanceAddress,
+        address _boldTokenAddress,
+        uint256 _campaignBoldAmountThreshold,
+        bytes32 _uniV4PoolId,
+        uint32 _weightFees,
+        uint32 _weightToken0,
+        uint32 _weightToken1,
+        address _mockDistributionCreator
+    ) {
+        require(_weightFees + _weightToken0 + _weightToken1 == 10000, "Wrong weigths");
+
+        governance = IGovernance(_governanceAddress);
+        boldToken = IERC20(_boldTokenAddress);
+        merklDistributionCreator = IDistributionCreator(_mockDistributionCreator);
+
+        CAMPAIGN_BOLD_AMOUNT_THRESHOLD = _campaignBoldAmountThreshold;
+        UNIV4_POOL_ID = _uniV4PoolId;
+        WEIGHT_FEES = _weightFees;
+        WEIGHT_TOKEN_0 = _weightToken0;
+        WEIGHT_TOKEN_1 = _weightToken1;
+
+        EPOCH_START = governance.EPOCH_START();
+        EPOCH_DURATION = governance.EPOCH_DURATION();
+
+        // Approve BOLD to Merkl
+        boldToken.approve(address(merklDistributionCreator), type(uint256).max);
+
+        // whitelist ourselves to be able to create campaigs without signature
+        merklDistributionCreator.acceptConditions();
+    }
+
+    function getCampaignData() public view returns (bytes memory) {
+        return bytes.concat(
+            abi.encode(
+                416, // 13 * 32, offset for poolId bytes
+                IS_OUT_OF_RANGE_INCENTIVIZED,
+                WEIGHT_FEES,
+                WEIGHT_TOKEN_0,
+                WEIGHT_TOKEN_1,
+                480, // 15 * 32, offset for whitelist address
+                512, // 16 * 32, offset for blacklist address
+                576 // 18 * 32, offset for hooks
+            ),
+            abi.encode(
+                0, // lowerPriceTolerance
+                0, // upperPriceTolerance
+                0, // lowerPriceBound
+                0, // upperPriceBound
+                608, // 19 * 32, offset for empty unknown last param
+                32, // poolId len as bytes
+                UNIV4_POOL_ID,
+                0, // empty whitelist
+                1, // blacklist len
+                LIQUITY_FUNDS_SAFE, // blacklisted address
+                0, // empty hooks
+                0 // empty last unknown param
+            )
+        );
+    }
+
+    function onRegisterInitiative(uint256 _atEpoch) external override {}
+
+    function onUnregisterInitiative(uint256 _atEpoch) external override {}
+
+    function onAfterAllocateLQTY(
+        uint256 _currentEpoch,
+        address _user,
+        IGovernance.UserState calldata _userState,
+        IGovernance.Allocation calldata _allocation,
+        IGovernance.InitiativeState calldata _initiativeState
+    ) external override {}
+
+    function onClaimForInitiative(uint256 _claimEpoch, uint256 _bold) external override onlyGovernance {}
+
+    function _createCampaign(uint256 _amount) internal {
+        // Avoid if rewards too low
+        if (_amount < CAMPAIGN_BOLD_AMOUNT_THRESHOLD) return;
+
+        uint256 claimEpoch = governance.epoch() - 1;
+
+        // (Only once per epoch)
+        uint256 epochEnd = EPOCH_START + claimEpoch * EPOCH_DURATION;
+        IDistributionCreator.CampaignParameters memory params = IDistributionCreator.CampaignParameters({
+            campaignId: bytes32(0),
+            creator: address(this),
+            rewardToken: address(boldToken),
+            amount: _amount,
+            campaignType: CAMPAIGN_TYPE,
+            startTimestamp: uint32(epochEnd),
+            duration: uint32(EPOCH_DURATION),
+            campaignData: getCampaignData()
+        });
+        
+        bytes32 campaignId = merklDistributionCreator.createCampaign(params);
+
+        emit NewMerklCampaign(claimEpoch, _amount, campaignId);
+    }
+
+    function claimForInitiative() external {
+        uint256 claimableAmount = governance.claimForInitiative(address(this));
+        uint256 amount = boldToken.balanceOf(address(this));
+        assert(amount >= claimableAmount);
+        require(amount > 0, "UniV4MerklInitiative: no funds for campaign");
+
+        _createCampaign(amount);
+    }
+}

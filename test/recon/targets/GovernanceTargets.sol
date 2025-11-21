@@ -42,20 +42,43 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance_depositLQTY(_lqtyAmount);
     }
 
-    function governance_depositLQTYViaPermit_clamped(uint256 _lqtyAmount) public asActor {
+function governance_depositLQTYViaPermit_clamped(uint256 _lqtyAmount) public asActor {
         _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
         
         PermitParams memory permitParams = PermitParams({
             owner: _getActor(),
             spender: address(governance),
             value: _lqtyAmount,
-            deadline: block.timestamp + 3600,
-            v: 27,
+            deadline: block.timestamp + 1000,
+            v: 0,
             r: bytes32(0),
             s: bytes32(0)
         });
         
-        governance_depositLQTYViaPermit(_lqtyAmount, permitParams);
+        governance.depositLQTYViaPermit(_lqtyAmount, permitParams);
+    }
+
+    function governance_registerInitiativeWithThreshold_clamped(uint256 _lqtyAmount) public asActor {
+        // Ensure we have enough LQTY to meet registration threshold
+        _lqtyAmount %= lqty.balanceOf(_getActor()) + 1;
+        
+        // Deposit LQTY first to establish voting power
+        vm.prank(_getActor());
+        lqty.transfer(address(governance), _lqtyAmount);
+        
+        // Try to register initiative
+        governance_registerInitiative(address(bribeInitiative));
+    }
+
+    function governance_claimForInitiativeWithDifferentAmounts_clamped() public asActor {
+        // Try claiming for different initiatives
+        address[] memory initiatives = new address[](3);
+        initiatives[0] = address(bribeInitiative);
+        initiatives[1] = address(curveV2GaugeRewards);
+        initiatives[2] = address(uniV4MerklRewards);
+        
+        uint256 randomIndex = block.timestamp % 3;
+        governance_claimForInitiative(initiatives[randomIndex]);
     }
 
     function governance_registerInitiative_clamped() public asActor {
