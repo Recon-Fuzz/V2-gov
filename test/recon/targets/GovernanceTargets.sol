@@ -80,6 +80,44 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance_resetAllocations(initiativesToReset, false);
     }
 
+    function governance_calculateVotingThreshold_clamped() public asActor {
+        governance_calculateVotingThreshold();
+    }
+
+    function governance_claimFromStakingV1_clamped() public asActor {
+        governance_claimFromStakingV1(_getActor());
+    }
+
+    function governance_deployUserProxy_clamped() public asActor {
+        governance_deployUserProxy();
+    }
+
+    function governance_getInitiativeState_clamped() public asActor {
+        governance_getInitiativeState(address(bribeInitiative));
+    }
+
+    function governance_multiDelegateCall_clamped() public asActor {
+        bytes[] memory calls = new bytes[](1);
+        calls[0] = abi.encodeWithSignature("depositLQTY(uint256)", uint256(0));
+        
+        governance_multiDelegateCall(calls);
+    }
+
+    function governance_registerInitialInitiatives_clamped() public asActor {
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        
+        governance_registerInitialInitiatives(initiatives);
+    }
+
+    function governance_snapshotVotesForInitiative_clamped() public asActor {
+        governance_snapshotVotesForInitiative(address(bribeInitiative));
+    }
+
+    function governance_unregisterInitiative_clamped() public asActor {
+        governance_unregisterInitiative(address(bribeInitiative));
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(
@@ -149,6 +187,14 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
 
     function governance_getInitiativeState(address _initiative) public asActor {
         governance.getInitiativeState(_initiative);
+    }
+
+    function governance_multiDelegateCall(bytes[] memory _calls) public asActor {
+        governance.multiDelegateCall(_calls);
+    }
+
+    function governance_registerInitialInitiatives(address[] memory _initiatives) public asActor {
+        governance.registerInitialInitiatives(_initiatives);
     }
 
     function governance_registerInitiative(address _initiative) public asActor {

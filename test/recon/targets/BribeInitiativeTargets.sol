@@ -39,6 +39,54 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, currentEpoch);
     }
 
+    function bribeInitiative_onAfterAllocateLQTY_clamped() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        address user = _getActor();
+        (uint256 unallocatedLQTY, uint256 unallocatedOffset, uint256 allocatedLQTY, uint256 allocatedOffset) = governance.userStates(user);
+        IGovernance.UserState memory userState = IGovernance.UserState({
+            unallocatedLQTY: unallocatedLQTY,
+            unallocatedOffset: unallocatedOffset,
+            allocatedLQTY: allocatedLQTY,
+            allocatedOffset: allocatedOffset
+        });
+        IGovernance.Allocation memory allocation = IGovernance.Allocation({
+            voteLQTY: 0,
+            voteOffset: 0,
+            vetoLQTY: 0,
+            vetoOffset: 0,
+            atEpoch: currentEpoch
+        });
+        (uint256 voteLQTY, uint256 voteOffset, uint256 vetoLQTY, uint256 vetoOffset, uint256 lastEpochClaim) = governance.initiativeStates(address(bribeInitiative));
+        IGovernance.InitiativeState memory initiativeState = IGovernance.InitiativeState({
+            voteLQTY: voteLQTY,
+            voteOffset: voteOffset,
+            vetoLQTY: vetoLQTY,
+            vetoOffset: vetoOffset,
+            lastEpochClaim: lastEpochClaim
+        });
+        
+        bribeInitiative_onAfterAllocateLQTY(currentEpoch, user, userState, allocation, initiativeState);
+    }
+
+    function bribeInitiative_onClaimForInitiative_clamped() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        uint256 claimAmount = 0;
+        
+        bribeInitiative_onClaimForInitiative(currentEpoch, claimAmount);
+    }
+
+    function bribeInitiative_onRegisterInitiative_clamped() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        
+        bribeInitiative_onRegisterInitiative(currentEpoch);
+    }
+
+    function bribeInitiative_onUnregisterInitiative_clamped() public asActor {
+        uint256 currentEpoch = governance.epoch();
+        
+        bribeInitiative_onUnregisterInitiative(currentEpoch);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(
