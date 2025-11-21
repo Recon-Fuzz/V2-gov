@@ -98,5 +98,51 @@ abstract contract TargetFunctions is
         // Unregister the initiative
         governance_unregisterInitiative(address(bribeInitiative));
     }
+    
+    function shortcut_resetAllocations(uint256 _lqtyAmount, uint256 _voteAmount) public {
+        // Switch to actor 0 and set up allocations to reset
+        switchActor(0);
+        governance_depositLQTY_clamped(_lqtyAmount);
+        governance_registerInitiative_clamped();
+        governance_allocateLQTY_clamped(_voteAmount, 0);
+        
+        // Reset the allocations
+        governance_resetAllocations_clamped();
+    }
+    
+    function shortcut_snapshotVotesForInitiative(uint256 _lqtyAmount, uint256 _voteAmount) public {
+        // Switch to actor 0 and set up voting activity
+        switchActor(0);
+        governance_depositLQTY_clamped(_lqtyAmount);
+        governance_registerInitiative_clamped();
+        governance_allocateLQTY_clamped(_voteAmount, 0);
+        
+        // Take a snapshot of votes for the initiative
+        governance_snapshotVotesForInitiative_clamped();
+    }
+    
+    function shortcut_multiDelegateCall(uint256 _lqtyAmount, uint256 _voteAmount, uint256 _withdrawAmount) public {
+        // Switch to actor 0 and set up governance state
+        switchActor(0);
+        governance_depositLQTY_clamped(_lqtyAmount);
+        governance_registerInitiative_clamped();
+        governance_allocateLQTY_clamped(_voteAmount, 0);
+        
+        // Create a multi-delegate call sequence: deposit more LQTY, then withdraw
+        bytes[] memory calls = new bytes[](2);
+        calls[0] = abi.encodeWithSignature("depositLQTY(uint256)", uint256(100));
+        calls[1] = abi.encodeWithSignature("withdrawLQTY(uint256)", _withdrawAmount);
+        
+        governance_multiDelegateCall(calls);
+    }
+    
+    function shortcut_claimFromStakingV1(uint256 _lqtyAmount) public {
+        // Switch to actor 0 and deposit LQTY to establish a connection to staking V1
+        switchActor(0);
+        governance_depositLQTY_clamped(_lqtyAmount);
+        
+        // Claim from staking V1
+        governance_claimFromStakingV1_clamped();
+    }
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
