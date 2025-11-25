@@ -33,7 +33,8 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     }
 
     function governance_withdrawLQTY_clamped(uint256 _lqtyAmount) public asActor {
-        _lqtyAmount %= governance.userStates(_getActor()).unallocatedLQTY + 1;
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        _lqtyAmount %= unallocatedLQTY + 1;
 
         governance_withdrawLQTY(_lqtyAmount);
     }
@@ -49,7 +50,7 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         int256[] memory _absoluteLQTYVetos
     ) public asActor {
         uint256 maxArraySize = 10;
-        uint256 unallocatedLQTY = governance.userStates(_getActor()).unallocatedLQTY;
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
 
         if (_initiativesToReset.length > maxArraySize) {
             assembly { mstore(_initiativesToReset, maxArraySize) }

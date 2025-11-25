@@ -2,6 +2,8 @@
     "contracts": 
         [ 
           "BribeInitiative",
-          "Governance"
+          "CurveV2GaugeRewards",
+          "Governance",
+          "UniV4MerklRewards"
         ]
 }
