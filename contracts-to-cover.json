@@ -1,9 +1,0 @@
-{
-    "contracts": 
-        [ 
-          "BribeInitiative",
-          "CurveV2GaugeRewards",
-          "Governance",
-          "UniV4MerklRewards"
-        ]
-}
