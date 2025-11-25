@@ -14,25 +14,7 @@ import {bound} from "../../util/Random.sol";
 import "src/BribeInitiative.sol";
 
 abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
-    /// CUSTOM TARGET FUNCTIONS - Add your own target functions here //
-
-    function bribeInitiative_depositBribe_clamped(
-        uint256 _boldAmount,
-        uint256 _bribeTokenAmount,
-        uint256 _epoch
-    ) public asActor {
-        _boldAmount %= bold.balanceOf(_getActor()) + 1;
-        _bribeTokenAmount %= bribeToken.balanceOf(_getActor()) + 1;
-        _epoch = governance.epoch();
-
-        bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
-    }
-
-    function bribeInitiative_claimBribes_clamped() public asActor {
-        IBribeInitiative.ClaimData[] memory _claimData = new IBribeInitiative.ClaimData[](10);
-        
-        bribeInitiative_claimBribes(_claimData);
-    }
+    /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
