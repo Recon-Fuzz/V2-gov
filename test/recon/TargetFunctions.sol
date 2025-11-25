@@ -121,5 +121,58 @@ abstract contract TargetFunctions is
         // 7. Claim bribes
         bribeInitiative_claimBribes_clamped();
     }
+
+    function shortcut_unregisterInitiative(uint256 _lqtyAmount, uint256 _voteAmount) public {
+        // Register initiative first, then unregister it
+        
+        // 1. Deposit LQTY to have voting power
+        governance_depositLQTY_clamped(_lqtyAmount);
+        
+        // 2. Register initiative
+        governance_registerInitiative_clamped();
+        
+        // 3. Allocate some LQTY to make the initiative active
+        address[] memory initiativesToReset = new address[](0);
+        address[] memory initiatives = new address[](1);
+        int256[] memory votes = new int256[](1);
+        int256[] memory vetos = new int256[](1);
+        
+        initiatives[0] = address(bribeInitiative);
+        votes[0] = int256(_voteAmount);
+        vetos[0] = int256(0);
+        
+        governance_allocateLQTY_clamped(initiativesToReset, initiatives, votes, vetos);
+        
+        // 4. Unregister the initiative
+        governance_unregisterInitiative_clamped();
+    }
+
+    function shortcut_resetAllocations(uint256 _lqtyAmount, uint256 _voteAmount) public {
+        // Setup allocations then reset them
+        
+        // 1. Deposit LQTY to have voting power
+        governance_depositLQTY_clamped(_lqtyAmount);
+        
+        // 2. Register initiative
+        governance_registerInitiative_clamped();
+        
+        // 3. Allocate LQTY to initiative
+        address[] memory initiativesToReset = new address[](0);
+        address[] memory initiatives = new address[](1);
+        int256[] memory votes = new int256[](1);
+        int256[] memory vetos = new int256[](1);
+        
+        initiatives[0] = address(bribeInitiative);
+        votes[0] = int256(_voteAmount);
+        vetos[0] = int256(0);
+        
+        governance_allocateLQTY_clamped(initiativesToReset, initiatives, votes, vetos);
+        
+        // 4. Reset allocations for the initiative
+        address[] memory initiativesToResetNow = new address[](1);
+        initiativesToResetNow[0] = address(bribeInitiative);
+        
+        governance_resetAllocations_clamped(initiativesToResetNow, false);
+    }
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
