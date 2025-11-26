@@ -16,23 +16,6 @@ import "src/BribeInitiative.sol";
 abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
-    // === CLAMPED HANDLERS === //
-
-    /// @dev Clamped version of depositBribe - clamps amounts to actor's token balances and epoch
-    function bribeInitiative_depositBribe_clamped(uint256 _boldAmount, uint256 _bribeTokenAmount, uint256 _epoch) public asActor {
-        _boldAmount = _boldAmount % (bold.balanceOf(_getActor()) + 1);
-        _bribeTokenAmount = _bribeTokenAmount % (bribeToken.balanceOf(_getActor()) + 1);
-        _epoch = _epoch % (governance.epoch() + 1);
-        
-        bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
-    }
-
-    /// @dev Clamped version of claimBribes - uses helper function to get valid claim data
-    function bribeInitiative_claimBribes_clamped() public asActor {
-        IBribeInitiative.ClaimData[] memory claimData = getBribeClaimData(_getActor());
-        bribeInitiative_claimBribes(claimData);
-    }
-
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(
