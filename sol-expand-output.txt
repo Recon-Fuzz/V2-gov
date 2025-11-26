@@ -1,4 +1,4 @@
-Processing pre-compiled JSON file: /Users/nelsonpereira/Documents/GitHub/Auditing/Fuzzing/Recon_Fuzzing/Liquity_V2_Gov/V2-gov/out/build-info/53c0567a0d5fb443.json
+Processing pre-compiled JSON file: out/build-info/2a2af230feaa0aa0.json
 
 🚀 Starting Two-Phase Contract Expansion
 ════════════════════════════════════════════════════════════
@@ -17036,6 +17036,62 @@ Contract: MaliciousInitiative
 📊 Total tree depth: 1 direct children
 
 
+Contract: MockDistributionCreator
+
+📋 Call Tree for function MockDistributionCreator.acceptConditions:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockDistributionCreator.acceptConditions() (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockDistributionCreator.createCampaign:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockDistributionCreator.createCampaign(struct IDistributionCreator.CampaignParameters) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockDistributionCreator.campaignId:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockDistributionCreator.campaignId(struct IDistributionCreator.CampaignParameters) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockDistributionCreator.distributor:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockDistributionCreator.distributor() (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockDistributionCreator.campaign:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockDistributionCreator.campaign(bytes32) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockDistributionCreator.campaignLookup:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockDistributionCreator.campaignLookup(bytes32) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
 Contract: MockERC20Tester
 
 📋 Call Tree for function MockERC20Tester.:
@@ -17524,6 +17580,35 @@ Contract: MockInitiative
 📊 Total tree depth: 0 direct children
 
 
+Contract: MockLiquidityGauge
+
+📋 Call Tree for function MockLiquidityGauge.:
+════════════════════════════════════════════════════════════
+┌─ [0] 🏗️ CONSTRUCTOR: MockLiquidityGauge.constructor(address) (NodeID: 0)
+    💬 Args: [no args]
+    🏗️  Contract: MockLiquidityGauge
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockLiquidityGauge.add_reward:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockLiquidityGauge.add_reward(address,address) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockLiquidityGauge.deposit_reward_token:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockLiquidityGauge.deposit_reward_token(address,uint256,uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
 Contract: MockStakingV1
 
 📋 Call Tree for function MockStakingV1.:
@@ -17765,6 +17850,79 @@ Contract: MockStakingV1
 📊 Total tree depth: 0 direct children
 
 
+Contract: MockUniV4MerklRewards
+
+📋 Call Tree for function MockUniV4MerklRewards.:
+════════════════════════════════════════════════════════════
+┌─ [0] 🏗️ CONSTRUCTOR: MockUniV4MerklRewards.constructor(address,address,uint256,bytes32,uint32,uint32,uint32,address) (NodeID: 0)
+    💬 Args: [no args]
+    🏗️  Contract: MockUniV4MerklRewards
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockUniV4MerklRewards.getCampaignData:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockUniV4MerklRewards.getCampaignData() (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockUniV4MerklRewards.onRegisterInitiative:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockUniV4MerklRewards.onRegisterInitiative(uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockUniV4MerklRewards.onUnregisterInitiative:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockUniV4MerklRewards.onUnregisterInitiative(uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockUniV4MerklRewards.onAfterAllocateLQTY:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockUniV4MerklRewards.onAfterAllocateLQTY(uint256,address,struct IGovernance.UserState,struct IGovernance.Allocation,struct IGovernance.InitiativeState) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 0 direct children
+
+
+📋 Call Tree for function MockUniV4MerklRewards.onClaimForInitiative:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockUniV4MerklRewards.onClaimForInitiative(uint256,uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+  └─ [1] 🔒 MODIFIER: MockUniV4MerklRewards.onlyGovernance() (NodeID: 1)
+      💬 Args: [no args]
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
+📋 Call Tree for function MockUniV4MerklRewards.claimForInitiative:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: MockUniV4MerklRewards.claimForInitiative() (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: external
+  └─ [1] ⚙️ FUNCTION: MockUniV4MerklRewards._createCampaign(uint256) (NodeID: 1)
+      💬 Args: [amount]
+      👁️  Def: internal
+    └─ [2] ⚙️ FUNCTION: MockUniV4MerklRewards.getCampaignData() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: public
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
 Contract: UniV4MerklRewardsWrapper
 
 📋 Call Tree for function UniV4MerklRewardsWrapper.:
@@ -17987,889 +18145,40 @@ Contract: CryticTester
 📊 Total tree depth: 1 direct children
 
 
-📋 Call Tree for function CryticTester.shortcut_multiEpochVoting:
+📋 Call Tree for function CryticTester.asset_mint_clamped:
 ════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_multiEpochVoting(uint256,uint256,uint256,uint256) (NodeID: 0)
+┌─ [0] ⚙️ FUNCTION: ManagersTargets.asset_mint_clamped(uint128) (NodeID: 0)
     💬 Args: [no args]
     👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
+  ├─ [1] ⚙️ FUNCTION: ManagersTargets.asset_mint(address,uint128) (NodeID: 1)
+      💬 Args: [_getActor(), amt]
       👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+    ├─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 7)
         💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 4)
-      💬 Args: [1]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 5)
-        💬 Args: [entropy]
         👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 6)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 7)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 8)
-      💬 Args: [bribeAmount, bribeAmount, governance.epoch()]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 9)
+    ├─ [2] ⚙️ FUNCTION: AssetManager._getAsset() (NodeID: 2)
         💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 11)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 12)
-        💬 Args: [entropy]
         👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 13)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 14)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 15)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 16)
+    ├─ [2] 🔒 MODIFIER: Setup.asAdmin() (NodeID: 3)
         💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 17)
+    └─ [2] 🔒 MODIFIER: BeforeAfter.updateGhosts() (NodeID: 4)
+        💬 Args: [no args]
+      ├─ [3] ⚙️ FUNCTION: BeforeAfter.__before() (NodeID: 5)
           💬 Args: [no args]
           👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 18)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 19)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 20)
+      └─ [3] ⚙️ FUNCTION: BeforeAfter.__after() (NodeID: 6)
           💬 Args: [no args]
           👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 21)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 22)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 23)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 24)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 25)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 26)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 8 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_fullInitiativeLifecycle:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_fullInitiativeLifecycle(uint256,uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 4)
-      💬 Args: [1]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 5)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 6)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 7)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 8)
-      💬 Args: [bribeAmount, bribeAmount, governance.epoch()]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 9)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 11)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 12)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 13)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 14)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 15)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 16)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 17)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 18)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 19)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 20)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 21)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 22)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 23)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 24)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 25)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 26)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_unregisterInitiative(address) (NodeID: 27)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 28)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 29)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 9 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_deployProxyAndVote:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_deployProxyAndVote(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_deployUserProxy() (NodeID: 1)
+  ├─ [1] 🔒 MODIFIER: Setup.asAdmin() (NodeID: 8)
       💬 Args: [no args]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 4)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 7)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 10)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 4 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_claimFromStakingV1:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_claimFromStakingV1(uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [lqtyAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimFromStakingV1(address) (NodeID: 7)
-      💬 Args: [_getActor()]
-      👁️  Def: public
-    ├─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-        💬 Args: [no args]
-        👁️  Def: internal
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 3 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_snapshotVotes:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_snapshotVotes(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 7)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_snapshotVotesForInitiative(address) (NodeID: 10)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 4 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_permitBasedFlow:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_permitBasedFlow(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 4)
+  └─ [1] 🔒 MODIFIER: BeforeAfter.updateGhosts() (NodeID: 9)
       💬 Args: [no args]
-      👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTYViaPermit(uint256,struct PermitParams) (NodeID: 5)
-      💬 Args: [lqtyAmount, permitParams]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 6)
+    ├─ [2] ⚙️ FUNCTION: BeforeAfter.__before() (NodeID: 10)
         💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 7)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 8)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 9)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 4 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_withdrawAndRedeposit:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_withdrawAndRedeposit(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [redepositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 7)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_withdrawLQTY(uint256) (NodeID: 10)
-      💬 Args: [withdrawAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 13)
-      💬 Args: [redepositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 14)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 15)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 16)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 17)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 18)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 6 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_multiActorVoting:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_multiActorVoting(uint256,uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 4)
-      💬 Args: [1]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 5)
-        💬 Args: [entropy]
         👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 6)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 7)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 8)
-      💬 Args: [bribeAmount, bribeAmount, governance.epoch()]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 9)
+    └─ [2] ⚙️ FUNCTION: BeforeAfter.__after() (NodeID: 11)
         💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 11)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 12)
-        💬 Args: [entropy]
         👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 13)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 14)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 15)
-      💬 Args: [actor1Deposit]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 16)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 17)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 18)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 19)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 20)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 21)
-      💬 Args: [2]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 22)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 23)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 24)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 25)
-      💬 Args: [actor2Deposit]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 26)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 27)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 28)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 29)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 30)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 31)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 32)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 33)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 34)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 35)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 36)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 37)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 38)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 39)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 40)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 41)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 42)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 43)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 44)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 45)
-      💬 Args: [2]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 46)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 47)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 48)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  └─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 49)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 50)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 51)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 15 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_unregisterAndReregister:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_unregisterAndReregister(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 7)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 10)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_unregisterInitiative(address) (NodeID: 13)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 14)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 15)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 16)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 17)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 18)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 19)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 20)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 21)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 22)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 23)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 24)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 8 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_resetAndReallocate:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_resetAndReallocate(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_resetAllocations(address[],bool) (NodeID: 4)
-      💬 Args: [new address[](0), false]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 7)
-      💬 Args: [newDepositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 10)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 4 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_fullVotingCycle:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_fullVotingCycle(uint256,uint256,uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 7)
-      💬 Args: [1]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 8)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 9)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 10)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 11)
-      💬 Args: [boldAmount, bribeTokenAmount, governance.epoch()]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 12)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 13)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 14)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 15)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 16)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 17)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 18)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 19)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 20)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 21)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 22)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 23)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 24)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 25)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 26)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 8 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_claimForInitiative:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_claimForInitiative(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 7)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 10)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 4 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_claimBribes:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_claimBribes(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 4)
-      💬 Args: [1]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 5)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 6)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 7)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 8)
-      💬 Args: [boldAmount, bribeTokenAmount, governance.epoch()]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 9)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 11)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 12)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 13)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 14)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: TargetFunctions.shortcut_allocateLQTY(uint256,uint256) (NodeID: 15)
-      💬 Args: [0, 0]
-      👁️  Def: public
-    ├─ [2] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 16)
-        💬 Args: [address(bribeInitiative)]
-        👁️  Def: public
-      └─ [3] 🔒 MODIFIER: Setup.asActor() (NodeID: 17)
-          💬 Args: [no args]
-        └─ [4] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 18)
-            💬 Args: [no args]
-            👁️  Def: internal
-    ├─ [2] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 19)
-        💬 Args: [depositAmount]
-        👁️  Def: public
-      └─ [3] 🔒 MODIFIER: Setup.asActor() (NodeID: 20)
-          💬 Args: [no args]
-        └─ [4] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 21)
-            💬 Args: [no args]
-            👁️  Def: internal
-    └─ [2] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 22)
-        💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-        👁️  Def: public
-      └─ [3] 🔒 MODIFIER: Setup.asActor() (NodeID: 23)
-          💬 Args: [no args]
-        └─ [4] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 24)
-            💬 Args: [no args]
-            👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 25)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 26)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 27)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 6 direct children
-
-
-📋 Call Tree for function CryticTester.shortcut_allocateLQTY:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_allocateLQTY(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 7)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
 ════════════════════════════════════════════════════════════
 📊 Total tree depth: 3 direct children
 
@@ -18987,6 +18296,20 @@ Contract: CryticTester
 📊 Total tree depth: 1 direct children
 
 
+📋 Call Tree for function CryticTester.governance_getLatestVotingThreshold:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: GovernanceTargets.governance_getLatestVotingThreshold() (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
 📋 Call Tree for function CryticTester.governance_withdrawLQTY:
 ════════════════════════════════════════════════════════════
 ┌─ [0] ⚙️ FUNCTION: GovernanceTargets.governance_withdrawLQTY(uint256,bool,address) (NodeID: 0)
@@ -19060,6 +18383,34 @@ Contract: CryticTester
 📋 Call Tree for function CryticTester.governance_registerInitiative:
 ════════════════════════════════════════════════════════════
 ┌─ [0] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
+📋 Call Tree for function CryticTester.governance_registerInitialInitiatives:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitialInitiatives(address[]) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
+📋 Call Tree for function CryticTester.governance_multiDelegateCall:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: GovernanceTargets.governance_multiDelegateCall(bytes[]) (NodeID: 0)
     💬 Args: [no args]
     👁️  Def: public
   └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
@@ -19211,6 +18562,48 @@ Contract: CryticTester
 📊 Total tree depth: 1 direct children
 
 
+📋 Call Tree for function CryticTester.bribeInitiative_checkClaimedBribeAtEpoch:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_checkClaimedBribeAtEpoch(address,uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
+📋 Call Tree for function CryticTester.bribeInitiative_lqtyAllocatedByUserAtEpoch:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_lqtyAllocatedByUserAtEpoch(address,uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
+📋 Call Tree for function CryticTester.bribeInitiative_totalLQTYAllocatedByEpoch:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_totalLQTYAllocatedByEpoch(uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
 📋 Call Tree for function CryticTester.bribeInitiative_onUnregisterInitiative:
 ════════════════════════════════════════════════════════════
 ┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_onUnregisterInitiative(uint256) (NodeID: 0)
@@ -19295,26 +18688,151 @@ Contract: CryticTester
 📊 Total tree depth: 1 direct children
 
 
-📋 Call Tree for function CryticTester.governance_multiDelegateCall:
+📋 Call Tree for function CryticTester.bribeInitiative_checkClaimedBribeAtEpoch_clamped:
 ════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: AdminTargets.governance_multiDelegateCall(bytes[]) (NodeID: 0)
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_checkClaimedBribeAtEpoch_clamped(uint256) (NodeID: 0)
     💬 Args: [no args]
     👁️  Def: public
-  └─ [1] 🔒 MODIFIER: Setup.asAdmin() (NodeID: 1)
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_checkClaimedBribeAtEpoch(address,uint256) (NodeID: 1)
+      💬 Args: [_getActor(), _epoch]
+      👁️  Def: public
+    ├─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 4)
+        💬 Args: [no args]
+        👁️  Def: internal
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
       💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
+        💬 Args: [no args]
+        👁️  Def: internal
 ════════════════════════════════════════════════════════════
-📊 Total tree depth: 1 direct children
+📊 Total tree depth: 2 direct children
 
 
-📋 Call Tree for function CryticTester.governance_registerInitialInitiatives:
+📋 Call Tree for function CryticTester.bribeInitiative_totalLQTYAllocatedByEpoch_clamped:
 ════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: AdminTargets.governance_registerInitialInitiatives(address[]) (NodeID: 0)
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_totalLQTYAllocatedByEpoch_clamped(uint256) (NodeID: 0)
     💬 Args: [no args]
     👁️  Def: public
-  └─ [1] 🔒 MODIFIER: Setup.asAdmin() (NodeID: 1)
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_totalLQTYAllocatedByEpoch(uint256) (NodeID: 1)
+      💬 Args: [_epoch]
+      👁️  Def: public
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 4)
       💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 5)
+        💬 Args: [no args]
+        👁️  Def: internal
 ════════════════════════════════════════════════════════════
-📊 Total tree depth: 1 direct children
+📊 Total tree depth: 2 direct children
+
+
+📋 Call Tree for function CryticTester.bribeInitiative_lqtyAllocatedByUserAtEpoch_clamped:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_lqtyAllocatedByUserAtEpoch_clamped(uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_lqtyAllocatedByUserAtEpoch(address,uint256) (NodeID: 1)
+      💬 Args: [_getActor(), _epoch]
+      👁️  Def: public
+    ├─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 4)
+        💬 Args: [no args]
+        👁️  Def: internal
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 2 direct children
+
+
+📋 Call Tree for function CryticTester.bribeInitiative_onAfterAllocateLQTY_clamped:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_onAfterAllocateLQTY_clamped(uint256,struct IGovernance.UserState,struct IGovernance.Allocation,struct IGovernance.InitiativeState) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_onAfterAllocateLQTY(uint256,address,struct IGovernance.UserState,struct IGovernance.Allocation,struct IGovernance.InitiativeState) (NodeID: 1)
+      💬 Args: [_currentEpoch, _getActor(), _userState, _allocation, _initiativeState]
+      👁️  Def: public
+    ├─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 4)
+        💬 Args: [no args]
+        👁️  Def: internal
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 2 direct children
+
+
+📋 Call Tree for function CryticTester.bribeInitiative_claimBribes_clamped:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes_clamped(uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 1)
+      💬 Args: [_claimData]
+      👁️  Def: public
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 4)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 5)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 2 direct children
+
+
+📋 Call Tree for function CryticTester.bribeInitiative_depositBribe_clamped:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe_clamped(uint256,uint256,uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  ├─ [1] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 1)
+      💬 Args: [no args]
+      👁️  Def: internal
+  ├─ [1] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+      💬 Args: [no args]
+      👁️  Def: internal
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 3)
+      💬 Args: [_boldAmount, _bribeTokenAmount, _epoch]
+      👁️  Def: public
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 4)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 5)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 6)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 7)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 4 direct children
 
 
 📋 Call Tree for function CryticTester.optimize_coverage:
@@ -20050,889 +19568,40 @@ Contract: CryticToFoundry
 📊 Total tree depth: 6 direct children
 
 
-📋 Call Tree for function CryticToFoundry.shortcut_multiEpochVoting:
+📋 Call Tree for function CryticToFoundry.asset_mint_clamped:
 ════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_multiEpochVoting(uint256,uint256,uint256,uint256) (NodeID: 0)
+┌─ [0] ⚙️ FUNCTION: ManagersTargets.asset_mint_clamped(uint128) (NodeID: 0)
     💬 Args: [no args]
     👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
+  ├─ [1] ⚙️ FUNCTION: ManagersTargets.asset_mint(address,uint128) (NodeID: 1)
+      💬 Args: [_getActor(), amt]
       👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+    ├─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 7)
         💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 4)
-      💬 Args: [1]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 5)
-        💬 Args: [entropy]
         👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 6)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 7)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 8)
-      💬 Args: [bribeAmount, bribeAmount, governance.epoch()]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 9)
+    ├─ [2] ⚙️ FUNCTION: AssetManager._getAsset() (NodeID: 2)
         💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 11)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 12)
-        💬 Args: [entropy]
         👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 13)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 14)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 15)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 16)
+    ├─ [2] 🔒 MODIFIER: Setup.asAdmin() (NodeID: 3)
         💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 17)
+    └─ [2] 🔒 MODIFIER: BeforeAfter.updateGhosts() (NodeID: 4)
+        💬 Args: [no args]
+      ├─ [3] ⚙️ FUNCTION: BeforeAfter.__before() (NodeID: 5)
           💬 Args: [no args]
           👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 18)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 19)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 20)
+      └─ [3] ⚙️ FUNCTION: BeforeAfter.__after() (NodeID: 6)
           💬 Args: [no args]
           👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 21)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 22)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 23)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 24)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 25)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 26)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 8 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_fullInitiativeLifecycle:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_fullInitiativeLifecycle(uint256,uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 4)
-      💬 Args: [1]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 5)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 6)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 7)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 8)
-      💬 Args: [bribeAmount, bribeAmount, governance.epoch()]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 9)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 11)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 12)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 13)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 14)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 15)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 16)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 17)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 18)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 19)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 20)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 21)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 22)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 23)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 24)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 25)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 26)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_unregisterInitiative(address) (NodeID: 27)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 28)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 29)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 9 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_deployProxyAndVote:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_deployProxyAndVote(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_deployUserProxy() (NodeID: 1)
+  ├─ [1] 🔒 MODIFIER: Setup.asAdmin() (NodeID: 8)
       💬 Args: [no args]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 4)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 7)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 10)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 4 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_claimFromStakingV1:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_claimFromStakingV1(uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [lqtyAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimFromStakingV1(address) (NodeID: 7)
-      💬 Args: [_getActor()]
-      👁️  Def: public
-    ├─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-        💬 Args: [no args]
-        👁️  Def: internal
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 3 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_snapshotVotes:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_snapshotVotes(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 7)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_snapshotVotesForInitiative(address) (NodeID: 10)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 4 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_permitBasedFlow:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_permitBasedFlow(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 4)
+  └─ [1] 🔒 MODIFIER: BeforeAfter.updateGhosts() (NodeID: 9)
       💬 Args: [no args]
-      👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTYViaPermit(uint256,struct PermitParams) (NodeID: 5)
-      💬 Args: [lqtyAmount, permitParams]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 6)
+    ├─ [2] ⚙️ FUNCTION: BeforeAfter.__before() (NodeID: 10)
         💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 7)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 8)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 9)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 4 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_withdrawAndRedeposit:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_withdrawAndRedeposit(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [redepositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 7)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_withdrawLQTY(uint256) (NodeID: 10)
-      💬 Args: [withdrawAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 13)
-      💬 Args: [redepositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 14)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 15)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 16)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 17)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 18)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 6 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_multiActorVoting:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_multiActorVoting(uint256,uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 4)
-      💬 Args: [1]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 5)
-        💬 Args: [entropy]
         👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 6)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 7)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 8)
-      💬 Args: [bribeAmount, bribeAmount, governance.epoch()]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 9)
+    └─ [2] ⚙️ FUNCTION: BeforeAfter.__after() (NodeID: 11)
         💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 11)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 12)
-        💬 Args: [entropy]
         👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 13)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 14)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 15)
-      💬 Args: [actor1Deposit]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 16)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 17)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 18)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 19)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 20)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 21)
-      💬 Args: [2]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 22)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 23)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 24)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 25)
-      💬 Args: [actor2Deposit]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 26)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 27)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 28)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 29)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 30)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 31)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 32)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 33)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 34)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 35)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 36)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 37)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 38)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 39)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 40)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 41)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 42)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 43)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 44)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 45)
-      💬 Args: [2]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 46)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 47)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 48)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  └─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 49)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 50)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 51)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 15 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_unregisterAndReregister:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_unregisterAndReregister(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 7)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 10)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_unregisterInitiative(address) (NodeID: 13)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 14)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 15)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 16)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 17)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 18)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 19)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 20)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 21)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 22)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 23)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 24)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 8 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_resetAndReallocate:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_resetAndReallocate(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_resetAllocations(address[],bool) (NodeID: 4)
-      💬 Args: [new address[](0), false]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 7)
-      💬 Args: [newDepositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 10)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 4 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_fullVotingCycle:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_fullVotingCycle(uint256,uint256,uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 7)
-      💬 Args: [1]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 8)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 9)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 10)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 11)
-      💬 Args: [boldAmount, bribeTokenAmount, governance.epoch()]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 12)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 13)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 14)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 15)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 16)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 17)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 18)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 19)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 20)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 21)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 22)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 23)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 24)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 25)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 26)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 8 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_claimForInitiative:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_claimForInitiative(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 7)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_claimForInitiative(address) (NodeID: 10)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 11)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 12)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 4 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_claimBribes:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_claimBribes(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 4)
-      💬 Args: [1]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 5)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 6)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 7)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 8)
-      💬 Args: [boldAmount, bribeTokenAmount, governance.epoch()]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 9)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 10)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: ManagersTargets.switchActor(uint256) (NodeID: 11)
-      💬 Args: [0]
-      👁️  Def: public
-    └─ [2] ⚙️ FUNCTION: ActorManager._switchActor(uint256) (NodeID: 12)
-        💬 Args: [entropy]
-        👁️  Def: internal
-      └─ [3] ⚙️ FUNCTION: EnumerableSet.at(struct EnumerableSet.AddressSet,uint256) (NodeID: 13)
-          💬 Args: [_actors, entropy]
-          👁️  Def: internal
-        └─ [4] ⚙️ FUNCTION: EnumerableSet._at(struct EnumerableSet.Set,uint256) (NodeID: 14)
-            💬 Args: [set._inner, index]
-            👁️  Def: private
-  ├─ [1] ⚙️ FUNCTION: TargetFunctions.shortcut_allocateLQTY(uint256,uint256) (NodeID: 15)
-      💬 Args: [0, 0]
-      👁️  Def: public
-    ├─ [2] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 16)
-        💬 Args: [address(bribeInitiative)]
-        👁️  Def: public
-      └─ [3] 🔒 MODIFIER: Setup.asActor() (NodeID: 17)
-          💬 Args: [no args]
-        └─ [4] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 18)
-            💬 Args: [no args]
-            👁️  Def: internal
-    ├─ [2] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 19)
-        💬 Args: [depositAmount]
-        👁️  Def: public
-      └─ [3] 🔒 MODIFIER: Setup.asActor() (NodeID: 20)
-          💬 Args: [no args]
-        └─ [4] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 21)
-            💬 Args: [no args]
-            👁️  Def: internal
-    └─ [2] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 22)
-        💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-        👁️  Def: public
-      └─ [3] 🔒 MODIFIER: Setup.asActor() (NodeID: 23)
-          💬 Args: [no args]
-        └─ [4] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 24)
-            💬 Args: [no args]
-            👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 25)
-      💬 Args: [claimData]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 26)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 27)
-          💬 Args: [no args]
-          👁️  Def: internal
-════════════════════════════════════════════════════════════
-📊 Total tree depth: 6 direct children
-
-
-📋 Call Tree for function CryticToFoundry.shortcut_allocateLQTY:
-════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: TargetFunctions.shortcut_allocateLQTY(uint256,uint256) (NodeID: 0)
-    💬 Args: [no args]
-    👁️  Def: public
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 1)
-      💬 Args: [address(bribeInitiative)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
-          💬 Args: [no args]
-          👁️  Def: internal
-  ├─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_depositLQTY(uint256) (NodeID: 4)
-      💬 Args: [depositAmount]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
-          💬 Args: [no args]
-          👁️  Def: internal
-  └─ [1] ⚙️ FUNCTION: GovernanceTargets.governance_allocateLQTY(address[],address[],int256[],int256[]) (NodeID: 7)
-      💬 Args: [new address[](0), new address[](1), new int256[](1), new int256[](1)]
-      👁️  Def: public
-    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 8)
-        💬 Args: [no args]
-      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 9)
-          💬 Args: [no args]
-          👁️  Def: internal
 ════════════════════════════════════════════════════════════
 📊 Total tree depth: 3 direct children
 
@@ -21050,6 +19719,20 @@ Contract: CryticToFoundry
 📊 Total tree depth: 1 direct children
 
 
+📋 Call Tree for function CryticToFoundry.governance_getLatestVotingThreshold:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: GovernanceTargets.governance_getLatestVotingThreshold() (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
 📋 Call Tree for function CryticToFoundry.governance_withdrawLQTY:
 ════════════════════════════════════════════════════════════
 ┌─ [0] ⚙️ FUNCTION: GovernanceTargets.governance_withdrawLQTY(uint256,bool,address) (NodeID: 0)
@@ -21123,6 +19806,34 @@ Contract: CryticToFoundry
 📋 Call Tree for function CryticToFoundry.governance_registerInitiative:
 ════════════════════════════════════════════════════════════
 ┌─ [0] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitiative(address) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
+📋 Call Tree for function CryticToFoundry.governance_registerInitialInitiatives:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: GovernanceTargets.governance_registerInitialInitiatives(address[]) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
+📋 Call Tree for function CryticToFoundry.governance_multiDelegateCall:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: GovernanceTargets.governance_multiDelegateCall(bytes[]) (NodeID: 0)
     💬 Args: [no args]
     👁️  Def: public
   └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
@@ -21274,6 +19985,48 @@ Contract: CryticToFoundry
 📊 Total tree depth: 1 direct children
 
 
+📋 Call Tree for function CryticToFoundry.bribeInitiative_checkClaimedBribeAtEpoch:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_checkClaimedBribeAtEpoch(address,uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
+📋 Call Tree for function CryticToFoundry.bribeInitiative_lqtyAllocatedByUserAtEpoch:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_lqtyAllocatedByUserAtEpoch(address,uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
+📋 Call Tree for function CryticToFoundry.bribeInitiative_totalLQTYAllocatedByEpoch:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_totalLQTYAllocatedByEpoch(uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 1)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 1 direct children
+
+
 📋 Call Tree for function CryticToFoundry.bribeInitiative_onUnregisterInitiative:
 ════════════════════════════════════════════════════════════
 ┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_onUnregisterInitiative(uint256) (NodeID: 0)
@@ -21358,26 +20111,151 @@ Contract: CryticToFoundry
 📊 Total tree depth: 1 direct children
 
 
-📋 Call Tree for function CryticToFoundry.governance_multiDelegateCall:
+📋 Call Tree for function CryticToFoundry.bribeInitiative_checkClaimedBribeAtEpoch_clamped:
 ════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: AdminTargets.governance_multiDelegateCall(bytes[]) (NodeID: 0)
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_checkClaimedBribeAtEpoch_clamped(uint256) (NodeID: 0)
     💬 Args: [no args]
     👁️  Def: public
-  └─ [1] 🔒 MODIFIER: Setup.asAdmin() (NodeID: 1)
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_checkClaimedBribeAtEpoch(address,uint256) (NodeID: 1)
+      💬 Args: [_getActor(), _epoch]
+      👁️  Def: public
+    ├─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 4)
+        💬 Args: [no args]
+        👁️  Def: internal
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
       💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
+        💬 Args: [no args]
+        👁️  Def: internal
 ════════════════════════════════════════════════════════════
-📊 Total tree depth: 1 direct children
+📊 Total tree depth: 2 direct children
 
 
-📋 Call Tree for function CryticToFoundry.governance_registerInitialInitiatives:
+📋 Call Tree for function CryticToFoundry.bribeInitiative_totalLQTYAllocatedByEpoch_clamped:
 ════════════════════════════════════════════════════════════
-┌─ [0] ⚙️ FUNCTION: AdminTargets.governance_registerInitialInitiatives(address[]) (NodeID: 0)
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_totalLQTYAllocatedByEpoch_clamped(uint256) (NodeID: 0)
     💬 Args: [no args]
     👁️  Def: public
-  └─ [1] 🔒 MODIFIER: Setup.asAdmin() (NodeID: 1)
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_totalLQTYAllocatedByEpoch(uint256) (NodeID: 1)
+      💬 Args: [_epoch]
+      👁️  Def: public
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 4)
       💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 5)
+        💬 Args: [no args]
+        👁️  Def: internal
 ════════════════════════════════════════════════════════════
-📊 Total tree depth: 1 direct children
+📊 Total tree depth: 2 direct children
+
+
+📋 Call Tree for function CryticToFoundry.bribeInitiative_lqtyAllocatedByUserAtEpoch_clamped:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_lqtyAllocatedByUserAtEpoch_clamped(uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_lqtyAllocatedByUserAtEpoch(address,uint256) (NodeID: 1)
+      💬 Args: [_getActor(), _epoch]
+      👁️  Def: public
+    ├─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 4)
+        💬 Args: [no args]
+        👁️  Def: internal
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 2 direct children
+
+
+📋 Call Tree for function CryticToFoundry.bribeInitiative_onAfterAllocateLQTY_clamped:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_onAfterAllocateLQTY_clamped(uint256,struct IGovernance.UserState,struct IGovernance.Allocation,struct IGovernance.InitiativeState) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_onAfterAllocateLQTY(uint256,address,struct IGovernance.UserState,struct IGovernance.Allocation,struct IGovernance.InitiativeState) (NodeID: 1)
+      💬 Args: [_currentEpoch, _getActor(), _userState, _allocation, _initiativeState]
+      👁️  Def: public
+    ├─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 4)
+        💬 Args: [no args]
+        👁️  Def: internal
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 5)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 6)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 2 direct children
+
+
+📋 Call Tree for function CryticToFoundry.bribeInitiative_claimBribes_clamped:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes_clamped(uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_claimBribes(struct IBribeInitiative.ClaimData[]) (NodeID: 1)
+      💬 Args: [_claimData]
+      👁️  Def: public
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 2)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 3)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 4)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 5)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 2 direct children
+
+
+📋 Call Tree for function CryticToFoundry.bribeInitiative_depositBribe_clamped:
+════════════════════════════════════════════════════════════
+┌─ [0] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe_clamped(uint256,uint256,uint256) (NodeID: 0)
+    💬 Args: [no args]
+    👁️  Def: public
+  ├─ [1] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 1)
+      💬 Args: [no args]
+      👁️  Def: internal
+  ├─ [1] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 2)
+      💬 Args: [no args]
+      👁️  Def: internal
+  ├─ [1] ⚙️ FUNCTION: BribeInitiativeTargets.bribeInitiative_depositBribe(uint256,uint256,uint256) (NodeID: 3)
+      💬 Args: [_boldAmount, _bribeTokenAmount, _epoch]
+      👁️  Def: public
+    └─ [2] 🔒 MODIFIER: Setup.asActor() (NodeID: 4)
+        💬 Args: [no args]
+      └─ [3] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 5)
+          💬 Args: [no args]
+          👁️  Def: internal
+  └─ [1] 🔒 MODIFIER: Setup.asActor() (NodeID: 6)
+      💬 Args: [no args]
+    └─ [2] ⚙️ FUNCTION: ActorManager._getActor() (NodeID: 7)
+        💬 Args: [no args]
+        👁️  Def: internal
+════════════════════════════════════════════════════════════
+📊 Total tree depth: 4 direct children
 
 
 📋 Call Tree for function CryticToFoundry.optimize_coverage:
@@ -21687,13 +20565,19 @@ Contract: CryticToFoundry
 
 📦 Extracting context for contract: MaliciousInitiative
 
+📦 Extracting context for contract: MockDistributionCreator
+
 📦 Extracting context for contract: MockERC20Tester
 
 📦 Extracting context for contract: MockGovernance
 
 📦 Extracting context for contract: MockInitiative
 
+📦 Extracting context for contract: MockLiquidityGauge
+
 📦 Extracting context for contract: MockStakingV1
+
+📦 Extracting context for contract: MockUniV4MerklRewards
 
 📦 Extracting context for contract: UniV4MerklRewardsWrapper
 
@@ -22372,6 +21256,13 @@ Contract: CryticToFoundry
     ✓ function_onUnregisterInitiative_uint256.md
     ✓ function_onAfterAllocateLQTY_uint256_address_struct_IGovernance.UserState_struct_IGovernance.Allocation_struct_IGovernance.InitiativeState.md
     ✓ function_onClaimForInitiative_uint256_uint256.md
+  ✓ context_output/test/mocks/MockDistributionCreator.sol/contract_MockDistributionCreator.md
+    ✓ function_acceptConditions.md
+    ✓ function_createCampaign_struct_IDistributionCreator.CampaignParameters.md
+    ✓ function_campaignId_struct_IDistributionCreator.CampaignParameters.md
+    ✓ function_distributor.md
+    ✓ function_campaign_bytes32.md
+    ✓ function_campaignLookup_bytes32.md
   ✓ context_output/test/mocks/MockERC20Tester.sol/contract_MockERC20Tester.md
     ✓ function_constructor_string_string.md
     ✓ function_domainSeparator.md
@@ -22404,6 +21295,10 @@ Contract: CryticToFoundry
     ✓ function_onUnregisterInitiative_uint256.md
     ✓ function_onAfterAllocateLQTY_uint256_address_struct_IGovernance.UserState_struct_IGovernance.Allocation_struct_IGovernance.InitiativeState.md
     ✓ function_onClaimForInitiative_uint256_uint256.md
+  ✓ context_output/test/mocks/MockLiquidityGauge.sol/contract_MockLiquidityGauge.md
+    ✓ function_constructor_address.md
+    ✓ function_add_reward_address_address.md
+    ✓ function_deposit_reward_token_address_uint256_uint256.md
   ✓ context_output/test/mocks/MockStakingV1.sol/contract_MockStakingV1.md
     ✓ function_constructor_contract_IERC20_contract_IERC20.md
     ✓ function_stake_uint256.md
@@ -22418,6 +21313,14 @@ Contract: CryticToFoundry
     ✓ function_owner.md
     ✓ function_renounceOwnership.md
     ✓ function_transferOwnership_address.md
+  ✓ context_output/test/mocks/MockUniV4MerklRewards.sol/contract_MockUniV4MerklRewards.md
+    ✓ function_constructor_address_address_uint256_bytes32_uint32_uint32_uint32_address.md
+    ✓ function_getCampaignData.md
+    ✓ function_onRegisterInitiative_uint256.md
+    ✓ function_onUnregisterInitiative_uint256.md
+    ✓ function_onAfterAllocateLQTY_uint256_address_struct_IGovernance.UserState_struct_IGovernance.Allocation_struct_IGovernance.InitiativeState.md
+    ✓ function_onClaimForInitiative_uint256_uint256.md
+    ✓ function_claimForInitiative.md
   ✓ context_output/test/mocks/UniV4MerklRewardsWrapper.sol/contract_UniV4MerklRewardsWrapper.md
     ✓ function_constructor_address_address_uint256_bytes32_uint32_uint32_uint32.md
     ✓ function_createCampaignWrapper_uint256.md
@@ -22430,14 +21333,21 @@ Contract: CryticToFoundry
   ✓ context_output/test/recon/CryticTester.sol/contract_CryticTester.md
     ✓ function_constructor.md
     ✓ function_optimize_coverage.md
-    ✓ function_governance_registerInitialInitiatives_address[].md
-    ✓ function_governance_multiDelegateCall_bytes[].md
+    ✓ function_bribeInitiative_depositBribe_clamped_uint256_uint256_uint256.md
+    ✓ function_bribeInitiative_claimBribes_clamped_uint256.md
+    ✓ function_bribeInitiative_onAfterAllocateLQTY_clamped_uint256_struct_IGovernance.UserState_struct_IGovernance.Allocation_struct_IGovernance.InitiativeState.md
+    ✓ function_bribeInitiative_lqtyAllocatedByUserAtEpoch_clamped_uint256.md
+    ✓ function_bribeInitiative_totalLQTYAllocatedByEpoch_clamped_uint256.md
+    ✓ function_bribeInitiative_checkClaimedBribeAtEpoch_clamped_uint256.md
     ✓ function_bribeInitiative_claimBribes_struct_IBribeInitiative.ClaimData[].md
     ✓ function_bribeInitiative_depositBribe_uint256_uint256_uint256.md
     ✓ function_bribeInitiative_onAfterAllocateLQTY_uint256_address_struct_IGovernance.UserState_struct_IGovernance.Allocation_struct_IGovernance.InitiativeState.md
     ✓ function_bribeInitiative_onClaimForInitiative_uint256_uint256.md
     ✓ function_bribeInitiative_onRegisterInitiative_uint256.md
     ✓ function_bribeInitiative_onUnregisterInitiative_uint256.md
+    ✓ function_bribeInitiative_totalLQTYAllocatedByEpoch_uint256.md
+    ✓ function_bribeInitiative_lqtyAllocatedByUserAtEpoch_address_uint256.md
+    ✓ function_bribeInitiative_checkClaimedBribeAtEpoch_address_uint256.md
     ✓ function_governance_allocateLQTY_address[]_address[]_int256[]_int256[].md
     ✓ function_governance_calculateVotingThreshold.md
     ✓ function_governance_claimForInitiative_address.md
@@ -22448,31 +21358,21 @@ Contract: CryticToFoundry
     ✓ function_governance_depositLQTYViaPermit_uint256_struct_PermitParams_bool_address.md
     ✓ function_governance_depositLQTYViaPermit_uint256_struct_PermitParams.md
     ✓ function_governance_getInitiativeState_address.md
+    ✓ function_governance_multiDelegateCall_bytes[].md
+    ✓ function_governance_registerInitialInitiatives_address[].md
     ✓ function_governance_registerInitiative_address.md
     ✓ function_governance_resetAllocations_address[]_bool.md
     ✓ function_governance_snapshotVotesForInitiative_address.md
     ✓ function_governance_unregisterInitiative_address.md
     ✓ function_governance_withdrawLQTY_uint256.md
     ✓ function_governance_withdrawLQTY_uint256_bool_address.md
+    ✓ function_governance_getLatestVotingThreshold.md
     ✓ function_switchActor_uint256.md
     ✓ function_switch_asset_uint256.md
     ✓ function_add_new_asset_uint8.md
     ✓ function_asset_approve_address_uint128.md
     ✓ function_asset_mint_address_uint128.md
-    ✓ function_shortcut_allocateLQTY_uint256_uint256.md
-    ✓ function_shortcut_claimBribes_uint256_uint256.md
-    ✓ function_shortcut_claimForInitiative_uint256_uint256.md
-    ✓ function_shortcut_fullVotingCycle_uint256_uint256_uint256_uint256.md
-    ✓ function_shortcut_resetAndReallocate_uint256_uint256.md
-    ✓ function_shortcut_unregisterAndReregister_uint256_uint256.md
-    ✓ function_shortcut_multiActorVoting_uint256_uint256_uint256.md
-    ✓ function_shortcut_withdrawAndRedeposit_uint256_uint256.md
-    ✓ function_shortcut_permitBasedFlow_uint256_uint256.md
-    ✓ function_shortcut_snapshotVotes_uint256_uint256.md
-    ✓ function_shortcut_claimFromStakingV1_uint256.md
-    ✓ function_shortcut_deployProxyAndVote_uint256_uint256.md
-    ✓ function_shortcut_fullInitiativeLifecycle_uint256_uint256_uint256.md
-    ✓ function_shortcut_multiEpochVoting_uint256_uint256_uint256_uint256.md
+    ✓ function_asset_mint_clamped_uint128.md
   ✓ context_output/test/recon/CryticToFoundry.sol/contract_CryticToFoundry.md
     ✓ function_setUp.md
     ✓ function_test_crytic.md
@@ -22504,14 +21404,21 @@ Contract: CryticToFoundry
     ✓ function_targetSenders.md
     ✓ function_targetInterfaces.md
     ✓ function_optimize_coverage.md
-    ✓ function_governance_registerInitialInitiatives_address[].md
-    ✓ function_governance_multiDelegateCall_bytes[].md
+    ✓ function_bribeInitiative_depositBribe_clamped_uint256_uint256_uint256.md
+    ✓ function_bribeInitiative_claimBribes_clamped_uint256.md
+    ✓ function_bribeInitiative_onAfterAllocateLQTY_clamped_uint256_struct_IGovernance.UserState_struct_IGovernance.Allocation_struct_IGovernance.InitiativeState.md
+    ✓ function_bribeInitiative_lqtyAllocatedByUserAtEpoch_clamped_uint256.md
+    ✓ function_bribeInitiative_totalLQTYAllocatedByEpoch_clamped_uint256.md
+    ✓ function_bribeInitiative_checkClaimedBribeAtEpoch_clamped_uint256.md
     ✓ function_bribeInitiative_claimBribes_struct_IBribeInitiative.ClaimData[].md
     ✓ function_bribeInitiative_depositBribe_uint256_uint256_uint256.md
     ✓ function_bribeInitiative_onAfterAllocateLQTY_uint256_address_struct_IGovernance.UserState_struct_IGovernance.Allocation_struct_IGovernance.InitiativeState.md
     ✓ function_bribeInitiative_onClaimForInitiative_uint256_uint256.md
     ✓ function_bribeInitiative_onRegisterInitiative_uint256.md
     ✓ function_bribeInitiative_onUnregisterInitiative_uint256.md
+    ✓ function_bribeInitiative_totalLQTYAllocatedByEpoch_uint256.md
+    ✓ function_bribeInitiative_lqtyAllocatedByUserAtEpoch_address_uint256.md
+    ✓ function_bribeInitiative_checkClaimedBribeAtEpoch_address_uint256.md
     ✓ function_governance_allocateLQTY_address[]_address[]_int256[]_int256[].md
     ✓ function_governance_calculateVotingThreshold.md
     ✓ function_governance_claimForInitiative_address.md
@@ -22522,31 +21429,21 @@ Contract: CryticToFoundry
     ✓ function_governance_depositLQTYViaPermit_uint256_struct_PermitParams_bool_address.md
     ✓ function_governance_depositLQTYViaPermit_uint256_struct_PermitParams.md
     ✓ function_governance_getInitiativeState_address.md
+    ✓ function_governance_multiDelegateCall_bytes[].md
+    ✓ function_governance_registerInitialInitiatives_address[].md
     ✓ function_governance_registerInitiative_address.md
     ✓ function_governance_resetAllocations_address[]_bool.md
     ✓ function_governance_snapshotVotesForInitiative_address.md
     ✓ function_governance_unregisterInitiative_address.md
     ✓ function_governance_withdrawLQTY_uint256.md
     ✓ function_governance_withdrawLQTY_uint256_bool_address.md
+    ✓ function_governance_getLatestVotingThreshold.md
     ✓ function_switchActor_uint256.md
     ✓ function_switch_asset_uint256.md
     ✓ function_add_new_asset_uint8.md
     ✓ function_asset_approve_address_uint128.md
     ✓ function_asset_mint_address_uint128.md
-    ✓ function_shortcut_allocateLQTY_uint256_uint256.md
-    ✓ function_shortcut_claimBribes_uint256_uint256.md
-    ✓ function_shortcut_claimForInitiative_uint256_uint256.md
-    ✓ function_shortcut_fullVotingCycle_uint256_uint256_uint256_uint256.md
-    ✓ function_shortcut_resetAndReallocate_uint256_uint256.md
-    ✓ function_shortcut_unregisterAndReregister_uint256_uint256.md
-    ✓ function_shortcut_multiActorVoting_uint256_uint256_uint256.md
-    ✓ function_shortcut_withdrawAndRedeposit_uint256_uint256.md
-    ✓ function_shortcut_permitBasedFlow_uint256_uint256.md
-    ✓ function_shortcut_snapshotVotes_uint256_uint256.md
-    ✓ function_shortcut_claimFromStakingV1_uint256.md
-    ✓ function_shortcut_deployProxyAndVote_uint256_uint256.md
-    ✓ function_shortcut_fullInitiativeLifecycle_uint256_uint256_uint256.md
-    ✓ function_shortcut_multiEpochVoting_uint256_uint256_uint256_uint256.md
+    ✓ function_asset_mint_clamped_uint128.md
   ✓ context_output/test/util/Random.sol/contract_Random.md
   ✓ context_output/test/util/StringFormatting.sol/contract_StringFormatting.md
   ✓ context_output/test/util/UintArray.sol/contract_UintArray.md
