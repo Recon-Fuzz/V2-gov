@@ -167,6 +167,45 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance_resetAllocations(initiativesToReset, false);
     }
 
+    /// @dev Helper to ensure BOLD is accrued in governance - deposits BOLD to governance contract
+    /// This helps reach line 296 in calculateVotingThreshold where payoutPerVote != 0
+    function governance_accrueBOLD_clamped(uint256 _boldAmount) public asActor {
+        // Clamp to actor's BOLD balance
+        _boldAmount = _boldAmount % (bold.balanceOf(_getActor()) + 1);
+        
+        // Transfer BOLD directly to governance to accrue rewards
+        if (_boldAmount > 0) {
+            bold.transfer(address(governance), _boldAmount);
+        }
+    }
+
+    /// @dev Helper to create edge case where claimableAmount > available BOLD
+    /// This helps reach line 908 in claimForInitiative by having multiple initiatives claim
+    function governance_multiClaim_clamped() public asActor {
+        // Try to claim for all registered initiatives to drain BOLD
+        governance_claimForInitiative_bribeInitiative_clamped();
+        governance_claimForInitiative_curveV2GaugeRewards_clamped();
+        governance_claimForInitiative_uniV4MerklRewards_clamped();
+    }
+
+    /// @dev Shortcut to set up scenario for calculateVotingThreshold edge case
+    /// Ensures BOLD is accrued and votes are allocated
+    function governance_setupVotingThreshold_clamped(uint256 depositAmount, uint256 boldAmount) public asActor {
+        // Register initiative
+        governance_registerInitiative_bribeInitiative_clamped();
+        
+        // Deposit LQTY and allocate votes
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_bribeInitiative_clamped(depositAmount, 0);
+        
+        // Accrue BOLD
+        governance_accrueBOLD_clamped(boldAmount);
+        
+        // Trigger snapshot which calls calculateVotingThreshold
+        vm.warp(block.timestamp + governance.EPOCH_DURATION());
+        governance_calculateVotingThreshold();
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(
