@@ -16,33 +16,6 @@ import "src/BribeInitiative.sol";
 abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
-    function bribeInitiative_claimBribes_clamped(
-        IBribeInitiative.ClaimData[] memory _claimData
-    ) public asActor {
-        // Clamp array size to maximum of 10
-        if (_claimData.length > 10) {
-            assembly {
-                mstore(_claimData, 10)
-            }
-        }
-        
-        bribeInitiative_claimBribes(_claimData);
-    }
-
-    function bribeInitiative_depositBribe_clamped(
-        uint256 _boldAmount,
-        uint256 _bribeTokenAmount,
-        uint256 _epoch
-    ) public asActor {
-        // Clamp amounts to actor's balances
-        _boldAmount %= bold.balanceOf(_getActor()) + 1;
-        _bribeTokenAmount %= bribeToken.balanceOf(_getActor()) + 1;
-        // Use exact current epoch
-        _epoch = governance.epoch();
-        
-        bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
-    }
-
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(
