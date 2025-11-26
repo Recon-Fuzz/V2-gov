@@ -21,13 +21,12 @@ import {BribeInitiativeTargets} from "./targets/BribeInitiativeTargets.sol";
 // import {DoomsdayTargets} from "./targets/DoomsdayTargets.sol";
 import {GovernanceTargets} from "./targets/GovernanceTargets.sol";
 import {ManagersTargets} from "./targets/ManagersTargets.sol";
-import {UserProxyTargets} from "./targets/UserProxyTargets.sol";
+// import {UserProxyTargets} from "./targets/UserProxyTargets.sol";
 // import {UniV4MerklRewardsTargets} from "./targets/UniV4MerklRewardsTargets.sol";
 
 abstract contract TargetFunctions is
     AdminTargets,
     BribeInitiativeTargets,
-    DoomsdayTargets,
     GovernanceTargets,
     ManagersTargets
 {
