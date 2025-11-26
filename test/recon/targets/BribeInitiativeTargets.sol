@@ -16,6 +16,76 @@ import "src/BribeInitiative.sol";
 abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
+    // === CLAMPED HANDLERS === //
+
+    /// @dev Clamped version of bribeInitiative_depositBribe - clamps amounts to actor's balances and epoch
+    function bribeInitiative_depositBribe_clamped(
+        uint256 _boldAmount,
+        uint256 _bribeTokenAmount,
+        uint256 _epoch
+    ) public asActor {
+        _boldAmount = _boldAmount % (bold.balanceOf(_getActor()) + 1);
+        _bribeTokenAmount = _bribeTokenAmount % (bribeToken.balanceOf(_getActor()) + 1);
+        _epoch = _epoch % (governance.epoch() + 10 + 1);
+        
+        bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
+    }
+
+    /// @dev Clamped version of bribeInitiative_claimBribes - clamps epoch to current epoch - 1
+    function bribeInitiative_claimBribes_clamped(uint256 _epochEntropy) public asActor {
+        uint256 currentEpoch = governance.epoch();
+        
+        // Create claim data for a single epoch
+        IBribeInitiative.ClaimData[] memory _claimData = new IBribeInitiative.ClaimData[](1);
+        
+        // Clamp epoch to a valid past epoch (current epoch - 1, or 0 if current epoch is 0)
+        uint256 claimEpoch = currentEpoch > 0 ? (_epochEntropy % currentEpoch) : 0;
+        
+        _claimData[0] = IBribeInitiative.ClaimData({
+            epoch: claimEpoch,
+            prevLQTYAllocationEpoch: claimEpoch > 0 ? claimEpoch - 1 : 0,
+            prevTotalLQTYAllocationEpoch: claimEpoch > 0 ? claimEpoch - 1 : 0
+        });
+        
+        bribeInitiative_claimBribes(_claimData);
+    }
+
+    /// @dev Clamped version of bribeInitiative_onAfterAllocateLQTY - clamps epoch to current epoch
+    function bribeInitiative_onAfterAllocateLQTY_clamped(
+        uint256 _currentEpoch,
+        IGovernance.UserState memory _userState,
+        IGovernance.Allocation memory _allocation,
+        IGovernance.InitiativeState memory _initiativeState
+    ) public asActor {
+        _currentEpoch = _currentEpoch % (governance.epoch() + 1);
+        
+        bribeInitiative_onAfterAllocateLQTY(
+            _currentEpoch,
+            _getActor(),
+            _userState,
+            _allocation,
+            _initiativeState
+        );
+    }
+
+    /// @dev Clamped version of bribeInitiative_lqtyAllocatedByUserAtEpoch - uses actor and clamped epoch
+    function bribeInitiative_lqtyAllocatedByUserAtEpoch_clamped(uint256 _epoch) public asActor {
+        _epoch = _epoch % (governance.epoch() + 1);
+        bribeInitiative_lqtyAllocatedByUserAtEpoch(_getActor(), _epoch);
+    }
+
+    /// @dev Clamped version of bribeInitiative_totalLQTYAllocatedByEpoch - clamps epoch
+    function bribeInitiative_totalLQTYAllocatedByEpoch_clamped(uint256 _epoch) public asActor {
+        _epoch = _epoch % (governance.epoch() + 1);
+        bribeInitiative_totalLQTYAllocatedByEpoch(_epoch);
+    }
+
+    /// @dev Clamped version of bribeInitiative_checkClaimedBribeAtEpoch - uses actor and clamped epoch
+    function bribeInitiative_checkClaimedBribeAtEpoch_clamped(uint256 _epoch) public asActor {
+        _epoch = _epoch % (governance.epoch() + 1);
+        bribeInitiative_checkClaimedBribeAtEpoch(_getActor(), _epoch);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(
