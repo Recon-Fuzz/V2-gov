@@ -17,6 +17,108 @@ import "src/Governance.sol";
 abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
+    // === CLAMPED HANDLERS === //
+
+    /// @dev Clamped version of governance_depositLQTY - clamps amount to actor's LQTY balance
+    function governance_depositLQTY_clamped(uint256 _lqtyAmount) public asActor {
+        _lqtyAmount = _lqtyAmount % (lqty.balanceOf(_getActor()) + 1);
+        governance_depositLQTY(_lqtyAmount);
+    }
+
+    /// @dev Clamped version of governance_depositLQTY with params - clamps amount to actor's LQTY balance
+    function governance_depositLQTY_clamped(uint256 _lqtyAmount, bool _doSendRewards) public asActor {
+        _lqtyAmount = _lqtyAmount % (lqty.balanceOf(_getActor()) + 1);
+        governance_depositLQTY(_lqtyAmount, _doSendRewards, _getActor());
+    }
+
+    /// @dev Clamped version of governance_withdrawLQTY - clamps amount to actor's unallocated LQTY
+    function governance_withdrawLQTY_clamped(uint256 _lqtyAmount) public asActor {
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        _lqtyAmount = _lqtyAmount % (unallocatedLQTY + 1);
+        governance_withdrawLQTY(_lqtyAmount);
+    }
+
+    /// @dev Clamped version of governance_withdrawLQTY with params - clamps amount to actor's unallocated LQTY
+    function governance_withdrawLQTY_clamped(uint256 _lqtyAmount, bool _doSendRewards) public asActor {
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        _lqtyAmount = _lqtyAmount % (unallocatedLQTY + 1);
+        governance_withdrawLQTY(_lqtyAmount, _doSendRewards, _getActor());
+    }
+
+    /// @dev Clamped version of governance_registerInitiative - uses bribeInitiative as the initiative
+    function governance_registerInitiative_clamped() public asActor {
+        governance_registerInitiative(address(bribeInitiative));
+    }
+
+    /// @dev Clamped version of governance_unregisterInitiative - uses bribeInitiative as the initiative
+    function governance_unregisterInitiative_clamped() public asActor {
+        governance_unregisterInitiative(address(bribeInitiative));
+    }
+
+    /// @dev Clamped version of governance_allocateLQTY - uses bribeInitiative and clamps votes/vetos
+    function governance_allocateLQTY_clamped(
+        int256 _absoluteLQTYVotes,
+        int256 _absoluteLQTYVetos
+    ) public asActor {
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        
+        // Clamp votes and vetos to unallocated amount
+        _absoluteLQTYVotes = int256(_absoluteLQTYVotes % int256(unallocatedLQTY + 1));
+        _absoluteLQTYVetos = int256(_absoluteLQTYVetos % int256(unallocatedLQTY + 1));
+        
+        // Create arrays with single initiative
+        address[] memory _initiativesToReset = new address[](0);
+        address[] memory _initiatives = new address[](1);
+        _initiatives[0] = address(bribeInitiative);
+        
+        int256[] memory _votes = new int256[](1);
+        _votes[0] = _absoluteLQTYVotes;
+        
+        int256[] memory _vetos = new int256[](1);
+        _vetos[0] = _absoluteLQTYVetos;
+        
+        governance_allocateLQTY(_initiativesToReset, _initiatives, _votes, _vetos);
+    }
+
+    /// @dev Clamped version of governance_claimForInitiative - uses bribeInitiative
+    function governance_claimForInitiative_clamped() public asActor {
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    /// @dev Clamped version of governance_snapshotVotesForInitiative - uses bribeInitiative
+    function governance_snapshotVotesForInitiative_clamped() public asActor {
+        governance_snapshotVotesForInitiative(address(bribeInitiative));
+    }
+
+    /// @dev Clamped version of governance_getInitiativeState - uses bribeInitiative
+    function governance_getInitiativeState_clamped() public asActor {
+        governance_getInitiativeState(address(bribeInitiative));
+    }
+
+    /// @dev Clamped version of governance_resetAllocations - uses bribeInitiative
+    function governance_resetAllocations_clamped(bool checkAll) public asActor {
+        address[] memory _initiativesToReset = new address[](1);
+        _initiativesToReset[0] = address(bribeInitiative);
+        governance_resetAllocations(_initiativesToReset, checkAll);
+    }
+
+    /// @dev Clamped version of governance_claimFromStakingV1 - uses actor as recipient
+    function governance_claimFromStakingV1_clamped() public asActor {
+        governance_claimFromStakingV1(_getActor());
+    }
+
+    /// @dev Clamped version of governance_depositLQTYViaPermit - clamps amount to actor's LQTY balance
+    function governance_depositLQTYViaPermit_clamped(uint256 _lqtyAmount, PermitParams memory _permitParams) public asActor {
+        _lqtyAmount = _lqtyAmount % (lqty.balanceOf(_getActor()) + 1);
+        governance_depositLQTYViaPermit(_lqtyAmount, _permitParams);
+    }
+
+    /// @dev Clamped version of governance_depositLQTYViaPermit with params - clamps amount to actor's LQTY balance
+    function governance_depositLQTYViaPermit_clamped(uint256 _lqtyAmount, PermitParams memory _permitParams, bool _doSendRewards) public asActor {
+        _lqtyAmount = _lqtyAmount % (lqty.balanceOf(_getActor()) + 1);
+        governance_depositLQTYViaPermit(_lqtyAmount, _permitParams, _doSendRewards, _getActor());
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(

@@ -31,20 +31,20 @@ abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
         bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
     }
 
-    /// @dev Clamped version of bribeInitiative_claimBribes - clamps epoch to current epoch - 1
-    function bribeInitiative_claimBribes_clamped(uint256 _epochEntropy) public asActor {
+    /// @dev Clamped version of bribeInitiative_claimBribes - clamps epoch to current epoch
+    function bribeInitiative_claimBribes_clamped(uint256 _epochEntropy, uint256 _prevEpochEntropy1, uint256 _prevEpochEntropy2) public asActor {
         uint256 currentEpoch = governance.epoch();
         
         // Create claim data for a single epoch
         IBribeInitiative.ClaimData[] memory _claimData = new IBribeInitiative.ClaimData[](1);
         
-        // Clamp epoch to a valid past epoch (current epoch - 1, or 0 if current epoch is 0)
-        uint256 claimEpoch = currentEpoch > 0 ? (_epochEntropy % currentEpoch) : 0;
+        // Clamp epoch to current epoch range
+        uint256 claimEpoch = _epochEntropy % (currentEpoch + 1);
         
         _claimData[0] = IBribeInitiative.ClaimData({
             epoch: claimEpoch,
-            prevLQTYAllocationEpoch: claimEpoch > 0 ? claimEpoch - 1 : 0,
-            prevTotalLQTYAllocationEpoch: claimEpoch > 0 ? claimEpoch - 1 : 0
+            prevLQTYAllocationEpoch: _prevEpochEntropy1 % (currentEpoch + 1),
+            prevTotalLQTYAllocationEpoch: _prevEpochEntropy2 % (currentEpoch + 1)
         });
         
         bribeInitiative_claimBribes(_claimData);
