@@ -250,5 +250,17 @@ abstract contract TargetFunctions is
         governance_claimForInitiative_curveV2GaugeRewards_clamped();
     }
     
+    /// @dev Enhanced shortcut to trigger line 908 with minimal BOLD
+    /// More aggressive approach to ensure claimableAmount > available
+    function shortcut_claimWithMinimalBOLD(uint256 depositAmount, uint256 voteSeed, uint256 vetoSeed) public {
+        governance_claimWithInsufficientBOLD_clamped(depositAmount, voteSeed, vetoSeed);
+    }
+    
+    /// @dev Ultra-aggressive shortcut to trigger line 908 with 3 initiatives
+    /// Transfers only 1 wei of BOLD to guarantee edge case
+    function shortcut_claimWithDrainedBOLD(uint256 depositAmount, uint256 voteSeed, uint256 vetoSeed) public {
+        governance_claimWithDrainedBOLD_clamped(depositAmount, voteSeed, vetoSeed);
+    }
+    
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }

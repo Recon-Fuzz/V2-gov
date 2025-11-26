@@ -206,6 +206,80 @@ abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
         governance_calculateVotingThreshold();
     }
 
+    /// @dev Improved handler to trigger line 908: claimableAmount > available BOLD
+    /// Creates scenario where governance has insufficient BOLD for all claimable rewards
+    function governance_claimWithInsufficientBOLD_clamped(uint256 depositAmount, uint256 voteSeed, uint256 vetoSeed) public asActor {
+        // Register both initiatives
+        governance_registerInitiative_bribeInitiative_clamped();
+        governance_registerInitiative_curveV2GaugeRewards_clamped();
+        
+        // Actor 0: Deposit LQTY and allocate to bribeInitiative
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_bribeInitiative_clamped(voteSeed, vetoSeed);
+        
+        // Actor 1: Deposit LQTY and allocate to curveV2GaugeRewards
+        _switchActor(1);
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_curveV2GaugeRewards_clamped(voteSeed, vetoSeed);
+        
+        // Transfer a very small amount of BOLD to governance (much less than potential claims)
+        // This ensures that when initiatives try to claim, there won't be enough BOLD
+        uint256 smallBoldAmount = 100e18; // Small fixed amount
+        if (bold.balanceOf(_getActor()) >= smallBoldAmount) {
+            bold.transfer(address(governance), smallBoldAmount);
+        }
+        
+        // Warp forward one epoch to make claims possible
+        vm.warp(block.timestamp + governance.EPOCH_DURATION());
+        
+        // First claim - this should succeed and drain most/all BOLD
+        _switchActor(0);
+        governance_claimForInitiative_bribeInitiative_clamped();
+        
+        // Second claim - this should hit line 908 if claimable > available
+        _switchActor(1);
+        governance_claimForInitiative_curveV2GaugeRewards_clamped();
+    }
+
+    /// @dev Alternative handler with even more aggressive BOLD limitation
+    /// Uses a percentage of the first claim to ensure second claim hits the edge case
+    function governance_claimWithDrainedBOLD_clamped(uint256 depositAmount, uint256 voteSeed, uint256 vetoSeed) public asActor {
+        // Register all three initiatives
+        governance_registerInitiative_bribeInitiative_clamped();
+        governance_registerInitiative_curveV2GaugeRewards_clamped();
+        governance_registerInitiative_uniV4MerklRewards_clamped();
+        
+        // Actor 0: Allocate to bribeInitiative
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_bribeInitiative_clamped(voteSeed, vetoSeed);
+        
+        // Actor 1: Allocate to curveV2GaugeRewards
+        _switchActor(1);
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_curveV2GaugeRewards_clamped(voteSeed, vetoSeed);
+        
+        // Actor 2: Allocate to uniV4MerklRewards
+        _switchActor(2);
+        governance_depositLQTY_clamped(depositAmount);
+        governance_allocateLQTY_uniV4MerklRewards_clamped(voteSeed, vetoSeed);
+        
+        // Transfer minimal BOLD - just 1 wei to ensure edge case
+        _switchActor(0);
+        if (bold.balanceOf(_getActor()) > 0) {
+            bold.transfer(address(governance), 1);
+        }
+        
+        // Warp forward
+        vm.warp(block.timestamp + governance.EPOCH_DURATION());
+        
+        // Try to claim for all initiatives - at least one should hit the edge case
+        governance_claimForInitiative_bribeInitiative_clamped();
+        _switchActor(1);
+        governance_claimForInitiative_curveV2GaugeRewards_clamped();
+        _switchActor(2);
+        governance_claimForInitiative_uniV4MerklRewards_clamped();
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(
