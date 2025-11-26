@@ -44,4 +44,12 @@ abstract contract ManagersTargets is BaseTargetFunctions, Properties {
     function asset_mint(address to, uint128 amt) public updateGhosts asAdmin {
         MockERC20(_getAsset()).mint(to, amt);
     }
+
+    // === CLAMPED HANDLERS === //
+
+    /// @dev Clamped version of asset_mint - clamps amount to type(uint88).max
+    function asset_mint_clamped(uint128 amt) public updateGhosts asAdmin {
+        amt = uint128(amt % (uint256(type(uint88).max) + 1));
+        asset_mint(_getActor(), amt);
+    }
 }

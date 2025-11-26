@@ -17,6 +17,156 @@ import "src/Governance.sol";
 abstract contract GovernanceTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
+    // === CLAMPED HANDLERS === //
+
+    /// @dev Clamped version of depositLQTY - clamps amount to actor's LQTY balance
+    function governance_depositLQTY_clamped(uint256 _lqtyAmount) public asActor {
+        _lqtyAmount = _lqtyAmount % (lqty.balanceOf(_getActor()) + 1);
+        governance_depositLQTY(_lqtyAmount);
+    }
+
+    /// @dev Clamped version of withdrawLQTY - clamps amount to actor's unallocated LQTY
+    function governance_withdrawLQTY_clamped(uint256 _lqtyAmount) public asActor {
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        _lqtyAmount = _lqtyAmount % (unallocatedLQTY + 1);
+        governance_withdrawLQTY(_lqtyAmount);
+    }
+
+    /// @dev Clamped version of registerInitiative using bribeInitiative
+    function governance_registerInitiative_bribeInitiative_clamped() public asActor {
+        governance_registerInitiative(address(bribeInitiative));
+    }
+
+    /// @dev Clamped version of registerInitiative using curveV2GaugeRewards
+    function governance_registerInitiative_curveV2GaugeRewards_clamped() public asActor {
+        governance_registerInitiative(address(curveV2GaugeRewards));
+    }
+
+    /// @dev Clamped version of registerInitiative using uniV4MerklRewards
+    function governance_registerInitiative_uniV4MerklRewards_clamped() public asActor {
+        governance_registerInitiative(address(uniV4MerklRewards));
+    }
+
+    /// @dev Clamped version of unregisterInitiative using bribeInitiative
+    function governance_unregisterInitiative_bribeInitiative_clamped() public asActor {
+        governance_unregisterInitiative(address(bribeInitiative));
+    }
+
+    /// @dev Clamped version of unregisterInitiative using curveV2GaugeRewards
+    function governance_unregisterInitiative_curveV2GaugeRewards_clamped() public asActor {
+        governance_unregisterInitiative(address(curveV2GaugeRewards));
+    }
+
+    /// @dev Clamped version of unregisterInitiative using uniV4MerklRewards
+    function governance_unregisterInitiative_uniV4MerklRewards_clamped() public asActor {
+        governance_unregisterInitiative(address(uniV4MerklRewards));
+    }
+
+    /// @dev Clamped version of claimForInitiative using bribeInitiative
+    function governance_claimForInitiative_bribeInitiative_clamped() public asActor {
+        governance_claimForInitiative(address(bribeInitiative));
+    }
+
+    /// @dev Clamped version of claimForInitiative using curveV2GaugeRewards
+    function governance_claimForInitiative_curveV2GaugeRewards_clamped() public asActor {
+        governance_claimForInitiative(address(curveV2GaugeRewards));
+    }
+
+    /// @dev Clamped version of claimForInitiative using uniV4MerklRewards
+    function governance_claimForInitiative_uniV4MerklRewards_clamped() public asActor {
+        governance_claimForInitiative(address(uniV4MerklRewards));
+    }
+
+    /// @dev Clamped version of snapshotVotesForInitiative using bribeInitiative
+    function governance_snapshotVotesForInitiative_bribeInitiative_clamped() public asActor {
+        governance_snapshotVotesForInitiative(address(bribeInitiative));
+    }
+
+    /// @dev Clamped version of snapshotVotesForInitiative using curveV2GaugeRewards
+    function governance_snapshotVotesForInitiative_curveV2GaugeRewards_clamped() public asActor {
+        governance_snapshotVotesForInitiative(address(curveV2GaugeRewards));
+    }
+
+    /// @dev Clamped version of snapshotVotesForInitiative using uniV4MerklRewards
+    function governance_snapshotVotesForInitiative_uniV4MerklRewards_clamped() public asActor {
+        governance_snapshotVotesForInitiative(address(uniV4MerklRewards));
+    }
+
+    /// @dev Clamped version of getInitiativeState using bribeInitiative
+    function governance_getInitiativeState_bribeInitiative_clamped() public asActor {
+        governance_getInitiativeState(address(bribeInitiative));
+    }
+
+    /// @dev Clamped version of getInitiativeState using curveV2GaugeRewards
+    function governance_getInitiativeState_curveV2GaugeRewards_clamped() public asActor {
+        governance_getInitiativeState(address(curveV2GaugeRewards));
+    }
+
+    /// @dev Clamped version of getInitiativeState using uniV4MerklRewards
+    function governance_getInitiativeState_uniV4MerklRewards_clamped() public asActor {
+        governance_getInitiativeState(address(uniV4MerklRewards));
+    }
+
+    /// @dev Clamped version of allocateLQTY using bribeInitiative - allocates all unallocated LQTY
+    function governance_allocateLQTY_bribeInitiative_clamped(uint256 voteSeed, uint256 vetoSeed) public asActor {
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        
+        address[] memory initiativesToReset = getInitiativesWithAllocation(_getActor());
+        
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(bribeInitiative);
+        
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(voteSeed % (unallocatedLQTY + 1));
+        
+        int256[] memory vetos = new int256[](1);
+        vetos[0] = int256(vetoSeed % (unallocatedLQTY + 1));
+        
+        governance_allocateLQTY(initiativesToReset, initiatives, votes, vetos);
+    }
+
+    /// @dev Clamped version of allocateLQTY using curveV2GaugeRewards - allocates all unallocated LQTY
+    function governance_allocateLQTY_curveV2GaugeRewards_clamped(uint256 voteSeed, uint256 vetoSeed) public asActor {
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        
+        address[] memory initiativesToReset = getInitiativesWithAllocation(_getActor());
+        
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(curveV2GaugeRewards);
+        
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(voteSeed % (unallocatedLQTY + 1));
+        
+        int256[] memory vetos = new int256[](1);
+        vetos[0] = int256(vetoSeed % (unallocatedLQTY + 1));
+        
+        governance_allocateLQTY(initiativesToReset, initiatives, votes, vetos);
+    }
+
+    /// @dev Clamped version of allocateLQTY using uniV4MerklRewards - allocates all unallocated LQTY
+    function governance_allocateLQTY_uniV4MerklRewards_clamped(uint256 voteSeed, uint256 vetoSeed) public asActor {
+        (uint256 unallocatedLQTY,,,) = governance.userStates(_getActor());
+        
+        address[] memory initiativesToReset = getInitiativesWithAllocation(_getActor());
+        
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(uniV4MerklRewards);
+        
+        int256[] memory votes = new int256[](1);
+        votes[0] = int256(voteSeed % (unallocatedLQTY + 1));
+        
+        int256[] memory vetos = new int256[](1);
+        vetos[0] = int256(vetoSeed % (unallocatedLQTY + 1));
+        
+        governance_allocateLQTY(initiativesToReset, initiatives, votes, vetos);
+    }
+
+    /// @dev Clamped version of resetAllocations - resets all current allocations
+    function governance_resetAllocations_clamped() public asActor {
+        address[] memory initiativesToReset = getInitiativesWithAllocation(_getActor());
+        governance_resetAllocations(initiativesToReset, false);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function governance_allocateLQTY(
