@@ -1,0 +1,166 @@
+{
+  "out/BribeInitiative.sol/BribeInitiative.json": {
+    "enabled": true,
+    "functions": [
+      {
+        "signature": "claimBribes(tuple[])",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "depositBribe(uint256,uint256,uint256)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "onAfterAllocateLQTY(uint256,address,tuple,tuple,tuple)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "onClaimForInitiative(uint256,uint256)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "onRegisterInitiative(uint256)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "onUnregisterInitiative(uint256)",
+        "actor": "actor",
+        "mode": "normal"
+      }
+    ],
+    "separated": true
+  },
+  "out/Governance.sol/Governance.json": {
+    "enabled": true,
+    "functions": [
+      {
+        "signature": "allocateLQTY(address[],address[],int256[],int256[])",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "calculateVotingThreshold()",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "claimForInitiative(address)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "claimFromStakingV1(address)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "deployUserProxy()",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "depositLQTY(uint256)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "depositLQTY(uint256,bool,address)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "depositLQTYViaPermit(uint256,tuple,bool,address)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "depositLQTYViaPermit(uint256,tuple)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "getInitiativeState(address)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "multiDelegateCall(bytes[])",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "registerInitialInitiatives(address[])",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "registerInitiative(address)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "resetAllocations(address[],bool)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "snapshotVotesForInitiative(address)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "unregisterInitiative(address)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "withdrawLQTY(uint256)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "withdrawLQTY(uint256,bool,address)",
+        "actor": "actor",
+        "mode": "normal"
+      }
+    ],
+    "separated": true
+  },
+  "out/UserProxy.sol/UserProxy.json": {
+    "enabled": true,
+    "functions": [
+      {
+        "signature": "stake(uint256,address,bool,address)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "stakeViaPermit(uint256,address,tuple,bool,address)",
+        "actor": "actor",
+        "mode": "normal"
+      },
+      {
+        "signature": "unstake(uint256,bool,address)",
+        "actor": "actor",
+        "mode": "normal"
+      }
+    ],
+    "separated": true
+  },
+  "out/UserProxyFactory.sol/UserProxyFactory.json": {
+    "enabled": true,
+    "functions": [
+      {
+        "signature": "deployUserProxy()",
+        "actor": "actor",
+        "mode": "normal"
+      }
+    ],
+    "separated": true
+  }
+}
