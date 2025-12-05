@@ -1,0 +1,102 @@
+{
+  "timestamp": "1764908141",
+  "lcov_file": "echidna/covered.1764908141.lcov",
+  "missing_coverage": {
+    "allocateLQTY": {
+      "contract": "Governance",
+      "source_file": "/Users/nelsonpereira/Documents/GitHub/Auditing/Fuzzing/Recon_Fuzzing/Liquity_V2_Gov/V2-gov/src/Governance.sol",
+      "function_range": {
+        "start": 584,
+        "end": 668
+      },
+      "coverage_stats": {
+        "total_lines": 36,
+        "covered_lines": 32,
+        "uncovered_lines": 4,
+        "percentage": 88.89
+      },
+      "uncovered_code": [
+        {
+          "line_range": "629-632",
+          "code": [
+            "629:                     if (cachedData[y].initiative == _initiatives[x]) {",
+            "630:                         found = true;",
+            "631:                         require(_absoluteLQTYVotes[x] <= cachedData[y].LQTYVotes, \"Cannot increase\");",
+            "632:                         break;"
+          ]
+        }
+      ]
+    },
+    "calculateVotingThreshold": {
+      "contract": "Governance",
+      "source_file": "/Users/nelsonpereira/Documents/GitHub/Auditing/Fuzzing/Recon_Fuzzing/Liquity_V2_Gov/V2-gov/src/Governance.sol",
+      "function_range": {
+        "start": 290,
+        "end": 299
+      },
+      "coverage_stats": {
+        "total_lines": 7,
+        "covered_lines": 6,
+        "uncovered_lines": 1,
+        "percentage": 85.71
+      },
+      "uncovered_code": [
+        {
+          "line_range": "296",
+          "code": [
+            "296:             minVotes = MIN_CLAIM * WAD / payoutPerVote;"
+          ]
+        }
+      ]
+    },
+    "claimForInitiative": {
+      "contract": "Governance",
+      "source_file": "/Users/nelsonpereira/Documents/GitHub/Auditing/Fuzzing/Recon_Fuzzing/Liquity_V2_Gov/V2-gov/src/Governance.sol",
+      "function_range": {
+        "start": 881,
+        "end": 926
+      },
+      "coverage_stats": {
+        "total_lines": 21,
+        "covered_lines": 20,
+        "uncovered_lines": 1,
+        "percentage": 95.24
+      },
+      "uncovered_code": [
+        {
+          "line_range": "908",
+          "code": [
+            "908:             claimableAmount = available;"
+          ]
+        }
+      ]
+    },
+    "multiDelegateCall": {
+      "contract": "MultiDelegateCall",
+      "source_file": "/Users/nelsonpereira/Documents/GitHub/Auditing/Fuzzing/Recon_Fuzzing/Liquity_V2_Gov/V2-gov/src/utils/MultiDelegateCall.sol",
+      "function_range": {
+        "start": 8,
+        "end": 26
+      },
+      "coverage_stats": {
+        "total_lines": 9,
+        "covered_lines": 8,
+        "uncovered_lines": 1,
+        "percentage": 88.89
+      },
+      "uncovered_code": [
+        {
+          "line_range": "24",
+          "code": [
+            "24:             returnValues[i] = returnData;"
+          ]
+        }
+      ]
+    }
+  },
+  "summary": {
+    "functions_analyzed": 50,
+    "functions_with_missing_coverage": 4,
+    "full_coverage": false
+  }
+}
