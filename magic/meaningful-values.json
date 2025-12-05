@@ -1,0 +1,212 @@
+[
+    {
+        "target_function": "bribeInitiative_depositBribe",
+        "type": "max",
+        "value": "uint256 _boldAmount",
+        "access": "bold.balanceOf(_getActor())"
+    },
+    {
+        "target_function": "bribeInitiative_depositBribe",
+        "type": "max",
+        "value": "uint256 _bribeTokenAmount",
+        "access": "bribeToken.balanceOf(_getActor())"
+    },
+    {
+        "target_function": "bribeInitiative_depositBribe",
+        "type": "max",
+        "value": "uint256 _epoch",
+        "access": "governance.epoch()"
+    },
+    {
+        "target_function": "governance_depositLQTY",
+        "type": "max",
+        "value": "uint256 _lqtyAmount",
+        "access": "lqty.balanceOf(_getActor())"
+    },
+    {
+        "target_function": "governance_depositLQTY(uint256,bool,address)",
+        "type": "max",
+        "value": "uint256 _lqtyAmount",
+        "access": "lqty.balanceOf(_getActor())"
+    },
+    {
+        "target_function": "governance_depositLQTYViaPermit(uint256,tuple)",
+        "type": "max",
+        "value": "uint256 _lqtyAmount",
+        "access": "lqty.balanceOf(_getActor())"
+    },
+    {
+        "target_function": "governance_depositLQTYViaPermit(uint256,tuple,bool,address)",
+        "type": "max",
+        "value": "uint256 _lqtyAmount",
+        "access": "lqty.balanceOf(_getActor())"
+    },
+    {
+        "target_function": "governance_withdrawLQTY",
+        "type": "max",
+        "value": "uint256 _lqtyAmount",
+        "access": "userStates[_getActor()].unallocatedLQTY"
+    },
+    {
+        "target_function": "governance_withdrawLQTY(uint256,bool,address)",
+        "type": "max",
+        "value": "uint256 _lqtyAmount",
+        "access": "userStates[_getActor()].unallocatedLQTY"
+    },
+    {
+        "target_function": "governance_registerInitiative",
+        "type": "max",
+        "value": "address _initiative",
+        "access": "bold.balanceOf(_getActor())"
+    },
+    {
+        "target_function": "governance_registerInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(bribeInitiative)"
+    },
+    {
+        "target_function": "governance_registerInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(curveV2GaugeRewards)"
+    },
+    {
+        "target_function": "governance_registerInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(uniV4MerklRewards)"
+    },
+    {
+        "target_function": "governance_claimForInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(bribeInitiative)"
+    },
+    {
+        "target_function": "governance_claimForInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(curveV2GaugeRewards)"
+    },
+    {
+        "target_function": "governance_claimForInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(uniV4MerklRewards)"
+    },
+    {
+        "target_function": "governance_getInitiativeState",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(bribeInitiative)"
+    },
+    {
+        "target_function": "governance_getInitiativeState",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(curveV2GaugeRewards)"
+    },
+    {
+        "target_function": "governance_getInitiativeState",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(uniV4MerklRewards)"
+    },
+    {
+        "target_function": "governance_snapshotVotesForInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(bribeInitiative)"
+    },
+    {
+        "target_function": "governance_snapshotVotesForInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(curveV2GaugeRewards)"
+    },
+    {
+        "target_function": "governance_snapshotVotesForInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(uniV4MerklRewards)"
+    },
+    {
+        "target_function": "governance_unregisterInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(bribeInitiative)"
+    },
+    {
+        "target_function": "governance_unregisterInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(curveV2GaugeRewards)"
+    },
+    {
+        "target_function": "governance_unregisterInitiative",
+        "type": "exact",
+        "value": "address _initiative",
+        "access": "address(uniV4MerklRewards)"
+    },
+    {
+        "target_function": "governance_allocateLQTY",
+        "type": "max",
+        "value": "int256[] memory _absoluteLQTYVotes",
+        "access": "userStates[_getActor()].unallocatedLQTY"
+    },
+    {
+        "target_function": "governance_allocateLQTY",
+        "type": "max",
+        "value": "int256[] memory _absoluteLQTYVetos",
+        "access": "userStates[_getActor()].unallocatedLQTY"
+    },
+    {
+        "target_function": "governance_allocateLQTY",
+        "type": "exact",
+        "value": "address[] memory _initiatives",
+        "access": "address(bribeInitiative)"
+    },
+    {
+        "target_function": "governance_allocateLQTY",
+        "type": "exact",
+        "value": "address[] memory _initiatives",
+        "access": "address(curveV2GaugeRewards)"
+    },
+    {
+        "target_function": "governance_allocateLQTY",
+        "type": "exact",
+        "value": "address[] memory _initiatives",
+        "access": "address(uniV4MerklRewards)"
+    },
+    {
+        "target_function": "governance_resetAllocations",
+        "type": "exact",
+        "value": "address[] memory _initiativesToReset",
+        "access": "address(bribeInitiative)"
+    },
+    {
+        "target_function": "governance_resetAllocations",
+        "type": "exact",
+        "value": "address[] memory _initiativesToReset",
+        "access": "address(curveV2GaugeRewards)"
+    },
+    {
+        "target_function": "governance_resetAllocations",
+        "type": "exact",
+        "value": "address[] memory _initiativesToReset",
+        "access": "address(uniV4MerklRewards)"
+    },
+    {
+        "target_function": "bribeInitiative_claimBribes",
+        "type": "max",
+        "value": "IBribeInitiative.ClaimData[] memory _claimData",
+        "access": "governance.epoch() - 1"
+    },
+    {
+        "target_function": "bribeInitiative_onAfterAllocateLQTY",
+        "type": "max",
+        "value": "uint256 _currentEpoch",
+        "access": "governance.epoch()"
+    }
+]
