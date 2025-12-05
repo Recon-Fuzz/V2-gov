@@ -256,5 +256,92 @@ abstract contract TargetFunctions is
         governance_claimForInitiative_bribeInitiative_clamped();
     }
     
+    // ========== COVERAGE GAP SHORTCUTS ==========
+    
+    /// @dev Shortcut to trigger allocateLQTY after voting cutoff with reset (covers lines 629-632)
+    /// This creates a scenario where a user reallocates votes after the cutoff period
+    function shortcut_allocateLQTY_afterCutoff_withReset(
+        uint256 _lqtyAmount,
+        uint256 _initialVoteSeed,
+        uint256 _finalVoteSeed
+    ) public {
+        // 1. Deposit LQTY
+        governance_depositLQTY_clamped(_lqtyAmount);
+        
+        // 2. Register initiative
+        governance_registerInitiative_bribeInitiative_clamped();
+        
+        // 3. Warp to next epoch (to make initiative votable)
+        vm.warp(block.timestamp + governance.EPOCH_DURATION() + 1);
+        
+        // 4. Initial allocation (this will be in cachedData after reset)
+        governance_allocateLQTY_bribeInitiative_clamped(_initialVoteSeed, 0);
+        
+        // 5. Warp past voting cutoff (but still in same epoch)
+        // EPOCH_VOTING_CUTOFF is 6 days (518400 seconds), EPOCH_DURATION is 7 days (604800 seconds)
+        vm.warp(block.timestamp + governance.EPOCH_VOTING_CUTOFF() + 100);
+        
+        // 6. Now reallocate after cutoff with reset (triggers lines 629-632)
+        governance_allocateLQTY_afterCutoff_withReset_clamped(_finalVoteSeed, 0);
+    }
+    
+    /// @dev Shortcut to trigger calculateVotingThreshold with non-zero payoutPerVote (covers line 296)
+    /// This ensures BOLD is accrued in governance before calculating voting threshold
+    function shortcut_calculateVotingThreshold_withBOLD(
+        uint256 _lqtyAmount,
+        uint256 _voteSeed,
+        uint256 _boldAmount
+    ) public {
+        // 1. Fund governance with BOLD (this sets boldAccrued)
+        governance_fundWithBOLD_clamped(_boldAmount);
+        
+        // 2. Deposit LQTY and vote to create voting power
+        governance_depositLQTY_clamped(_lqtyAmount);
+        governance_registerInitiative_bribeInitiative_clamped();
+        
+        // 3. Warp to next epoch
+        vm.warp(block.timestamp + governance.EPOCH_DURATION() + 1);
+        
+        // 4. Allocate votes
+        governance_allocateLQTY_bribeInitiative_clamped(_voteSeed, 0);
+        
+        // 5. Warp to next epoch to snapshot votes
+        vm.warp(block.timestamp + governance.EPOCH_DURATION() + 1);
+        
+        // 6. Call calculateVotingThreshold (should now have non-zero payoutPerVote)
+        governance_calculateVotingThreshold();
+    }
+    
+    /// @dev Shortcut to trigger claimForInitiative with insufficient BOLD (covers line 908)
+    /// This creates a scenario where claimable amount exceeds available BOLD
+    function shortcut_claimForInitiative_insufficientBOLD(
+        uint256 _lqtyAmount,
+        uint256 _voteSeed,
+        uint256 _boldToFund,
+        uint256 _boldToDrain
+    ) public {
+        // 1. Fund governance with some BOLD initially
+        governance_fundWithBOLD_clamped(_boldToFund);
+        
+        // 2. Setup voting scenario
+        governance_depositLQTY_clamped(_lqtyAmount);
+        governance_registerInitiative_bribeInitiative_clamped();
+        
+        // 3. Warp to next epoch
+        vm.warp(block.timestamp + governance.EPOCH_DURATION() + 1);
+        
+        // 4. Allocate large amount of votes to maximize claimable amount
+        governance_allocateLQTY_bribeInitiative_clamped(_voteSeed, 0);
+        
+        // 5. Warp to next epoch to enable claiming
+        vm.warp(block.timestamp + governance.EPOCH_DURATION() + 1);
+        
+        // 6. Drain most of the BOLD from governance before claiming
+        governance_drainBOLD_clamped(_boldToDrain);
+        
+        // 7. Claim (should hit line 908 if claimable > available)
+        governance_claimForInitiative_bribeInitiative_clamped();
+    }
+    
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 }
