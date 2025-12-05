@@ -1,0 +1,41 @@
+{
+  "_claimBribe": {
+    "contract": "BribeInitiative",
+    "lines_missing_covg": [
+      "127-130",
+      "132-136",
+      "138-139",
+      "141"
+    ]
+  },
+  "claimBribes": {
+    "contract": "BribeInitiative",
+    "lines_missing_covg": [
+      "154-155"
+    ]
+  },
+  "allocateLQTY": {
+    "contract": "Governance",
+    "lines_missing_covg": [
+      "629-632"
+    ]
+  },
+  "calculateVotingThreshold": {
+    "contract": "Governance",
+    "lines_missing_covg": [
+      "296"
+    ]
+  },
+  "claimForInitiative": {
+    "contract": "Governance",
+    "lines_missing_covg": [
+      "908"
+    ]
+  },
+  "multiDelegateCall": {
+    "contract": "MultiDelegateCall",
+    "lines_missing_covg": [
+      "24"
+    ]
+  }
+}
