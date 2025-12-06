@@ -29,8 +29,8 @@ abstract contract BribeInitiativeTargets is
         bribeInitiative.depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
     }
 
-    function bribeInitiative_onAfterAllocateLQTY(uint256 _currentEpoch, address _user, IGovernance.UserState memory , IGovernance.Allocation memory _allocation, IGovernance.InitiativeState memory _initiativeState) public asActor {
-        bribeInitiative.onAfterAllocateLQTY(_currentEpoch, _user, "__HandleMe__", _allocation, _initiativeState);
+    function bribeInitiative_onAfterAllocateLQTY(uint256 _currentEpoch, address _user, IGovernance.UserState memory _userState, IGovernance.Allocation memory _allocation, IGovernance.InitiativeState memory _initiativeState) public asActor {
+        bribeInitiative.onAfterAllocateLQTY(_currentEpoch, _user, _userState, _allocation, _initiativeState);
     }
 
     function bribeInitiative_onClaimForInitiative(uint256 , uint256 ) public asActor {
