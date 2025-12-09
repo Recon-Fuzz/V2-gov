@@ -1,7 +1,5 @@
 testMode: "property"
-prefix: "optimize_"
 coverage: true
-coverageFormats: ["txt", "lcov"]
 corpusDir: "echidna"
 balanceAddr: 0x1043561a8829300000
 balanceContract: 0x1043561a8829300000
