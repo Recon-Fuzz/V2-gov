@@ -1,0 +1,284 @@
+[
+  {
+    "target_function": "governance_depositLQTY",
+    "type": "max",
+    "value": "uint256 _lqtyAmount",
+    "access": "lqty.balanceOf(_getActor())"
+  },
+  {
+    "target_function": "governance_withdrawLQTY",
+    "type": "max",
+    "value": "uint256 _lqtyAmount",
+    "access": "userStates(_getActor()).unallocatedLQTY"
+  },
+  {
+    "target_function": "governance_registerInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(bribeInitiative)"
+  },
+  {
+    "target_function": "governance_registerInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(curveV2GaugeRewards)"
+  },
+  {
+    "target_function": "governance_registerInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(uniV4MerklRewards)"
+  },
+  {
+    "target_function": "governance_allocateLQTY",
+    "type": "exact",
+    "value": "address[] memory _initiativesToReset",
+    "access": "getAllocatedInitiatives(_getActor())"
+  },
+  {
+    "target_function": "governance_allocateLQTY",
+    "type": "exact",
+    "value": "address[] memory _initiatives",
+    "access": "address(bribeInitiative)"
+  },
+  {
+    "target_function": "governance_allocateLQTY",
+    "type": "exact",
+    "value": "address[] memory _initiatives",
+    "access": "address(curveV2GaugeRewards)"
+  },
+  {
+    "target_function": "governance_allocateLQTY",
+    "type": "exact",
+    "value": "address[] memory _initiatives",
+    "access": "address(uniV4MerklRewards)"
+  },
+  {
+    "target_function": "governance_allocateLQTY",
+    "type": "max",
+    "value": "int256[] memory _absoluteLQTYVotes",
+    "access": "userStates(_getActor()).unallocatedLQTY"
+  },
+  {
+    "target_function": "governance_allocateLQTY",
+    "type": "max",
+    "value": "int256[] memory _absoluteLQTYVetos",
+    "access": "userStates(_getActor()).unallocatedLQTY"
+  },
+  {
+    "target_function": "governance_resetAllocations",
+    "type": "exact",
+    "value": "address[] memory _initiativesToReset",
+    "access": "getAllocatedInitiatives(_getActor())"
+  },
+  {
+    "target_function": "governance_claimForInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(bribeInitiative)"
+  },
+  {
+    "target_function": "governance_claimForInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(curveV2GaugeRewards)"
+  },
+  {
+    "target_function": "governance_claimForInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(uniV4MerklRewards)"
+  },
+  {
+    "target_function": "governance_snapshotVotesForInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(bribeInitiative)"
+  },
+  {
+    "target_function": "governance_snapshotVotesForInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(curveV2GaugeRewards)"
+  },
+  {
+    "target_function": "governance_snapshotVotesForInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(uniV4MerklRewards)"
+  },
+  {
+    "target_function": "governance_unregisterInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(bribeInitiative)"
+  },
+  {
+    "target_function": "governance_unregisterInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(curveV2GaugeRewards)"
+  },
+  {
+    "target_function": "governance_unregisterInitiative",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(uniV4MerklRewards)"
+  },
+  {
+    "target_function": "governance_getInitiativeState",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(bribeInitiative)"
+  },
+  {
+    "target_function": "governance_getInitiativeState",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(curveV2GaugeRewards)"
+  },
+  {
+    "target_function": "governance_getInitiativeState",
+    "type": "exact",
+    "value": "address _initiative",
+    "access": "address(uniV4MerklRewards)"
+  },
+  {
+    "target_function": "bribeInitiative_depositBribe",
+    "type": "max",
+    "value": "uint256 _boldAmount",
+    "access": "bold.balanceOf(_getActor())"
+  },
+  {
+    "target_function": "bribeInitiative_depositBribe",
+    "type": "max",
+    "value": "uint256 _bribeTokenAmount",
+    "access": "bribeToken.balanceOf(_getActor())"
+  },
+  {
+    "target_function": "bribeInitiative_depositBribe",
+    "type": "max",
+    "value": "uint256 _epoch",
+    "access": "governance.epoch() + 52"
+  },
+  {
+    "target_function": "bribeInitiative_depositBribe",
+    "type": "exact",
+    "value": "uint256 _epoch",
+    "access": "governance.epoch()"
+  },
+  {
+    "target_function": "bribeInitiative_claimBribes",
+    "type": "max",
+    "value": "uint256 epoch",
+    "access": "governance.epoch() - 1"
+  },
+  {
+    "target_function": "bribeInitiative_claimBribes",
+    "type": "exact",
+    "value": "uint256 prevLQTYAllocationEpoch",
+    "access": "bribeInitiative.getMostRecentUserEpoch(_getActor())"
+  },
+  {
+    "target_function": "bribeInitiative_claimBribes",
+    "type": "exact",
+    "value": "uint256 prevTotalLQTYAllocationEpoch",
+    "access": "bribeInitiative.getMostRecentTotalEpoch()"
+  },
+  {
+    "target_function": "bribeInitiative_onAfterAllocateLQTY",
+    "type": "exact",
+    "value": "uint256 _currentEpoch",
+    "access": "governance.epoch()"
+  },
+  {
+    "target_function": "bribeInitiative_onAfterAllocateLQTY",
+    "type": "exact",
+    "value": "address _user",
+    "access": "_getActor()"
+  },
+  {
+    "target_function": "bribeInitiative_onAfterAllocateLQTY",
+    "type": "exact",
+    "value": "IGovernance.UserState memory _userState",
+    "access": "governance.userStates(_getActor())"
+  },
+  {
+    "target_function": "bribeInitiative_onAfterAllocateLQTY",
+    "type": "exact",
+    "value": "IGovernance.Allocation memory _allocation",
+    "access": "governance.lqtyAllocatedByUserToInitiative(_getActor(), address(bribeInitiative))"
+  },
+  {
+    "target_function": "bribeInitiative_onAfterAllocateLQTY",
+    "type": "exact",
+    "value": "IGovernance.InitiativeState memory _initiativeState",
+    "access": "governance.initiativeStates(address(bribeInitiative))"
+  },
+  {
+    "target_function": "bribeInitiative_onClaimForInitiative",
+    "type": "exact",
+    "value": "uint256",
+    "access": "governance.epoch() - 1"
+  },
+  {
+    "target_function": "bribeInitiative_onRegisterInitiative",
+    "type": "exact",
+    "value": "uint256",
+    "access": "governance.epoch()"
+  },
+  {
+    "target_function": "bribeInitiative_onUnregisterInitiative",
+    "type": "exact",
+    "value": "uint256",
+    "access": "governance.epoch()"
+  },
+  {
+    "target_function": "bribeInitiative_totalLQTYAllocatedByEpoch",
+    "type": "exact",
+    "value": "uint256 _epoch",
+    "access": "governance.epoch()"
+  },
+  {
+    "target_function": "bribeInitiative_totalLQTYAllocatedByEpoch",
+    "type": "max",
+    "value": "uint256 _epoch",
+    "access": "governance.epoch() + 52"
+  },
+  {
+    "target_function": "bribeInitiative_lqtyAllocatedByUserAtEpoch",
+    "type": "exact",
+    "value": "address _user",
+    "access": "_getActor()"
+  },
+  {
+    "target_function": "bribeInitiative_lqtyAllocatedByUserAtEpoch",
+    "type": "exact",
+    "value": "uint256 _epoch",
+    "access": "governance.epoch()"
+  },
+  {
+    "target_function": "bribeInitiative_lqtyAllocatedByUserAtEpoch",
+    "type": "max",
+    "value": "uint256 _epoch",
+    "access": "governance.epoch() + 52"
+  },
+  {
+    "target_function": "bribeInitiative_checkClaimedBribeAtEpoch",
+    "type": "exact",
+    "value": "address _user",
+    "access": "_getActor()"
+  },
+  {
+    "target_function": "bribeInitiative_checkClaimedBribeAtEpoch",
+    "type": "exact",
+    "value": "uint256 _epoch",
+    "access": "governance.epoch()"
+  },
+  {
+    "target_function": "bribeInitiative_checkClaimedBribeAtEpoch",
+    "type": "max",
+    "value": "uint256 _epoch",
+    "access": "governance.epoch() + 52"
+  }
+]
