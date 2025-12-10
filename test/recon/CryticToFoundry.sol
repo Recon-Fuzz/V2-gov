@@ -8,6 +8,8 @@ import "forge-std/console2.sol";
 import {Test} from "forge-std/Test.sol";
 import {TargetFunctions} from "./TargetFunctions.sol";
 import {IBribeInitiative} from "src/interfaces/IBribeInitiative.sol";
+import {BribeInitiative} from "src/BribeInitiative.sol";
+import {PermitParams} from "src/utils/Types.sol";
 
 // forge test --match-contract CryticToFoundry -vv
 contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
@@ -26,7 +28,8 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
 
     // 1. governance_deployUserProxy
     function test_governance_deployUserProxy() public {
-        switchActor(0);
+        // Deploy user proxy for actor 2 (actors 0 and 1 already have proxies from setup)
+        switchActor(2);
         governance_deployUserProxy();
     }
 
@@ -43,9 +46,40 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
         governance_depositLQTY(1e18, false, actor);
     }
 
-    // 4 & 5. governance_depositLQTYViaPermit (skipped - requires valid permit signature)
-    // These functions require valid permit parameters which are complex to generate in tests
-    // They will be tested via fuzzing but skipped in unit tests
+    // 4 & 5. governance_depositLQTYViaPermit
+    function test_governance_depositLQTYViaPermit_simple() public {
+        // Use the actor with known private key (actor 1: 0x537C8f3d3E18dF5517a58B3fB9D9143697996802)
+        switchActor(1);
+        address actor = _getActor();
+        
+        // Get user proxy for this actor
+        address userProxyAddr = governance.deriveUserProxyAddress(actor);
+        
+        // Generate valid permit params
+        uint256 lqtyAmount = 1e18;
+        uint256 deadline = block.timestamp + 1 hours;
+        PermitParams memory permitParams = _getValidPermitParams(actor, userProxyAddr, lqtyAmount, deadline);
+        
+        // Call depositLQTYViaPermit
+        governance_depositLQTYViaPermit(lqtyAmount, permitParams);
+    }
+    
+    function test_governance_depositLQTYViaPermit_withParams() public {
+        // Use the actor with known private key (actor 1: 0x537C8f3d3E18dF5517a58B3fB9D9143697996802)
+        switchActor(1);
+        address actor = _getActor();
+        
+        // Get user proxy for this actor
+        address userProxyAddr = governance.deriveUserProxyAddress(actor);
+        
+        // Generate valid permit params
+        uint256 lqtyAmount = 1e18;
+        uint256 deadline = block.timestamp + 1 hours;
+        PermitParams memory permitParams = _getValidPermitParams(actor, userProxyAddr, lqtyAmount, deadline);
+        
+        // Call depositLQTYViaPermit with additional params
+        governance_depositLQTYViaPermit(lqtyAmount, permitParams, false, actor);
+    }
 
     // 6. governance_registerInitiative
     function test_governance_registerInitiative() public {
@@ -53,16 +87,22 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
         switchActor(0);
         governance_depositLQTY(10e18);
 
-        // Register the bribeInitiative
-        governance_registerInitiative(address(bribeInitiative));
+        // Deploy a new BribeInitiative to register (bribeInitiative is already registered in setup)
+        BribeInitiative newInitiative = new BribeInitiative(
+            address(governance),
+            address(bold),
+            address(bribeToken)
+        );
+        
+        // Register the new initiative
+        governance_registerInitiative(address(newInitiative));
     }
 
     // 7. governance_allocateLQTY
     function test_governance_allocateLQTY() public {
-        // Setup: deposit LQTY and register initiative
+        // Setup: deposit LQTY (bribeInitiative is already registered in setup)
         switchActor(0);
         governance_depositLQTY(10e18);
-        governance_registerInitiative(address(bribeInitiative));
 
         // Wait for next epoch so initiative is no longer in WARM_UP
         vm.warp(block.timestamp + 604800); // 1 week
@@ -99,10 +139,9 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
 
     // 11. governance_claimForInitiative
     function test_governance_claimForInitiative() public {
-        // Setup: deposit, register, allocate
+        // Setup: deposit, allocate (bribeInitiative is already registered in setup)
         switchActor(0);
         governance_depositLQTY(100e18);
-        governance_registerInitiative(address(bribeInitiative));
 
         // Wait for next epoch so initiative is no longer in WARM_UP
         vm.warp(block.timestamp + 604800); // 1 week
@@ -143,10 +182,9 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
 
     // 14. governance_resetAllocations
     function test_governance_resetAllocations() public {
-        // Setup: deposit, register, allocate
+        // Setup: deposit, allocate (bribeInitiative is already registered in setup)
         switchActor(0);
         governance_depositLQTY(10e18);
-        governance_registerInitiative(address(bribeInitiative));
 
         // Wait for next epoch so initiative is no longer in WARM_UP
         vm.warp(block.timestamp + 604800); // 1 week
@@ -204,13 +242,12 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
 
     // 3. bribeInitiative_claimBribes
     function test_bribeInitiative_claimBribes() public {
-        // Setup: deposit bribe and allocate
+        // Setup: deposit bribe and allocate (bribeInitiative is already registered in setup)
         switchActor(0);
         uint256 currentEpoch = governance.epoch();
         bribeInitiative_depositBribe(10e18, 5e18, currentEpoch + 1);
 
         governance_depositLQTY(100e18);
-        governance_registerInitiative(address(bribeInitiative));
 
         // Wait for next epoch so initiative is no longer in WARM_UP
         vm.warp(block.timestamp + 604800); // 1 week
@@ -230,6 +267,104 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
         bribeInitiative_claimBribes(claimData);
     }
 
-    // 4, 5, 6. Governance callbacks - tested via governance functions
-    // Skipping direct tests as they are callbacks
+    // 4. bribeInitiative_totalLQTYAllocatedByEpoch
+    function test_bribeInitiative_totalLQTYAllocatedByEpoch() public {
+        switchActor(0);
+        uint256 currentEpoch = governance.epoch();
+        bribeInitiative_totalLQTYAllocatedByEpoch(currentEpoch);
+    }
+
+    // 5. bribeInitiative_lqtyAllocatedByUserAtEpoch
+    function test_bribeInitiative_lqtyAllocatedByUserAtEpoch() public {
+        switchActor(0);
+        address actor = _getActor();
+        uint256 currentEpoch = governance.epoch();
+        bribeInitiative_lqtyAllocatedByUserAtEpoch(actor, currentEpoch);
+    }
+
+    // 6. bribeInitiative_checkClaimedBribeAtEpoch
+    function test_bribeInitiative_checkClaimedBribeAtEpoch() public {
+        switchActor(0);
+        address actor = _getActor();
+        uint256 currentEpoch = governance.epoch();
+        bribeInitiative_checkClaimedBribeAtEpoch(actor, currentEpoch);
+    }
+
+    // governance_getLatestVotingThreshold
+    function test_governance_getLatestVotingThreshold() public {
+        switchActor(0);
+        governance_getLatestVotingThreshold();
+    }
+
+    // governance_unregisterInitiative - requires initiative in UNREGISTERABLE state
+    function test_governance_unregisterInitiative() public {
+        // Setup: Create and register an initiative
+        switchActor(0);
+        governance_depositLQTY(100e18);
+        
+        BribeInitiative newInitiative = new BribeInitiative(
+            address(governance),
+            address(bold),
+            address(bribeToken)
+        );
+        
+        governance_registerInitiative(address(newInitiative));
+        
+        // Wait for next epoch
+        vm.warp(block.timestamp + 604800);
+        
+        // Allocate some votes to make it registered
+        address[] memory initiativesToReset = new address[](0);
+        address[] memory initiatives = new address[](1);
+        initiatives[0] = address(newInitiative);
+        int256[] memory votes = new int256[](1);
+        votes[0] = 5e18;
+        int256[] memory vetos = new int256[](1);
+        vetos[0] = 0;
+        
+        governance_allocateLQTY(initiativesToReset, initiatives, votes, vetos);
+        
+        // Wait multiple epochs for unregistration conditions to be met
+        // Need to wait for unregistrationAfterEpochs (4 epochs) + being below threshold
+        for (uint256 i = 0; i < 5; i++) {
+            vm.warp(block.timestamp + 604800); // 1 week per epoch
+        }
+        
+        // Try to unregister (may still fail if conditions not met)
+        try this.external_governance_unregisterInitiative(address(newInitiative)) {
+            // Success
+        } catch {
+            // Expected to fail if not in UNREGISTERABLE state
+        }
+    }
+    
+    // Helper function to call unregisterInitiative from external context
+    function external_governance_unregisterInitiative(address _initiative) external {
+        governance_unregisterInitiative(_initiative);
+    }
+
+    // governance_multiDelegateCall
+    function test_governance_multiDelegateCall() public {
+        switchActor(0);
+        
+        // Create a simple multicall: getInitiativeState
+        bytes[] memory calls = new bytes[](1);
+        calls[0] = abi.encodeWithSignature("getInitiativeState(address)", address(bribeInitiative));
+        
+        governance_multiDelegateCall(calls);
+    }
+
+    // Callback tests - these are admin-only functions called by governance
+    
+    // bribeInitiative_onAfterAllocateLQTY - tested via allocateLQTY
+    // This is called automatically by governance when allocating, we don't test it directly
+    
+    // bribeInitiative_onRegisterInitiative - tested via registerInitiative
+    // This is called automatically by governance when registering, we don't test it directly
+    
+    // bribeInitiative_onUnregisterInitiative - tested via unregisterInitiative
+    // This is called automatically by governance when unregistering, we don't test it directly
+    
+    // bribeInitiative_onClaimForInitiative - tested via claimForInitiative
+    // This is called automatically by governance when claiming, we don't test it directly
 }

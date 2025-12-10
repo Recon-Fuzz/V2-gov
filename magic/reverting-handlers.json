@@ -1,0 +1,28 @@
+{
+  "reverting_handlers": [
+    {
+      "function": "bribeInitiative_onAfterAllocateLQTY",
+      "reason": "BribeInitiative: invalid-sender",
+      "justification": "Function has onlyGovernance modifier and can only be called by the Governance contract, not by users directly",
+      "natspec": "This is a callback function called by Governance.allocateLQTY()"
+    },
+    {
+      "function": "bribeInitiative_onRegisterInitiative",
+      "reason": "BribeInitiative: invalid-sender",
+      "justification": "Function has onlyGovernance modifier and can only be called by the Governance contract, not by users directly",
+      "natspec": "This is a callback function called by Governance.registerInitiative()"
+    },
+    {
+      "function": "bribeInitiative_onUnregisterInitiative",
+      "reason": "BribeInitiative: invalid-sender",
+      "justification": "Function has onlyGovernance modifier and can only be called by the Governance contract, not by users directly",
+      "natspec": "This is a callback function called by Governance.unregisterInitiative()"
+    },
+    {
+      "function": "bribeInitiative_onClaimForInitiative",
+      "reason": "BribeInitiative: invalid-sender",
+      "justification": "Function has onlyGovernance modifier and can only be called by the Governance contract, not by users directly",
+      "natspec": "This is a callback function called by Governance.claimForInitiative()"
+    }
+  ]
+}

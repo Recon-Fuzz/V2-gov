@@ -1,0 +1,29 @@
+{
+  "testing_order": [
+    "governance_deployUserProxy",
+    "governance_depositLQTY",
+    "governance_depositLQTYViaPermit",
+    "governance_calculateVotingThreshold",
+    "governance_getInitiativeState",
+    "governance_getLatestVotingThreshold",
+    "governance_registerInitiative",
+    "governance_allocateLQTY",
+    "governance_snapshotVotesForInitiative",
+    "governance_claimForInitiative",
+    "governance_withdrawLQTY",
+    "governance_resetAllocations",
+    "governance_unregisterInitiative",
+    "governance_claimFromStakingV1",
+    "governance_multiDelegateCall",
+    "governance_registerInitialInitiatives",
+    "bribeInitiative_depositBribe",
+    "bribeInitiative_claimBribes",
+    "bribeInitiative_totalLQTYAllocatedByEpoch",
+    "bribeInitiative_lqtyAllocatedByUserAtEpoch",
+    "bribeInitiative_checkClaimedBribeAtEpoch",
+    "bribeInitiative_onAfterAllocateLQTY",
+    "bribeInitiative_onRegisterInitiative",
+    "bribeInitiative_onUnregisterInitiative",
+    "bribeInitiative_onClaimForInitiative"
+  ]
+}

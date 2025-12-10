@@ -79,6 +79,8 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
         // 2. Add actors (address(this) is already an actor by default)
         // Add the actor with known private key for permit testing
         _addActor(0x537C8f3d3E18dF5517a58B3fB9D9143697996802);
+        // Add an additional actor for testing
+        _addActor(address(0x1234));
 
         // 3. Deploy tokens using custom mocks
         lqty = new MockERC20Tester("Liquity", "LQTY");
@@ -93,8 +95,8 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
         _addAsset(address(bribeToken));
 
         // 4. Deploy mocks (non-token dependencies)
-        stakingV1 = new MockStakingV1(address(lqty), address(lusd));
-        mockLiquidityGauge = new MockLiquidityGauge();
+        stakingV1 = new MockStakingV1(lqty, lusd);
+        mockLiquidityGauge = new MockLiquidityGauge(address(bold));
         mockDistributionCreator = new MockDistributionCreator();
 
         // 5. Deploy core contracts
@@ -128,11 +130,21 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
         curveV2GaugeRewards = new CurveV2GaugeRewards(
             address(governance),
             address(bold),
-            address(mockDistributionCreator),
-            address(mockLiquidityGauge)
+            address(bribeToken),
+            address(mockLiquidityGauge),
+            7 days
         );
 
-        uniV4MerklRewards = new MockUniV4MerklRewards(address(governance), address(bold));
+        uniV4MerklRewards = new MockUniV4MerklRewards(
+            address(governance),
+            address(bold),
+            1e18, // _campaignBoldAmountThreshold
+            bytes32(0), // _uniV4PoolId
+            3333, // _weightFees
+            3333, // _weightToken0
+            3334, // _weightToken1
+            address(mockDistributionCreator)
+        );
 
         // 6. Post-deploy actions
         // Deploy initial BribeInitiative instance
@@ -143,15 +155,46 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
         );
         deployedBribeInitiatives.push(address(bribeInitiative));
 
+        // Warp to epoch 3 (registration is only enabled after epoch 2)
+        // Each epoch is EPOCH_DURATION (7 days), and governance starts at START_TIME - EPOCH_DURATION
+        vm.warp(START_TIME + EPOCH_DURATION * 2 + 1);
+
         // Register the initial bribe initiative
         bold.mint(address(this), REGISTRATION_FEE);
         bold.approve(address(governance), REGISTRATION_FEE);
         governance.registerInitiative(address(bribeInitiative));
 
-        // Deploy user proxy for the primary actor (address(this))
-        userProxy = governance.deployUserProxy();
+        // 7. Manually mint tokens to all actors and deploy user proxies
+        address[] memory actors = _getActors();
+        address[] memory assets = _getAssets();
+        uint256 mintAmount = type(uint88).max;
+        
+        // Deploy user proxies for the first 2 actors only (leave actor 2 for testing deployUserProxy)
+        for (uint256 i = 0; i < 2 && i < actors.length; i++) {
+            vm.prank(actors[i]);
+            address actorUserProxy = governance.deployUserProxy();
+            
+            // Approve the user proxy to spend LQTY for this actor
+            vm.prank(actors[i]);
+            lqty.approve(actorUserProxy, type(uint256).max);
+            
+            // Approve stakingV1 to spend LQTY from the user proxy
+            vm.prank(actorUserProxy);
+            lqty.approve(address(stakingV1), type(uint256).max);
+            
+            // Store the first user proxy (for address(this))
+            if (i == 0) {
+                userProxy = actorUserProxy;
+            }
+        }
+        
+        for (uint256 i = 0; i < assets.length; i++) {
+            for (uint256 j = 0; j < actors.length; j++) {
+                MockERC20Tester(assets[i]).mint(actors[j], mintAmount);
+            }
+        }
 
-        // 7. Set up approvals array
+        // 8. Set up approvals for all actors
         address[] memory approvalArray = new address[](5);
         approvalArray[0] = address(governance);
         approvalArray[1] = address(curveV2GaugeRewards);
@@ -159,8 +202,14 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
         approvalArray[3] = address(bribeInitiative);
         approvalArray[4] = userProxy;
 
-        // 8. Finalize - mints tokens to all actors and sets approvals
-        _finalizeAssetDeployment(_getActors(), approvalArray, type(uint88).max);
+        for (uint256 i = 0; i < assets.length; i++) {
+            for (uint256 j = 0; j < actors.length; j++) {
+                for (uint256 k = 0; k < approvalArray.length; k++) {
+                    vm.prank(actors[j]);
+                    MockERC20Tester(assets[i]).approve(approvalArray[k], type(uint256).max);
+                }
+            }
+        }
     }
 
     /// === Helper Functions === ///
@@ -186,7 +235,6 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
     /// @return Valid PermitParams struct with signature
     function _getValidPermitParams(address owner, address spender, uint256 value, uint256 deadline)
         internal
-        view
         returns (PermitParams memory)
     {
         // Create the permit digest
