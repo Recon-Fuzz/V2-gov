@@ -1,10 +1,11 @@
 {
-  "governance_withdrawLQTY": {
-    "prerequisite_functions": [
-      "governance_depositLQTY"
-    ]
+  "governance_depositLQTY": {
+    "prerequisite_functions": []
   },
-  "governance_allocateLQTY": {
+  "governance_depositLQTYViaPermit": {
+    "prerequisite_functions": []
+  },
+  "governance_withdrawLQTY": {
     "prerequisite_functions": [
       "governance_depositLQTY"
     ]
@@ -14,6 +15,18 @@
       "governance_depositLQTY"
     ]
   },
+  "governance_allocateLQTY": {
+    "prerequisite_functions": [
+      "governance_depositLQTY",
+      "governance_registerInitiative"
+    ]
+  },
+  "governance_resetAllocations": {
+    "prerequisite_functions": [
+      "governance_depositLQTY",
+      "governance_allocateLQTY"
+    ]
+  },
   "governance_registerInitiative": {
     "prerequisite_functions": [
       "governance_depositLQTY"
@@ -21,54 +34,34 @@
   },
   "governance_unregisterInitiative": {
     "prerequisite_functions": [
-      "governance_registerInitiative"
+      "governance_depositLQTY",
+      "governance_registerInitiative",
+      "governance_allocateLQTY"
     ]
   },
   "governance_claimForInitiative": {
     "prerequisite_functions": [
-      "governance_registerInitiative"
+      "governance_depositLQTY",
+      "governance_registerInitiative",
+      "governance_allocateLQTY"
     ]
   },
   "governance_snapshotVotesForInitiative": {
-    "prerequisite_functions": [
-      "governance_registerInitiative"
-    ]
-  },
-  "governance_resetAllocations": {
-    "prerequisite_functions": [
-      "governance_allocateLQTY"
-    ]
-  },
-  "bribeInitiative_claimBribes": {
-    "prerequisite_functions": [
-      "bribeInitiative_depositBribe",
-      "governance_allocateLQTY"
-    ]
-  },
-  "bribeInitiative_onAfterAllocateLQTY": {
-    "prerequisite_functions": [
-      "governance_allocateLQTY"
-    ]
-  },
-  "governance_depositLQTY": {
-    "prerequisite_functions": []
-  },
-  "governance_depositLQTYViaPermit": {
-    "prerequisite_functions": []
-  },
-  "governance_deployUserProxy": {
     "prerequisite_functions": []
   },
   "governance_calculateVotingThreshold": {
     "prerequisite_functions": []
   },
-  "governance_getInitiativeState": {
-    "prerequisite_functions": []
-  },
   "governance_getLatestVotingThreshold": {
     "prerequisite_functions": []
   },
+  "governance_getInitiativeState": {
+    "prerequisite_functions": []
+  },
   "governance_multiDelegateCall": {
+    "prerequisite_functions": []
+  },
+  "governance_deployUserProxy": {
     "prerequisite_functions": []
   },
   "governance_registerInitialInitiatives": {
@@ -77,14 +70,13 @@
   "bribeInitiative_depositBribe": {
     "prerequisite_functions": []
   },
-  "bribeInitiative_onRegisterInitiative": {
-    "prerequisite_functions": []
-  },
-  "bribeInitiative_onUnregisterInitiative": {
-    "prerequisite_functions": []
-  },
-  "bribeInitiative_onClaimForInitiative": {
-    "prerequisite_functions": []
+  "bribeInitiative_claimBribes": {
+    "prerequisite_functions": [
+      "governance_depositLQTY",
+      "governance_registerInitiative",
+      "governance_allocateLQTY",
+      "bribeInitiative_depositBribe"
+    ]
   },
   "bribeInitiative_totalLQTYAllocatedByEpoch": {
     "prerequisite_functions": []
@@ -93,6 +85,33 @@
     "prerequisite_functions": []
   },
   "bribeInitiative_checkClaimedBribeAtEpoch": {
+    "prerequisite_functions": []
+  },
+  "bribeInitiative_onAfterAllocateLQTY": {
+    "prerequisite_functions": []
+  },
+  "bribeInitiative_onClaimForInitiative": {
+    "prerequisite_functions": []
+  },
+  "bribeInitiative_onRegisterInitiative": {
+    "prerequisite_functions": []
+  },
+  "bribeInitiative_onUnregisterInitiative": {
+    "prerequisite_functions": []
+  },
+  "switchActor": {
+    "prerequisite_functions": []
+  },
+  "switch_asset": {
+    "prerequisite_functions": []
+  },
+  "add_new_asset": {
+    "prerequisite_functions": []
+  },
+  "asset_approve": {
+    "prerequisite_functions": []
+  },
+  "asset_mint": {
     "prerequisite_functions": []
   }
 }
