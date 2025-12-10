@@ -8,6 +8,7 @@ import "forge-std/console2.sol";
 import {Test} from "forge-std/Test.sol";
 import {TargetFunctions} from "./TargetFunctions.sol";
 import {IBribeInitiative} from "src/interfaces/IBribeInitiative.sol";
+import {IGovernance} from "src/interfaces/IGovernance.sol";
 import {BribeInitiative} from "src/BribeInitiative.sol";
 import {PermitParams} from "src/utils/Types.sol";
 
@@ -28,8 +29,8 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
 
     // 1. governance_deployUserProxy
     function test_governance_deployUserProxy() public {
-        // Deploy user proxy for actor 2 (actors 0 and 1 already have proxies from setup)
-        switchActor(2);
+        // Deploy user proxy for actor 1 (only actor 0 gets proxy setup approvals, actor 1 with known private key can deploy their own)
+        switchActor(1);
         governance_deployUserProxy();
     }
 
@@ -93,6 +94,11 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
             address(bold),
             address(bribeToken)
         );
+        
+        // Approve BOLD for registration fee
+        address actor = _getActor();
+        vm.prank(actor);
+        bold.approve(address(governance), 1 ether);
         
         // Register the new initiative
         governance_registerInitiative(address(newInitiative));
@@ -300,6 +306,7 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
     function test_governance_unregisterInitiative() public {
         // Setup: Create and register an initiative
         switchActor(0);
+        address actor = _getActor();
         governance_depositLQTY(100e18);
         
         BribeInitiative newInitiative = new BribeInitiative(
@@ -307,6 +314,10 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
             address(bold),
             address(bribeToken)
         );
+        
+        // Approve BOLD for registration fee
+        vm.prank(actor);
+        bold.approve(address(governance), 1 ether);
         
         governance_registerInitiative(address(newInitiative));
         
@@ -355,16 +366,67 @@ contract CryticToFoundry is Test, TargetFunctions, FoundryAsserts {
     }
 
     // Callback tests - these are admin-only functions called by governance
+    // They are tested as admin functions since they have onlyGovernance modifier
     
-    // bribeInitiative_onAfterAllocateLQTY - tested via allocateLQTY
-    // This is called automatically by governance when allocating, we don't test it directly
+    function test_bribeInitiative_onAfterAllocateLQTY() public {
+        // This is a callback function that requires msg.sender == governance
+        // Set up minimal state for the callback
+        uint256 currentEpoch = governance.epoch();
+        address user = _getActor();
+        
+        IGovernance.UserState memory userState = IGovernance.UserState({
+            unallocatedLQTY: 0,
+            unallocatedOffset: 0,
+            allocatedLQTY: 0,
+            allocatedOffset: 0
+        });
+        
+        IGovernance.Allocation memory allocation = IGovernance.Allocation({
+            voteLQTY: 0,
+            voteOffset: 0,
+            vetoLQTY: 0,
+            vetoOffset: 0,
+            atEpoch: currentEpoch
+        });
+        
+        IGovernance.InitiativeState memory initiativeState = IGovernance.InitiativeState({
+            voteLQTY: 0,
+            voteOffset: 0,
+            vetoLQTY: 0,
+            vetoOffset: 0,
+            lastEpochClaim: 0
+        });
+        
+        // Prank as governance to pass onlyGovernance modifier
+        vm.prank(address(governance));
+        bribeInitiative.onAfterAllocateLQTY(currentEpoch, user, userState, allocation, initiativeState);
+    }
     
-    // bribeInitiative_onRegisterInitiative - tested via registerInitiative
-    // This is called automatically by governance when registering, we don't test it directly
+    function test_bribeInitiative_onRegisterInitiative() public {
+        // This is a callback function that requires msg.sender == governance
+        uint256 currentEpoch = governance.epoch();
+        
+        // Prank as governance to pass onlyGovernance modifier
+        vm.prank(address(governance));
+        bribeInitiative.onRegisterInitiative(currentEpoch);
+    }
     
-    // bribeInitiative_onUnregisterInitiative - tested via unregisterInitiative
-    // This is called automatically by governance when unregistering, we don't test it directly
+    function test_bribeInitiative_onUnregisterInitiative() public {
+        // This is a callback function that requires msg.sender == governance
+        uint256 currentEpoch = governance.epoch();
+        
+        // Prank as governance to pass onlyGovernance modifier
+        vm.prank(address(governance));
+        bribeInitiative.onUnregisterInitiative(currentEpoch);
+    }
     
-    // bribeInitiative_onClaimForInitiative - tested via claimForInitiative
-    // This is called automatically by governance when claiming, we don't test it directly
+    function test_bribeInitiative_onClaimForInitiative() public {
+        // This is a callback function that requires msg.sender == governance
+        uint256 currentEpoch = governance.epoch();
+        uint256 amount = 1e18;
+        
+        // Prank as governance to pass onlyGovernance modifier
+        vm.prank(address(governance));
+        bribeInitiative.onClaimForInitiative(currentEpoch, amount);
+    }
 }

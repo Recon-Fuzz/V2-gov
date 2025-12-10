@@ -167,9 +167,40 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
         approvalArray[2] = address(bribeInitiative);
 
         // 10. Finalize asset deployment (approve all tokens from actors to contracts)
-        // Note: For UserProxy approvals, users must approve governance.deriveUserProxyAddress(user)
-        // before calling depositLQTY, or use depositLQTYViaPermit instead
         _finalizeAssetDeployment(_getActors(), approvalArray, type(uint88).max);
+
+        // 11. Set up approvals for user proxy addresses (needed for depositLQTY)
+        // Each actor needs to approve their derived user proxy to spend LQTY
+        address[] memory actorsArray = _getActors();
+        for (uint256 i = 0; i < actorsArray.length; i++) {
+            address actor = actorsArray[i];
+            address userProxyAddress = governance.deriveUserProxyAddress(actor);
+            
+            // Approve LQTY from actor to user proxy
+            vm.prank(actor);
+            lqty.approve(userProxyAddress, type(uint256).max);
+            
+            // Approve bribeToken from actor to bribeInitiative
+            vm.prank(actor);
+            bribeToken.approve(address(bribeInitiative), type(uint256).max);
+            
+            // Approve bold from actor to bribeInitiative
+            vm.prank(actor);
+            bold.approve(address(bribeInitiative), type(uint256).max);
+        }
+
+        // 12. Register the bribeInitiative so it's available for testing
+        // Registration requires currentEpoch > 2, so warp to epoch 3
+        vm.warp(START_TIME + EPOCH_DURATION * 2); // Now at epoch 3
+        
+        // Approve BOLD for registration fee
+        bold.approve(address(governance), REGISTRATION_FEE);
+        
+        // Deposit LQTY to have voting power for registration
+        governance.depositLQTY(100e18);
+        
+        // Register the bribeInitiative
+        governance.registerInitiative(address(bribeInitiative));
     }
 
     /// === Helper Deploy Functions (fuzzer-controlled deployment) === ///
