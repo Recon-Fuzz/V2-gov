@@ -16,6 +16,102 @@ import "src/BribeInitiative.sol";
 abstract contract BribeInitiativeTargets is BaseTargetFunctions, Properties {
     /// CUSTOM TARGET FUNCTIONS - Add your own target functions here ///
 
+    // Clamped handler for depositBribe
+    function bribeInitiative_depositBribe_clamped(uint256 _boldAmount, uint256 _bribeTokenAmount, uint256 _epoch) public {
+        // Clamp BOLD amount to actor's balance
+        _boldAmount = _boldAmount % (bold.balanceOf(_getActor()) + 1);
+        
+        // Clamp bribe token amount to actor's balance
+        _bribeTokenAmount = _bribeTokenAmount % (bribeToken.balanceOf(_getActor()) + 1);
+        
+        // Clamp epoch to a reasonable range: current epoch to current + 52 weeks
+        uint256 currentEpoch = governance.epoch();
+        _epoch = currentEpoch + (_epoch % 53); // 0 to 52 weeks ahead
+        
+        bribeInitiative_depositBribe(_boldAmount, _bribeTokenAmount, _epoch);
+    }
+
+    // Clamped handler for claimBribes
+    function bribeInitiative_claimBribes_clamped(uint256 epoch) public {
+        // Clamp epoch to valid range (should be in the past)
+        uint256 currentEpoch = governance.epoch();
+        if (currentEpoch > 0) {
+            epoch = epoch % currentEpoch;
+        } else {
+            epoch = 0;
+        }
+        
+        // Get the most recent user and total epochs
+        uint256 prevLQTYAllocationEpoch = bribeInitiative.getMostRecentUserEpoch(_getActor());
+        uint256 prevTotalLQTYAllocationEpoch = bribeInitiative.getMostRecentTotalEpoch();
+        
+        // Create ClaimData array
+        IBribeInitiative.ClaimData[] memory claimData = new IBribeInitiative.ClaimData[](1);
+        claimData[0] = IBribeInitiative.ClaimData({
+            epoch: epoch,
+            prevLQTYAllocationEpoch: prevLQTYAllocationEpoch,
+            prevTotalLQTYAllocationEpoch: prevTotalLQTYAllocationEpoch
+        });
+        
+        bribeInitiative_claimBribes(claimData);
+    }
+
+    // Note: onAfterAllocateLQTY is a hook function that is called by Governance during allocateLQTY
+    // It's not meant to be called directly by fuzzers, so we don't create a clamped handler for it
+    // The function will be tested indirectly through governance_allocateLQTY_clamped
+
+    // Clamped handler for onClaimForInitiative - uses governance epoch - 1
+    function bribeInitiative_onClaimForInitiative_clamped() public {
+        uint256 claimEpoch = governance.epoch();
+        if (claimEpoch > 0) {
+            claimEpoch = claimEpoch - 1;
+        }
+        bribeInitiative_onClaimForInitiative(claimEpoch, 0);
+    }
+
+    // Clamped handler for onRegisterInitiative - uses current epoch
+    function bribeInitiative_onRegisterInitiative_clamped() public {
+        uint256 currentEpoch = governance.epoch();
+        bribeInitiative_onRegisterInitiative(currentEpoch);
+    }
+
+    // Clamped handler for onUnregisterInitiative - uses current epoch
+    function bribeInitiative_onUnregisterInitiative_clamped() public {
+        uint256 currentEpoch = governance.epoch();
+        bribeInitiative_onUnregisterInitiative(currentEpoch);
+    }
+
+    // Clamped handler for totalLQTYAllocatedByEpoch
+    function bribeInitiative_totalLQTYAllocatedByEpoch_clamped(uint256 _epoch) public {
+        // Clamp to reasonable epoch range
+        uint256 currentEpoch = governance.epoch();
+        _epoch = currentEpoch + (_epoch % 53); // Current to +52 weeks
+        
+        bribeInitiative_totalLQTYAllocatedByEpoch(_epoch);
+    }
+
+    // Clamped handler for lqtyAllocatedByUserAtEpoch
+    function bribeInitiative_lqtyAllocatedByUserAtEpoch_clamped(uint256 _epoch) public {
+        address user = _getActor();
+        
+        // Clamp to reasonable epoch range
+        uint256 currentEpoch = governance.epoch();
+        _epoch = currentEpoch + (_epoch % 53); // Current to +52 weeks
+        
+        bribeInitiative_lqtyAllocatedByUserAtEpoch(user, _epoch);
+    }
+
+    // Clamped handler for checkClaimedBribeAtEpoch
+    function bribeInitiative_checkClaimedBribeAtEpoch_clamped(uint256 _epoch) public {
+        address user = _getActor();
+        
+        // Clamp to reasonable epoch range
+        uint256 currentEpoch = governance.epoch();
+        _epoch = currentEpoch + (_epoch % 53); // Current to +52 weeks
+        
+        bribeInitiative_checkClaimedBribeAtEpoch(user, _epoch);
+    }
+
     /// AUTO GENERATED TARGET FUNCTIONS - WARNING: DO NOT DELETE OR MODIFY THIS LINE ///
 
     function bribeInitiative_claimBribes(
