@@ -1,30 +1,107 @@
 {
   "version": "2.0.0",
+  "architecture_reasoning": {
+    "pattern_identified": "Governance system with user proxies, epoch-based voting, and multiple initiative types (BribeInitiative, CurveV2GaugeRewards, UniV4MerklRewards). Users stake LQTY through their proxy, allocate votes to initiatives, and initiatives receive BOLD rewards based on vote share. The system has time-based epochs and requires UserProxy deployment for staking.",
+    "complexity_choice": "moderate",
+    "instance_counts": {
+      "description": "Deploy minimal viable system in setup(), use helper functions for additional instances",
+      "choices": [
+        {
+          "contract": "Governance",
+          "deploy_in_setup": 1,
+          "has_helper_deploy": false,
+          "config_variations": [],
+          "audit_reason": "@audit Single governance instance required - it's the central coordinator, deploying multiple makes no sense"
+        },
+        {
+          "contract": "BribeInitiative",
+          "deploy_in_setup": 1,
+          "has_helper_deploy": true,
+          "config_variations": ["different bribe tokens", "different governance addresses would break system"],
+          "audit_reason": "@audit Deploy 1 in setup for basic testing, add helper_deployBribeInitiative() to test multiple initiatives with different bribe tokens. Each initiative can have a different bribe token which creates meaningful state space exploration."
+        },
+        {
+          "contract": "CurveV2GaugeRewards",
+          "deploy_in_setup": 0,
+          "has_helper_deploy": true,
+          "config_variations": ["different gauges", "different durations"],
+          "audit_reason": "@audit NOT deploying in setup - this is optional and can be deployed via helper. Uses helper_deployCurveV2GaugeRewards() to test different gauge configurations."
+        },
+        {
+          "contract": "UniV4MerklRewards",
+          "deploy_in_setup": 0,
+          "has_helper_deploy": true,
+          "config_variations": ["different pool IDs", "different weight configurations"],
+          "audit_reason": "@audit NOT deploying in setup - this is optional and can be deployed via helper. Uses helper_deployUniV4MerklRewards() to test different Uniswap V4 pool configurations."
+        }
+      ]
+    },
+    "scenarios_covered": [
+      "Basic governance staking and vote allocation",
+      "User proxy deployment and interaction",
+      "BribeInitiative deposit and claim flows",
+      "Multiple initiatives competing for votes",
+      "Epoch transitions and time-based logic",
+      "Initiative registration and unregistration",
+      "BOLD reward distribution based on votes",
+      "Permit-based LQTY deposits"
+    ],
+    "scenarios_NOT_covered": [
+      "@audit NOT TESTING: Multiple governance instances - makes no architectural sense",
+      "@audit NOT TESTING: CurveV2GaugeRewards and UniV4MerklRewards in initial setup - these are optional reward mechanisms that can be tested via helpers",
+      "@audit NOT TESTING: Complex multi-user delegation patterns beyond 2 actors - keeping complexity manageable",
+      "@audit NOT TESTING: Migration from V1 staking rewards (ETH gains) - MockStakingV1 provides basic functionality but complex V1 migration scenarios are out of scope"
+    ],
+    "trade_off_summary": "Chose moderate complexity by deploying 1 BribeInitiative in setup with helper functions to deploy more. This allows basic testing immediately while giving fuzzer control over when/how many additional initiatives are deployed. Skipped deploying CurveV2GaugeRewards and UniV4MerklRewards in setup since they're optional reward mechanisms - fuzzer can deploy them via helpers if needed."
+  },
   "decisions": {
     "dynamic_deployments": [
       {
         "name": "bribeInitiatives",
         "contract": "BribeInitiative",
-        "reason": "Governance system supports multiple initiatives that can be registered dynamically",
-        "needs_registration": true,
-        "registration_call": "governance.registerInitiative(address)"
+        "deploy_in_setup": 1,
+        "helper_function": "helper_deployBribeInitiative",
+        "helper_params": ["bribeTokenAddress"],
+        "needs_registration": false,
+        "registration_call": null,
+        "reason": "Fuzzer should be able to deploy multiple BribeInitiatives with different bribe tokens to test competition, different token decimals, and multi-initiative scenarios. Registration is manual via governance.registerInitiative()."
+      },
+      {
+        "name": "curveV2GaugeRewards",
+        "contract": "CurveV2GaugeRewards",
+        "deploy_in_setup": 0,
+        "helper_function": "helper_deployCurveV2GaugeRewards",
+        "helper_params": ["gaugeAddress", "duration"],
+        "needs_registration": false,
+        "registration_call": null,
+        "reason": "Optional reward mechanism - fuzzer controls if/when to deploy. Allows testing gauge integration scenarios without cluttering initial setup."
+      },
+      {
+        "name": "uniV4MerklRewards",
+        "contract": "UniV4MerklRewards",
+        "deploy_in_setup": 0,
+        "helper_function": "helper_deployUniV4MerklRewards",
+        "helper_params": ["campaignBoldAmountThreshold", "uniV4PoolId", "weightFees", "weightToken0", "weightToken1"],
+        "needs_registration": false,
+        "registration_call": null,
+        "reason": "Optional Merkl rewards integration - fuzzer controls deployment. Allows testing different pool configurations and weight distributions."
       }
     ],
     "custom_mocks_needed": [
       {
         "name": "stakingV1",
         "mock_contract": "MockStakingV1",
-        "reason": "Governance requires V1 staking contract for migration; standard MockERC20 insufficient"
-      },
-      {
-        "name": "distributionCreator",
-        "mock_contract": "MockDistributionCreator",
-        "reason": "CurveV2GaugeRewards requires IDistributionCreator interface"
+        "reason": "Requires specific ILQTYStaking interface implementation with stake/unstake and reward tracking. Standard MockERC20 cannot fulfill this role."
       },
       {
         "name": "liquidityGauge",
         "mock_contract": "MockLiquidityGauge",
-        "reason": "CurveV2GaugeRewards requires ILiquidityGauge interface"
+        "reason": "Required for CurveV2GaugeRewards testing - needs deposit_reward_token functionality. Used only when deploying CurveV2GaugeRewards via helper."
+      },
+      {
+        "name": "distributionCreator",
+        "mock_contract": "MockDistributionCreator",
+        "reason": "Required for UniV4MerklRewards testing - needs Merkl-specific campaign creation interface. Used only when deploying UniV4MerklRewards via helper."
       }
     ],
     "tokens": [
@@ -33,102 +110,139 @@
         "role": "governance_token",
         "use_asset_manager": false,
         "custom_mock": "MockERC20Tester",
-        "reason": "LQTY is the primary governance token staked by users; needs permit functionality"
+        "reason": "LQTY is the governance/staking token. Needs MockERC20Tester for permit functionality (EIP-2612). Not using AssetManager because LQTY has a fixed role and is not swappable."
       },
       {
         "name": "lusd",
-        "role": "legacy_stablecoin",
+        "role": "v1_reward_token",
         "use_asset_manager": false,
         "custom_mock": "MockERC20Tester",
-        "reason": "LUSD is legacy V1 stablecoin used in UserProxyFactory and stakingV1"
+        "reason": "LUSD is received as rewards from V1 staking. Used by MockStakingV1 and UserProxy. Fixed role, not swappable."
       },
       {
         "name": "bold",
-        "role": "reward_token",
+        "role": "governance_reward_token",
         "use_asset_manager": false,
         "custom_mock": "MockERC20Tester",
-        "reason": "BOLD is the new stablecoin used for rewards distribution to initiatives"
+        "reason": "BOLD is the primary reward token distributed to initiatives based on votes. Also used for registration fees. Fixed role in governance, not swappable."
       },
       {
         "name": "bribeToken",
-        "role": "bribe_reward",
+        "role": "bribe_reward_token",
         "use_asset_manager": false,
         "custom_mock": "MockERC20Tester",
-        "reason": "BribeInitiative uses a secondary bribe token alongside BOLD for incentives"
+        "reason": "Token used for bribes in BribeInitiative. Each BribeInitiative can have a different bribe token. Using MockERC20Tester for standard ERC20 functionality."
       }
     ],
     "time_sensitive": {
       "needs_warp": true,
-      "reason": "Governance is highly epoch-based with EPOCH_DURATION, EPOCH_START, and time-weighted voting power calculations"
+      "reason": "System is heavily epoch-based. Governance uses block.timestamp for epoch calculations, voting cutoffs, and reward accrual. Need vm.warp() to test epoch transitions, voting windows, and time-locked features like initiative registration/unregistration."
     },
     "multi_user": {
       "additional_actors_count": 1,
       "needs_private_key": true,
-      "reason": "depositLQTYViaPermit requires valid EIP-2612 permit signatures, needs actor with known private key"
+      "reason": "Need 1 additional actor (total 2) for testing different users staking, voting, and claiming. System has permit functionality (depositLQTYViaPermit) which requires valid signatures, so needs_private_key is true to use the hardcoded actor with known private key for permit testing."
     },
     "proxy_deployment": {
       "needs_proxy": true,
       "deploy_method": "governance.deployUserProxy()",
       "proxy_variable": "userProxy",
-      "reason": "Users must interact with stakingV1 through a UserProxy contract deployed via Governance"
+      "reason": "Users must interact through UserProxy contracts for staking LQTY in V1. The UserProxy is created via governance.deriveUserProxyAddress() and deployed via governance.deployUserProxy() (or auto-deployed on first stake). Required for all staking operations."
     },
     "struct_params": [
       {
         "struct_type": "PermitParams",
         "variable_name": "permitParams",
         "mode": "single",
-        "reason": "PermitParams used in depositLQTYViaPermit functions; single valid permit sufficient for testing"
+        "reason": "Used by depositLQTYViaPermit(). Rather than having fuzzer generate complex permit signatures, we generate valid permits via _getValidPermitParams() helper. Single mode is sufficient - one valid permit is all we need."
       },
       {
         "struct_type": "IBribeInitiative.ClaimData",
         "variable_name": "claimData",
         "mode": "single",
-        "reason": "ClaimData struct used in claimBribes; single claim configuration sufficient"
+        "reason": "Used by BribeInitiative.claimBribes(). Contains epoch and prevAllocationEpoch values. Single instance simplifies fuzzing - fuzzer can still call with arrays containing this single struct."
       },
       {
         "struct_type": "IGovernance.UserState",
         "variable_name": "userState",
         "mode": "single",
-        "reason": "UserState passed to onAfterAllocateLQTY hook; single state representative of user interactions"
+        "reason": "Passed to initiative hooks like onAfterAllocateLQTY(). Read from governance.userStates() so we don't need fuzzer to generate it. Single cached instance for admin testing."
       },
       {
         "struct_type": "IGovernance.Allocation",
         "variable_name": "allocation",
         "mode": "single",
-        "reason": "Allocation struct passed to onAfterAllocateLQTY hook; single allocation pattern sufficient"
+        "reason": "Passed to initiative hooks like onAfterAllocateLQTY(). Read from governance.lqtyAllocatedByUserToInitiative() so fuzzer doesn't generate it. Single cached instance for admin testing."
       },
       {
         "struct_type": "IGovernance.InitiativeState",
         "variable_name": "initiativeState",
         "mode": "single",
-        "reason": "InitiativeState passed to onAfterAllocateLQTY hook; single state pattern sufficient"
+        "reason": "Passed to initiative hooks like onAfterAllocateLQTY(). Read from governance.initiativeStates() so fuzzer doesn't generate it. Single cached instance for admin testing."
       }
     ],
     "post_deploy_actions": [
-      "register_initial_bribe_initiative",
-      "deploy_user_proxy_for_actors",
-      "mint_and_approve_tokens",
-      "set_epoch_start_in_past"
+      "mint_initial_lqty_to_actors",
+      "mint_initial_bold_to_governance",
+      "approve_lqty_to_stakingV1",
+      "approve_bold_for_registration",
+      "approve_bribeToken_to_bribeInitiative",
+      "set_initial_epoch_time"
     ]
   },
   "helper_functions_needed": [
     {
       "type": "dynamic_getter",
       "name": "_getDeployedBribeInitiative",
-      "signature": "function _getDeployedBribeInitiative(uint8 index) internal view returns (address)",
-      "reason": "Support dynamic selection of BribeInitiative instances for fuzzing"
+      "params": ["uint8 index"],
+      "returns": "address",
+      "reason": "Get a deployed BribeInitiative by index from deployedBribeInitiatives array. Modulo wrapping for fuzzer convenience."
+    },
+    {
+      "type": "dynamic_getter",
+      "name": "_getDeployedCurveV2GaugeRewards",
+      "params": ["uint8 index"],
+      "returns": "address",
+      "reason": "Get a deployed CurveV2GaugeRewards by index. Only needed if fuzzer deploys via helper."
+    },
+    {
+      "type": "dynamic_getter",
+      "name": "_getDeployedUniV4MerklRewards",
+      "params": ["uint8 index"],
+      "returns": "address",
+      "reason": "Get a deployed UniV4MerklRewards by index. Only needed if fuzzer deploys via helper."
     },
     {
       "type": "status_getter",
       "name": "_getCurrentEpoch",
-      "signature": "function _getCurrentEpoch() internal view returns (uint256)",
-      "reason": "Convenient access to current epoch for time-based testing"
+      "params": [],
+      "returns": "uint256",
+      "reason": "Get current epoch from governance contract. Useful for fuzzer to know current state."
     },
     {
-      "type": "helper",
+      "type": "custom",
       "name": "_getValidPermitParams",
-      "signature": "function _getValidPermitParams(address owner, address spender, uint256 value, uint256 deadline) internal view returns (PermitParams memory)",
-      "reason": "Generate valid permit signatures using actor with known private key"
+      "params": ["address owner", "address spender", "uint256 value", "uint256 deadline"],
+      "returns": "PermitParams memory",
+      "reason": "Generate valid EIP-2612 permit signatures using the known private key. Required for testing depositLQTYViaPermit() without fuzzer having to generate valid signatures."
     }
+  ],
+  "audit_notes": [
+    "@audit chose moderate setup because the system has clear core contracts (Governance, 1 BribeInitiative) that must exist, but benefits from fuzzer-controlled deployment of additional initiatives",
+    "@audit NOT TESTING: Multiple Governance instances - architecturally nonsensical, Governance is a singleton coordinator",
+    "@audit NOT TESTING: CurveV2GaugeRewards and UniV4MerklRewards in initial setup - these are optional reward distribution mechanisms that can be deployed via helpers if fuzzer explores those paths",
+    "@audit NOT TESTING: Complex V1 staking migration scenarios with ETH gains - MockStakingV1 provides basic stake/unstake but complex V1 migration is out of scope",
+    "@audit NOT TESTING: More than 2 actors - system supports arbitrary users but 2 actors (address(this) + 1 additional) is sufficient to test multi-user interactions while keeping state space manageable",
+    "@audit ASSUMPTION: Using START_TIME and EPOCH_DURATION constants from existing setup - these match the deployment test values",
+    "@audit ASSUMPTION: BribeInitiative deployed in setup uses a generic bribeToken - fuzzer can deploy additional BribeInitiatives with different tokens via helper",
+    "@audit ASSUMPTION: All struct parameters use single mode because they're either generated by helpers (_getValidPermitParams) or read from governance state - fuzzer doesn't need to generate these complex structs",
+    "@audit UNCERTAINTY: Whether to track ETH rewards from V1 staking - MockStakingV1 supports it but adds complexity. Keeping it for completeness.",
+    "@audit chose to NOT deploy UserProxy in setup because governance auto-deploys it on first stake via _increaseUserVoteTrackers(). Storing the address after first deployment for convenience.",
+    "@audit chose needs_private_key=true because depositLQTYViaPermit requires valid EIP-2612 signatures. Using hardcoded actor 0x537C8f3d3E18dF5517a58B3fB9D9143697996802 with known private key.",
+    "@audit Trade-off: Deploying only 1 BribeInitiative in setup vs 0 - chose 1 because most tests will use BribeInitiative and it's the primary initiative type. Helpers allow deploying more.",
+    "@audit Trade-off: Using MockERC20Tester vs standard MockERC20 - chose MockERC20Tester because it has permit() functionality needed for depositLQTYViaPermit testing",
+    "@audit Coverage gap: Not testing initiative hook gas limits (MIN_GAS_TO_HOOK) - this is a security feature but difficult to test in fuzzing without custom malicious initiatives",
+    "@audit Coverage gap: Not testing registration/unregistration edge cases around UNREGISTRATION_AFTER_EPOCHS - these require precise epoch timing that may be hard for fuzzer to hit",
+    "@audit Design choice: Storing struct parameters in Setup rather than having fuzzer generate them - this simplifies fuzzing since these structs are either derived from contract state or require complex signature generation"
   ]
 }
