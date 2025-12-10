@@ -1,19 +1,5 @@
 [
   {
-    "contract": "BribeInitiative",
-    "target_functions": [
-      "claimBribes",
-      "claimedBribeAtEpoch",
-      "depositBribe",
-      "lqtyAllocatedByUserAtEpoch",
-      "onAfterAllocateLQTY",
-      "onClaimForInitiative",
-      "onRegisterInitiative",
-      "onUnregisterInitiative",
-      "totalLQTYAllocatedByEpoch"
-    ]
-  },
-  {
     "contract": "Governance",
     "target_functions": [
       "allocateLQTY",
