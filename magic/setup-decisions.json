@@ -1,0 +1,134 @@
+{
+  "version": "2.0.0",
+  "decisions": {
+    "dynamic_deployments": [
+      {
+        "name": "bribeInitiatives",
+        "contract": "BribeInitiative",
+        "reason": "Governance system supports multiple initiatives that can be registered dynamically",
+        "needs_registration": true,
+        "registration_call": "governance.registerInitiative(address)"
+      }
+    ],
+    "custom_mocks_needed": [
+      {
+        "name": "stakingV1",
+        "mock_contract": "MockStakingV1",
+        "reason": "Governance requires V1 staking contract for migration; standard MockERC20 insufficient"
+      },
+      {
+        "name": "distributionCreator",
+        "mock_contract": "MockDistributionCreator",
+        "reason": "CurveV2GaugeRewards requires IDistributionCreator interface"
+      },
+      {
+        "name": "liquidityGauge",
+        "mock_contract": "MockLiquidityGauge",
+        "reason": "CurveV2GaugeRewards requires ILiquidityGauge interface"
+      }
+    ],
+    "tokens": [
+      {
+        "name": "lqty",
+        "role": "governance_token",
+        "use_asset_manager": false,
+        "custom_mock": "MockERC20Tester",
+        "reason": "LQTY is the primary governance token staked by users; needs permit functionality"
+      },
+      {
+        "name": "lusd",
+        "role": "legacy_stablecoin",
+        "use_asset_manager": false,
+        "custom_mock": "MockERC20Tester",
+        "reason": "LUSD is legacy V1 stablecoin used in UserProxyFactory and stakingV1"
+      },
+      {
+        "name": "bold",
+        "role": "reward_token",
+        "use_asset_manager": false,
+        "custom_mock": "MockERC20Tester",
+        "reason": "BOLD is the new stablecoin used for rewards distribution to initiatives"
+      },
+      {
+        "name": "bribeToken",
+        "role": "bribe_reward",
+        "use_asset_manager": false,
+        "custom_mock": "MockERC20Tester",
+        "reason": "BribeInitiative uses a secondary bribe token alongside BOLD for incentives"
+      }
+    ],
+    "time_sensitive": {
+      "needs_warp": true,
+      "reason": "Governance is highly epoch-based with EPOCH_DURATION, EPOCH_START, and time-weighted voting power calculations"
+    },
+    "multi_user": {
+      "additional_actors_count": 1,
+      "needs_private_key": true,
+      "reason": "depositLQTYViaPermit requires valid EIP-2612 permit signatures, needs actor with known private key"
+    },
+    "proxy_deployment": {
+      "needs_proxy": true,
+      "deploy_method": "governance.deployUserProxy()",
+      "proxy_variable": "userProxy",
+      "reason": "Users must interact with stakingV1 through a UserProxy contract deployed via Governance"
+    },
+    "struct_params": [
+      {
+        "struct_type": "PermitParams",
+        "variable_name": "permitParams",
+        "mode": "single",
+        "reason": "PermitParams used in depositLQTYViaPermit functions; single valid permit sufficient for testing"
+      },
+      {
+        "struct_type": "IBribeInitiative.ClaimData",
+        "variable_name": "claimData",
+        "mode": "single",
+        "reason": "ClaimData struct used in claimBribes; single claim configuration sufficient"
+      },
+      {
+        "struct_type": "IGovernance.UserState",
+        "variable_name": "userState",
+        "mode": "single",
+        "reason": "UserState passed to onAfterAllocateLQTY hook; single state representative of user interactions"
+      },
+      {
+        "struct_type": "IGovernance.Allocation",
+        "variable_name": "allocation",
+        "mode": "single",
+        "reason": "Allocation struct passed to onAfterAllocateLQTY hook; single allocation pattern sufficient"
+      },
+      {
+        "struct_type": "IGovernance.InitiativeState",
+        "variable_name": "initiativeState",
+        "mode": "single",
+        "reason": "InitiativeState passed to onAfterAllocateLQTY hook; single state pattern sufficient"
+      }
+    ],
+    "post_deploy_actions": [
+      "register_initial_bribe_initiative",
+      "deploy_user_proxy_for_actors",
+      "mint_and_approve_tokens",
+      "set_epoch_start_in_past"
+    ]
+  },
+  "helper_functions_needed": [
+    {
+      "type": "dynamic_getter",
+      "name": "_getDeployedBribeInitiative",
+      "signature": "function _getDeployedBribeInitiative(uint8 index) internal view returns (address)",
+      "reason": "Support dynamic selection of BribeInitiative instances for fuzzing"
+    },
+    {
+      "type": "status_getter",
+      "name": "_getCurrentEpoch",
+      "signature": "function _getCurrentEpoch() internal view returns (uint256)",
+      "reason": "Convenient access to current epoch for time-based testing"
+    },
+    {
+      "type": "helper",
+      "name": "_getValidPermitParams",
+      "signature": "function _getValidPermitParams(address owner, address spender, uint256 value, uint256 deadline) internal view returns (PermitParams memory)",
+      "reason": "Generate valid permit signatures using actor with known private key"
+    }
+  ]
+}
