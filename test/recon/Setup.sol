@@ -39,6 +39,7 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
 
     // Core contracts
     Governance governance;
+    BribeInitiative bribeInitiative;
     CurveV2GaugeRewards curveV2GaugeRewards;
     MockUniV4MerklRewards uniV4MerklRewards;
 
@@ -135,17 +136,17 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
 
         // 6. Post-deploy actions
         // Deploy initial BribeInitiative instance
-        BribeInitiative initialBribeInitiative = new BribeInitiative(
+        bribeInitiative = new BribeInitiative(
             address(governance),
             address(bold),
             address(bribeToken)
         );
-        deployedBribeInitiatives.push(address(initialBribeInitiative));
+        deployedBribeInitiatives.push(address(bribeInitiative));
 
         // Register the initial bribe initiative
         bold.mint(address(this), REGISTRATION_FEE);
         bold.approve(address(governance), REGISTRATION_FEE);
-        governance.registerInitiative(address(initialBribeInitiative));
+        governance.registerInitiative(address(bribeInitiative));
 
         // Deploy user proxy for the primary actor (address(this))
         userProxy = governance.deployUserProxy();
@@ -155,7 +156,7 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
         approvalArray[0] = address(governance);
         approvalArray[1] = address(curveV2GaugeRewards);
         approvalArray[2] = address(uniV4MerklRewards);
-        approvalArray[3] = address(initialBribeInitiative);
+        approvalArray[3] = address(bribeInitiative);
         approvalArray[4] = userProxy;
 
         // 8. Finalize - mints tokens to all actors and sets approvals

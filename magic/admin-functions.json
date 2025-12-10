@@ -1,0 +1,17 @@
+[
+  {
+    "contract_name": "GovernanceTargets",
+    "functions": [
+      "governance_registerInitialInitiatives"
+    ]
+  },
+  {
+    "contract_name": "BribeInitiativeTargets",
+    "functions": [
+      "bribeInitiative_onAfterAllocateLQTY",
+      "bribeInitiative_onRegisterInitiative",
+      "bribeInitiative_onUnregisterInitiative",
+      "bribeInitiative_onClaimForInitiative"
+    ]
+  }
+]
