@@ -1,17 +1,12 @@
 [
   {
-    "contract_name": "GovernanceTargets",
+    "contract_name": "AdminTargets",
     "functions": [
-      "governance_registerInitialInitiatives"
-    ]
-  },
-  {
-    "contract_name": "BribeInitiativeTargets",
-    "functions": [
+      "governance_registerInitialInitiatives",
       "bribeInitiative_onAfterAllocateLQTY",
+      "bribeInitiative_onClaimForInitiative",
       "bribeInitiative_onRegisterInitiative",
-      "bribeInitiative_onUnregisterInitiative",
-      "bribeInitiative_onClaimForInitiative"
+      "bribeInitiative_onUnregisterInitiative"
     ]
   }
 ]
